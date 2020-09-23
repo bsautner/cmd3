@@ -18,30 +18,30 @@ package com.intellij.ui.tabs;
 
 public interface TabsListener {
 
-  void selectionChanged(TabInfo oldSelection, TabInfo newSelection);
+    void selectionChanged(TabInfo oldSelection, TabInfo newSelection);
 
-  void beforeSelectionChanged(TabInfo oldSelection, TabInfo newSelection);
-  
-  void tabRemoved(TabInfo tabToRemove);
-  
-  void tabsMoved();
-  
-  class Adapter implements TabsListener {
-    @Override
-    public void selectionChanged(TabInfo oldSelection, TabInfo newSelection) {
-    }
+    void beforeSelectionChanged(TabInfo oldSelection, TabInfo newSelection);
 
-    @Override
-    public void beforeSelectionChanged(TabInfo oldSelection, TabInfo newSelection) {
-    }
+    void tabRemoved(TabInfo tabToRemove);
 
-    @Override
-    public void tabsMoved() {
-    }
+    void tabsMoved();
 
-    @Override
-    public void tabRemoved(TabInfo tabToRemove) {
+    class Adapter implements TabsListener {
+        @Override
+        public void selectionChanged(TabInfo oldSelection, TabInfo newSelection) {
+        }
+
+        @Override
+        public void beforeSelectionChanged(TabInfo oldSelection, TabInfo newSelection) {
+        }
+
+        @Override
+        public void tabsMoved() {
+        }
+
+        @Override
+        public void tabRemoved(TabInfo tabToRemove) {
+        }
     }
-  }
 
 }

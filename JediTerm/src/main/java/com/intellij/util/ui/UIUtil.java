@@ -28,8 +28,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
 
-import javax.swing.*;
 import javax.swing.Timer;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.ComboBoxUI;
 import javax.swing.plaf.basic.BasicComboBoxUI;
@@ -53,8 +53,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.text.NumberFormat;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -80,10 +80,10 @@ public class UIUtil extends DrawUtil {
     }
 
     private static void blockATKWrapper() {
-    /*
-     * The method should be called before java.awt.Toolkit.initAssistiveTechnologies()
-     * which is called from Toolkit.getDefaultToolkit().
-     */
+        /*
+         * The method should be called before java.awt.Toolkit.initAssistiveTechnologies()
+         * which is called from Toolkit.getDefaultToolkit().
+         */
         if (!(SystemInfo.isLinux && Registry.is("linux.jdk.accessibility.atkwrapper.block"))) return;
 
 

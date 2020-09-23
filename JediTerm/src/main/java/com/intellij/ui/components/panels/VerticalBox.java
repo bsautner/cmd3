@@ -20,13 +20,13 @@ import java.awt.*;
 
 public class VerticalBox extends Box {
 
-  public VerticalBox() {
-    super(BoxLayout.Y_AXIS);
-    setOpaque(false);
-  }
+    public VerticalBox() {
+        super(BoxLayout.Y_AXIS);
+        setOpaque(false);
+    }
 
-  public Component add(Component comp) {
-    ((JComponent) comp).setAlignmentX(0f);
-    return super.add(comp);
-  }
+    public Component add(Component comp) {
+        ((JComponent) comp).setAlignmentX(0f);
+        return super.add(comp);
+    }
 }

@@ -9,7 +9,8 @@ import javax.swing.*;
  */
 
 public interface AnchorableComponent {
-  @Nullable
-  JComponent getAnchor();
-  void setAnchor(@Nullable JComponent anchor);
+    @Nullable
+    JComponent getAnchor();
+
+    void setAnchor(@Nullable JComponent anchor);
 }

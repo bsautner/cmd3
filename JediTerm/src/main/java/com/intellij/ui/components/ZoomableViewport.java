@@ -24,9 +24,12 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 
 public interface ZoomableViewport {
-  @Nullable
-  Magnificator getMagnificator();
-  void magnificationStarted(Point at);
-  void magnificationFinished(double magnification);
-  void magnify(double magnification);
+    @Nullable
+    Magnificator getMagnificator();
+
+    void magnificationStarted(Point at);
+
+    void magnificationFinished(double magnification);
+
+    void magnify(double magnification);
 }

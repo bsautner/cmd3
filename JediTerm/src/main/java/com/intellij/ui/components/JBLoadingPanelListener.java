@@ -19,18 +19,18 @@ package com.intellij.ui.components;
  * @author Konstantin Bulenkov
  */
 public interface JBLoadingPanelListener {
-  void onLoadingStart();
+    void onLoadingStart();
 
-  void onLoadingFinish();
+    void onLoadingFinish();
 
 
-  abstract class Adapter implements JBLoadingPanelListener {
-    @Override
-    public void onLoadingStart() {
+    abstract class Adapter implements JBLoadingPanelListener {
+        @Override
+        public void onLoadingStart() {
+        }
+
+        @Override
+        public void onLoadingFinish() {
+        }
     }
-
-    @Override
-    public void onLoadingFinish() {
-    }
-  }
 }

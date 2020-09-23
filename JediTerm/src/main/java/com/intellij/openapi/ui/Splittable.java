@@ -20,22 +20,22 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 
 public interface Splittable {
-  float getMinProportion(boolean first);
+    float getMinProportion(boolean first);
 
-  void setProportion(float proportion);
+    void setProportion(float proportion);
 
-  /**
-   * @return <code>true</code> if splitter has vertical orientation, <code>false</code> otherwise
-   */
-  boolean getOrientation();
+    /**
+     * @return <code>true</code> if splitter has vertical orientation, <code>false</code> otherwise
+     */
+    boolean getOrientation();
 
-  /**
-   * @param verticalSplit <code>true</code> means that splitter will have vertical split
-   */
-  void setOrientation(boolean verticalSplit);
+    /**
+     * @param verticalSplit <code>true</code> means that splitter will have vertical split
+     */
+    void setOrientation(boolean verticalSplit);
 
-  @NotNull
-  Component asComponent();
+    @NotNull
+    Component asComponent();
 
-  void setDragging(boolean dragging);
+    void setDragging(boolean dragging);
 }

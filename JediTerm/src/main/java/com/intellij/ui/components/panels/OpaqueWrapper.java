@@ -24,19 +24,19 @@ import java.awt.*;
  */
 public class OpaqueWrapper extends Wrapper {
 
-  public OpaqueWrapper(JComponent wrapped, Color color) {
-    super(wrapped);
-    setBackground(color);
-  }
+    public OpaqueWrapper(JComponent wrapped, Color color) {
+        super(wrapped);
+        setBackground(color);
+    }
 
-  public OpaqueWrapper(LayoutManager layoutManager, JComponent wrapped, Color color) {
-    super(layoutManager, wrapped);
-    setBackground(color);
-  }
+    public OpaqueWrapper(LayoutManager layoutManager, JComponent wrapped, Color color) {
+        super(layoutManager, wrapped);
+        setBackground(color);
+    }
 
-  protected void paintComponent(Graphics g) {
-    g.setColor(getBackground());
-    Dimension size = getSize();
-    g.fillRect(0, 0, size.width, size.height);
-  }
+    protected void paintComponent(Graphics g) {
+        g.setColor(getBackground());
+        Dimension size = getSize();
+        g.fillRect(0, 0, size.width, size.height);
+    }
 }

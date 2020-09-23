@@ -20,23 +20,23 @@ import org.jetbrains.annotations.NotNull;
 import java.util.regex.Pattern;
 
 public class URLUtil {
-  public static final String SCHEME_SEPARATOR = "://";
-  public static final String FILE_PROTOCOL = "file";
-  public static final String HTTP_PROTOCOL = "http";
-  public static final String JAR_PROTOCOL = "jar";
-  public static final String JAR_SEPARATOR = "!/";
+    public static final String SCHEME_SEPARATOR = "://";
+    public static final String FILE_PROTOCOL = "file";
+    public static final String HTTP_PROTOCOL = "http";
+    public static final String JAR_PROTOCOL = "jar";
+    public static final String JAR_SEPARATOR = "!/";
 
-  public static final Pattern DATA_URI_PATTERN = Pattern.compile("data:([^,;]+/[^,;]+)(;charset(?:=|:)[^,;]+)?(;base64)?,(.+)");
-  public static final Pattern URL_PATTERN = Pattern.compile("\\b(mailto:|(news|(ht|f)tp(s?))://|((?<![\\p{L}0-9_.])(www\\.)))[-A-Za-z0-9+$&@#/%?=~_|!:,.;]*[-A-Za-z0-9+$&@#/%=~_|]");
+    public static final Pattern DATA_URI_PATTERN = Pattern.compile("data:([^,;]+/[^,;]+)(;charset(?:=|:)[^,;]+)?(;base64)?,(.+)");
+    public static final Pattern URL_PATTERN = Pattern.compile("\\b(mailto:|(news|(ht|f)tp(s?))://|((?<![\\p{L}0-9_.])(www\\.)))[-A-Za-z0-9+$&@#/%?=~_|!:,.;]*[-A-Za-z0-9+$&@#/%=~_|]");
 
-  private URLUtil() {
-  }
+    private URLUtil() {
+    }
 
-  /**
-   * @return if false, then the line contains no URL; if true, then more heavy {@link #URL_PATTERN} check should be used.
-   */
-  public static boolean canContainUrl(@NotNull String line) {
-    return line.contains("mailto:") || line.contains("://") || line.contains("www.");
-  }
+    /**
+     * @return if false, then the line contains no URL; if true, then more heavy {@link #URL_PATTERN} check should be used.
+     */
+    public static boolean canContainUrl(@NotNull String line) {
+        return line.contains("mailto:") || line.contains("://") || line.contains("www.");
+    }
 
 }

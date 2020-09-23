@@ -27,103 +27,104 @@ import org.jetbrains.annotations.Nullable;
  * @see Splitter
  */
 public class JBSplitter extends Splitter {
-  /**
-   * Used as a key to save and load proportion
-   */
-  @Nullable
-  private String mySplitterProportionKey = null;
-  private final float myDefaultProportion;
+    /**
+     * Used as a key to save and load proportion
+     */
+    @Nullable
+    private String mySplitterProportionKey = null;
+    private final float myDefaultProportion;
 
-  public JBSplitter() {
-    super();
+    public JBSplitter() {
+        super();
 
-    myDefaultProportion = 0.5f;
-  }
+        myDefaultProportion = 0.5f;
+    }
 
-  public JBSplitter(@NotNull String proportionKey, float defaultProportion) {
-    this(false, proportionKey, defaultProportion);
-  }
+    public JBSplitter(@NotNull String proportionKey, float defaultProportion) {
+        this(false, proportionKey, defaultProportion);
+    }
 
-  public JBSplitter(boolean vertical, @NotNull String proportionKey, float defaultProportion) {
-    super(vertical, defaultProportion);
+    public JBSplitter(boolean vertical, @NotNull String proportionKey, float defaultProportion) {
+        super(vertical, defaultProportion);
 
-    mySplitterProportionKey = proportionKey;
-    myDefaultProportion = defaultProportion;
-  }
+        mySplitterProportionKey = proportionKey;
+        myDefaultProportion = defaultProportion;
+    }
 
-  public JBSplitter(boolean vertical) {
-    super(vertical);
+    public JBSplitter(boolean vertical) {
+        super(vertical);
 
-    myDefaultProportion = 0.5f;
-  }
+        myDefaultProportion = 0.5f;
+    }
 
-  public JBSplitter(boolean vertical, float proportion) {
-    super(vertical, proportion);
+    public JBSplitter(boolean vertical, float proportion) {
+        super(vertical, proportion);
 
-    myDefaultProportion = proportion;
-  }
+        myDefaultProportion = proportion;
+    }
 
-  public JBSplitter(float proportion) {
-    super(false, proportion);
+    public JBSplitter(float proportion) {
+        super(false, proportion);
 
-    myDefaultProportion = proportion;
-  }
+        myDefaultProportion = proportion;
+    }
 
-  public JBSplitter(boolean vertical, float proportion, float minProp, float maxProp) {
-    super(vertical, proportion, minProp, maxProp);
+    public JBSplitter(boolean vertical, float proportion, float minProp, float maxProp) {
+        super(vertical, proportion, minProp, maxProp);
 
-    myDefaultProportion = proportion;
-  }
+        myDefaultProportion = proportion;
+    }
 
-  /**
-   * Splitter proportion unique key
-   *
-   * @return non empty unique String or <code>null</code> if splitter does not require proportion saving
-   */
-  @Nullable
-  public final String getSplitterProportionKey() {
-    return mySplitterProportionKey;
-  }
+    /**
+     * Splitter proportion unique key
+     *
+     * @return non empty unique String or <code>null</code> if splitter does not require proportion saving
+     */
+    @Nullable
+    public final String getSplitterProportionKey() {
+        return mySplitterProportionKey;
+    }
 
-  /**
-   * Sets proportion key
-   *
-   * @param key non empty unique String or <code>null</code> if splitter does not require proportion saving
-   */
-  public final void setSplitterProportionKey(@Nullable String key) {
-    mySplitterProportionKey = key;
-  }
+    /**
+     * Sets proportion key
+     *
+     * @param key non empty unique String or <code>null</code> if splitter does not require proportion saving
+     */
+    public final void setSplitterProportionKey(@Nullable String key) {
+        mySplitterProportionKey = key;
+    }
 
-  /**
-   * Sets proportion key and load from settings.
-   * @param key
-   */
-  public final void setAndLoadSplitterProportionKey(@NotNull String key) {
-    setSplitterProportionKey(key);
-    loadProportion();
-  }
+    /**
+     * Sets proportion key and load from settings.
+     *
+     * @param key
+     */
+    public final void setAndLoadSplitterProportionKey(@NotNull String key) {
+        setSplitterProportionKey(key);
+        loadProportion();
+    }
 
-  @Override
-  public void addNotify() {
-    super.addNotify();
-    loadProportion();
-  }
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        loadProportion();
+    }
 
-  @Override
-  public void setProportion(float proportion) {
-    super.setProportion(proportion);
-    saveProportion();
-  }
+    @Override
+    public void setProportion(float proportion) {
+        super.setProportion(proportion);
+        saveProportion();
+    }
 
-  protected void loadProportion() {
-    if (!StringUtil.isEmpty(mySplitterProportionKey)) {
+    protected void loadProportion() {
+        if (!StringUtil.isEmpty(mySplitterProportionKey)) {
 //      setProportion(PropertiesComponent.getInstance().getFloat(mySplitterProportionKey, myProportion));
+        }
     }
-  }
 
-  protected void saveProportion() {
-    if (!StringUtil.isEmpty(mySplitterProportionKey)) {
+    protected void saveProportion() {
+        if (!StringUtil.isEmpty(mySplitterProportionKey)) {
 //      PropertiesComponent.getInstance().setValue(mySplitterProportionKey, myProportion, myDefaultProportion);
+        }
     }
-  }
 }

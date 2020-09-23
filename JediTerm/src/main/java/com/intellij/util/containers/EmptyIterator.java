@@ -19,20 +19,22 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class EmptyIterator<T> implements Iterator<T> {
-  private static final EmptyIterator INSTANCE = new EmptyIterator();
-  public static <T> EmptyIterator<T> getInstance() {
-    //noinspection unchecked
-    return INSTANCE;
-  }
-  public boolean hasNext() {
-    return false;
-  }
+    private static final EmptyIterator INSTANCE = new EmptyIterator();
 
-  public T next() {
-    throw new NoSuchElementException();
-  }
+    public static <T> EmptyIterator<T> getInstance() {
+        //noinspection unchecked
+        return INSTANCE;
+    }
 
-  public void remove() {
-    throw new IllegalStateException();
-  }
+    public boolean hasNext() {
+        return false;
+    }
+
+    public T next() {
+        throw new NoSuchElementException();
+    }
+
+    public void remove() {
+        throw new IllegalStateException();
+    }
 }

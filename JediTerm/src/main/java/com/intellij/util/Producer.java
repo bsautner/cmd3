@@ -21,8 +21,8 @@ import org.jetbrains.annotations.Nullable;
  * @author pegov
  */
 public interface Producer<T> {
-  
-  @Nullable
-  T produce();
-  
+
+    @Nullable
+    T produce();
+
 }

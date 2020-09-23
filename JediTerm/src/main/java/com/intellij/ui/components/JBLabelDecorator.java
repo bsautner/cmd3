@@ -27,54 +27,54 @@ import java.awt.*;
  * @author evgeny.zakrevsky
  */
 public class JBLabelDecorator extends JBLabel {
-  private JBLabelDecorator() {
-    super();
-  }
-
-  private JBLabelDecorator(@Nullable Icon image) {
-    super(image);
-  }
-
-  private JBLabelDecorator(@NotNull String text) {
-    super(text);
-  }
-
-  private JBLabelDecorator(@NotNull String text, @JdkConstants.HorizontalAlignment int horizontalAlignment) {
-    super(text, horizontalAlignment);
-  }
-
-  private JBLabelDecorator(@Nullable Icon image, @JdkConstants.HorizontalAlignment int horizontalAlignment) {
-    super(image, horizontalAlignment);
-  }
-
-  private JBLabelDecorator(@NotNull String text, @Nullable Icon icon, @JdkConstants.HorizontalAlignment int horizontalAlignment) {
-    super(text, icon, horizontalAlignment);
-  }
-
-  public static JBLabelDecorator createJBLabelDecorator() {
-    return new JBLabelDecorator();
-  }
-
-  public static JBLabelDecorator createJBLabelDecorator(String text) {
-    return new JBLabelDecorator(text);
-  }
-
-  public JBLabelDecorator setBold(boolean isBold) {
-    if (isBold) {
-      setFont(getFont().deriveFont(Font.BOLD));
-    } else {
-      setFont(getFont().deriveFont(Font.PLAIN));
+    private JBLabelDecorator() {
+        super();
     }
-    return this;
-  }
 
-  public JBLabelDecorator setComponentStyleDecorative(@NotNull UIUtil.ComponentStyle componentStyle) {
-    super.setComponentStyle(componentStyle);
-    return this;
-  }
+    private JBLabelDecorator(@Nullable Icon image) {
+        super(image);
+    }
 
-  public JBLabelDecorator setFontColorDecorative(@NotNull UIUtil.FontColor fontColor) {
-    super.setFontColor(fontColor);
-    return this;
-  }
+    private JBLabelDecorator(@NotNull String text) {
+        super(text);
+    }
+
+    private JBLabelDecorator(@NotNull String text, @JdkConstants.HorizontalAlignment int horizontalAlignment) {
+        super(text, horizontalAlignment);
+    }
+
+    private JBLabelDecorator(@Nullable Icon image, @JdkConstants.HorizontalAlignment int horizontalAlignment) {
+        super(image, horizontalAlignment);
+    }
+
+    private JBLabelDecorator(@NotNull String text, @Nullable Icon icon, @JdkConstants.HorizontalAlignment int horizontalAlignment) {
+        super(text, icon, horizontalAlignment);
+    }
+
+    public static JBLabelDecorator createJBLabelDecorator() {
+        return new JBLabelDecorator();
+    }
+
+    public static JBLabelDecorator createJBLabelDecorator(String text) {
+        return new JBLabelDecorator(text);
+    }
+
+    public JBLabelDecorator setBold(boolean isBold) {
+        if (isBold) {
+            setFont(getFont().deriveFont(Font.BOLD));
+        } else {
+            setFont(getFont().deriveFont(Font.PLAIN));
+        }
+        return this;
+    }
+
+    public JBLabelDecorator setComponentStyleDecorative(@NotNull UIUtil.ComponentStyle componentStyle) {
+        super.setComponentStyle(componentStyle);
+        return this;
+    }
+
+    public JBLabelDecorator setFontColorDecorative(@NotNull UIUtil.FontColor fontColor) {
+        super.setFontColor(fontColor);
+        return this;
+    }
 }

@@ -90,7 +90,6 @@ public class TabLabel extends JPanel implements Accessible {
             }
 
 
-
             public void mouseClicked(final MouseEvent e) {
                 handlePopup(e);
             }
@@ -413,7 +412,6 @@ public class TabLabel extends JPanel implements Accessible {
     private static int getValue(int currentValue, int newValue) {
         return newValue != -1 ? newValue : currentValue;
     }
-
 
 
     protected void paintChildren(final Graphics g) {

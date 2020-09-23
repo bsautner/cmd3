@@ -20,17 +20,17 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class ActiveRunnable extends ComparableObject.Impl {
 
-  protected ActiveRunnable() {
-  }
+    protected ActiveRunnable() {
+    }
 
-  protected ActiveRunnable(@NotNull Object object) {
-    super(object);
-  }
+    protected ActiveRunnable(@NotNull Object object) {
+        super(object);
+    }
 
-  protected ActiveRunnable(@NotNull Object[] objects) {
-    super(objects);
-  }
+    protected ActiveRunnable(@NotNull Object[] objects) {
+        super(objects);
+    }
 
-  @NotNull
-  public abstract ActionCallback run();
+    @NotNull
+    public abstract ActionCallback run();
 }

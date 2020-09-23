@@ -19,18 +19,18 @@ import com.sun.jna.NativeLong;
 
 /**
  * Could be an address in memory (if pointer to a class or method) or a value (like 0 or 1)
- *
+ * <p>
  * User: spLeaner
  */
 public class ID extends NativeLong {
 
-  public ID() {
-  }
+    public ID() {
+    }
 
-  public ID(long peer) {
-    super(peer);
-  }
-  
-  public static final ID NIL = new ID(0);
+    public ID(long peer) {
+        super(peer);
+    }
+
+    public static final ID NIL = new ID(0);
 
 }

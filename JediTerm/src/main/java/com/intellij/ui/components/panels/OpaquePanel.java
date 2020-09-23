@@ -22,56 +22,56 @@ import java.awt.*;
  * @author Eugene Belyaev
  */
 public class OpaquePanel extends JPanel {
-  private boolean myOpaqueActive = true;
+    private boolean myOpaqueActive = true;
 
-  public OpaquePanel() {
-    this(null, null);
-  }
-
-  public OpaquePanel(LayoutManager layout) {
-    this(layout, null);
-  }
-
-  public OpaquePanel(Color color) {
-    this(null, color);
-  }
-
-  public OpaquePanel(LayoutManager layoutManager, Color color) {
-    super(layoutManager);
-    setBackground(color);
-  }
-
-  protected void paintComponent(Graphics g) {
-    if (isOpaqueActive()) {
-      final Color bg = getBackground();
-      g.setColor(bg);
-      final Dimension size = getSize();
-      g.fillRect(0, 0, size.width, size.height);
-    }
-  }
-
-  public boolean isOpaqueActive() {
-    return myOpaqueActive;
-  }
-
-  public void setOpaqueActive(final boolean opaqueActive) {
-    myOpaqueActive = opaqueActive;
-  }
-
-  public static class List extends OpaquePanel {
-    public List() {
+    public OpaquePanel() {
+        this(null, null);
     }
 
-    public List(LayoutManager layout) {
-      super(layout);
+    public OpaquePanel(LayoutManager layout) {
+        this(layout, null);
     }
 
-    public List(Color color) {
-      super(color);
+    public OpaquePanel(Color color) {
+        this(null, color);
     }
 
-    public List(LayoutManager layoutManager, Color color) {
-      super(layoutManager, color);
+    public OpaquePanel(LayoutManager layoutManager, Color color) {
+        super(layoutManager);
+        setBackground(color);
     }
-  }
+
+    protected void paintComponent(Graphics g) {
+        if (isOpaqueActive()) {
+            final Color bg = getBackground();
+            g.setColor(bg);
+            final Dimension size = getSize();
+            g.fillRect(0, 0, size.width, size.height);
+        }
+    }
+
+    public boolean isOpaqueActive() {
+        return myOpaqueActive;
+    }
+
+    public void setOpaqueActive(final boolean opaqueActive) {
+        myOpaqueActive = opaqueActive;
+    }
+
+    public static class List extends OpaquePanel {
+        public List() {
+        }
+
+        public List(LayoutManager layout) {
+            super(layout);
+        }
+
+        public List(Color color) {
+            super(color);
+        }
+
+        public List(LayoutManager layoutManager, Color color) {
+            super(layoutManager, color);
+        }
+    }
 }

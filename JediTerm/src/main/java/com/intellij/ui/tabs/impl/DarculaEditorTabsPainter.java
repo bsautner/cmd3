@@ -25,16 +25,16 @@ import java.awt.*;
 @SuppressWarnings("UseJBColor")
 class DarculaEditorTabsPainter extends DefaultEditorTabsPainter {
 
-  @Override
-  protected Color getDefaultTabColor() {
-    if (myDefaultTabColor != null) {
-      return myDefaultTabColor;
+    @Override
+    protected Color getDefaultTabColor() {
+        if (myDefaultTabColor != null) {
+            return myDefaultTabColor;
+        }
+        return new Color(0x515658);
     }
-    return new Color(0x515658);
-  }
 
-  @Override
-  protected Color getInactiveMaskColor() {
-    return ColorUtil.withAlpha(new Color(0x262626), .5);
-  }
+    @Override
+    protected Color getInactiveMaskColor() {
+        return ColorUtil.withAlpha(new Color(0x262626), .5);
+    }
 }

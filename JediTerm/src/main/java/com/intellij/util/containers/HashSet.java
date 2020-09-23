@@ -19,22 +19,23 @@ import java.util.Collection;
 
 @SuppressWarnings("ClassNameSameAsAncestorName")
 public class HashSet<E> extends java.util.HashSet<E> {
-  public HashSet() { }
+    public HashSet() {
+    }
 
-  public HashSet(Collection<? extends E> collection) {
-    super(collection);
-  }
+    public HashSet(Collection<? extends E> collection) {
+        super(collection);
+    }
 
-  public HashSet(int i, float v) {
-    super(i, v);
-  }
+    public HashSet(int i, float v) {
+        super(i, v);
+    }
 
-  public HashSet(int i) {
-    super(i);
-  }
+    public HashSet(int i) {
+        super(i);
+    }
 
-  public void clear() {
-    if (size() == 0) return; // optimization
-    super.clear();
-  }
+    public void clear() {
+        if (size() == 0) return; // optimization
+        super.clear();
+    }
 }

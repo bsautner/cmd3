@@ -34,47 +34,47 @@ import java.awt.*;
  * @see #createUI(JComponent)
  */
 public class JBScrollBar extends JScrollBar {
-  /**
-   * This key defines a region painter, which is used by the custom ScrollBarUI
-   * to draw additional paintings (i.e. error stripes) on the scrollbar's track.
-   *
-   * @see UIUtil#putClientProperty
-   */
-  public static final Key<RegionPainter<Object>> TRACK = Key.create("JB_SCROLL_BAR_TRACK");
+    /**
+     * This key defines a region painter, which is used by the custom ScrollBarUI
+     * to draw additional paintings (i.e. error stripes) on the scrollbar's track.
+     *
+     * @see UIUtil#putClientProperty
+     */
+    public static final Key<RegionPainter<Object>> TRACK = Key.create("JB_SCROLL_BAR_TRACK");
 
-  public JBScrollBar() {
-    this(Adjustable.VERTICAL);
-  }
-
-  public JBScrollBar(@JdkConstants.AdjustableOrientation int orientation) {
-    this(orientation, 0, 10, 0, 100);
-  }
-
-  public JBScrollBar(@JdkConstants.AdjustableOrientation int orientation, int value, int extent, int min, int max) {
-    super(orientation, value, extent, min, max);
-    putClientProperty("JScrollBar.fastWheelScrolling", Boolean.TRUE); // fast scrolling for JDK 6
-  }
-
-  @Override
-  public void updateUI() {
-    ScrollBarUI ui = getUI();
-    if (ui instanceof DefaultScrollBarUI) return;
-    setUI(createUI(this));
-  }
-
-  /**
-   * Returns a new instance of {@link ScrollBarUI}.
-   * Do not share it between different scroll bars.
-   *
-   * @param c a target component for this UI
-   * @return a new instance of {@link ScrollBarUI}
-   */
-  @SuppressWarnings("UnusedParameters")
-  public static ScrollBarUI createUI(JComponent c) {
-    if (Registry.is("ide.scroll.new.layout")) {
-      if (!SystemInfo.isMac) return new DefaultScrollBarUI();
-      if (Registry.is("mac.scroll.new.ui")) return new MacScrollBarUI();
+    public JBScrollBar() {
+        this(Adjustable.VERTICAL);
     }
-    return ButtonlessScrollBarUI.createNormal();
-  }
+
+    public JBScrollBar(@JdkConstants.AdjustableOrientation int orientation) {
+        this(orientation, 0, 10, 0, 100);
+    }
+
+    public JBScrollBar(@JdkConstants.AdjustableOrientation int orientation, int value, int extent, int min, int max) {
+        super(orientation, value, extent, min, max);
+        putClientProperty("JScrollBar.fastWheelScrolling", Boolean.TRUE); // fast scrolling for JDK 6
+    }
+
+    @Override
+    public void updateUI() {
+        ScrollBarUI ui = getUI();
+        if (ui instanceof DefaultScrollBarUI) return;
+        setUI(createUI(this));
+    }
+
+    /**
+     * Returns a new instance of {@link ScrollBarUI}.
+     * Do not share it between different scroll bars.
+     *
+     * @param c a target component for this UI
+     * @return a new instance of {@link ScrollBarUI}
+     */
+    @SuppressWarnings("UnusedParameters")
+    public static ScrollBarUI createUI(JComponent c) {
+        if (Registry.is("ide.scroll.new.layout")) {
+            if (!SystemInfo.isMac) return new DefaultScrollBarUI();
+            if (Registry.is("mac.scroll.new.ui")) return new MacScrollBarUI();
+        }
+        return ButtonlessScrollBarUI.createNormal();
+    }
 }

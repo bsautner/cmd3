@@ -21,32 +21,31 @@ import sun.swing.SwingUtilities2;
 import java.awt.*;
 
 public enum AntialiasingType {
-  SUBPIXEL("Subpixel", RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB, true),
-  GREYSCALE("Greyscale", RenderingHints.VALUE_TEXT_ANTIALIAS_ON, true),
-  OFF("No antialiasing", RenderingHints.VALUE_TEXT_ANTIALIAS_OFF, false);
+    SUBPIXEL("Subpixel", RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB, true),
+    GREYSCALE("Greyscale", RenderingHints.VALUE_TEXT_ANTIALIAS_ON, true),
+    OFF("No antialiasing", RenderingHints.VALUE_TEXT_ANTIALIAS_OFF, false);
 
-  public static Object getAAHintForSwingComponent() {
-    return GREYSCALE.getTextInfo();
-  }
+    public static Object getAAHintForSwingComponent() {
+        return GREYSCALE.getTextInfo();
+    }
 
 
+    private final String myName;
+    private final Object myHint;
+    private final boolean isEnabled;
 
-  private final String myName;
-  private final Object myHint;
-  private final boolean isEnabled;
+    AntialiasingType(String name, Object hint, boolean enabled) {
+        myName = name;
+        myHint = hint;
+        isEnabled = enabled;
+    }
 
-  AntialiasingType(String name, Object hint, boolean enabled) {
-    myName = name;
-    myHint = hint;
-    isEnabled = enabled;
-  }
+    public SwingUtilities2.AATextInfo getTextInfo() {
+        return !isEnabled ? null : new SwingUtilities2.AATextInfo(myHint, UIUtil.getLcdContrastValue());
+    }
 
-  public SwingUtilities2.AATextInfo getTextInfo() {
-    return !isEnabled ? null : new SwingUtilities2.AATextInfo(myHint, UIUtil.getLcdContrastValue());
-  }
-
-  @Override
-  public String toString() {
-    return myName;
-  }
- }
+    @Override
+    public String toString() {
+        return myName;
+    }
+}

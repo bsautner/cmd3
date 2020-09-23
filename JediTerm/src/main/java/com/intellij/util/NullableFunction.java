@@ -21,15 +21,15 @@ import org.jetbrains.annotations.Nullable;
  * @author peter
  */
 public interface NullableFunction<Param, Result> extends Function<Param, Result> {
-  @Nullable
-  Result fun(final Param param);
+    @Nullable
+    Result fun(final Param param);
 
-  /**
-   * @see FunctionUtil#nullConstant()
-   */
-  NullableFunction NULL = new NullableFunction() {
-    public Object fun(final Object o) {
-      return null;
-    }
-  };
+    /**
+     * @see FunctionUtil#nullConstant()
+     */
+    NullableFunction NULL = new NullableFunction() {
+        public Object fun(final Object o) {
+            return null;
+        }
+    };
 }

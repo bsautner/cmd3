@@ -44,8 +44,8 @@ import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class JBTabsImpl extends JComponent
         implements JBTabs, PropertyChangeListener, PopupMenuListener, JBTabsPresentation,
@@ -2565,7 +2565,6 @@ public class JBTabsImpl extends JComponent
     }
 
 
-
     public static boolean isSelectionClick(final MouseEvent e, boolean canBeQuick) {
         if (e.getClickCount() == 1 || canBeQuick) {
             if (!e.isPopupTrigger()) {
@@ -2852,8 +2851,8 @@ public class JBTabsImpl extends JComponent
         }
 
         /*
-     * initializes the AccessibleContext for the page
-     */
+         * initializes the AccessibleContext for the page
+         */
         void initAccessibleContext() {
             // Note: null checks because we do not want to load Accessibility classes unnecessarily.
             if (JBTabsImpl.this.accessibleContext != null && myComponent instanceof Accessible) {

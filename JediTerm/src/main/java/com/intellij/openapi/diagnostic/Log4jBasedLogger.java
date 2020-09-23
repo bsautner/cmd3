@@ -25,65 +25,65 @@ import org.jetbrains.annotations.Nullable;
  * @author nik
  */
 public class Log4jBasedLogger extends Logger {
-  protected final org.apache.log4j.Logger myLogger;
+    protected final org.apache.log4j.Logger myLogger;
 
-  public Log4jBasedLogger(@NotNull org.apache.log4j.Logger delegate) {
-    myLogger = delegate;
-  }
+    public Log4jBasedLogger(@NotNull org.apache.log4j.Logger delegate) {
+        myLogger = delegate;
+    }
 
-  @Override
-  public boolean isDebugEnabled() {
-    return myLogger.isDebugEnabled();
-  }
+    @Override
+    public boolean isDebugEnabled() {
+        return myLogger.isDebugEnabled();
+    }
 
-  @Override
-  public void debug(@NonNls String message) {
-    myLogger.debug(message);
-  }
+    @Override
+    public void debug(@NonNls String message) {
+        myLogger.debug(message);
+    }
 
-  @Override
-  public void debug(@Nullable Throwable t) {
-    myLogger.debug("", t);
-  }
+    @Override
+    public void debug(@Nullable Throwable t) {
+        myLogger.debug("", t);
+    }
 
-  @Override
-  public void debug(@NonNls String message, @Nullable Throwable t) {
-    myLogger.debug(message, t);
-  }
+    @Override
+    public void debug(@NonNls String message, @Nullable Throwable t) {
+        myLogger.debug(message, t);
+    }
 
-  @Override
-  public boolean isTraceEnabled() {
-    return myLogger.isTraceEnabled();
-  }
+    @Override
+    public boolean isTraceEnabled() {
+        return myLogger.isTraceEnabled();
+    }
 
-  @Override
-  public void trace(String message) {
-    myLogger.trace(message);
-  }
+    @Override
+    public void trace(String message) {
+        myLogger.trace(message);
+    }
 
-  @Override
-  public void info(@NonNls String message) {
-    myLogger.info(message);
-  }
+    @Override
+    public void info(@NonNls String message) {
+        myLogger.info(message);
+    }
 
-  @Override
-  public void info(@NonNls String message, @Nullable Throwable t) {
-    myLogger.info(message, t);
-  }
+    @Override
+    public void info(@NonNls String message, @Nullable Throwable t) {
+        myLogger.info(message, t);
+    }
 
-  @Override
-  public void warn(@NonNls String message, @Nullable Throwable t) {
-    myLogger.warn(message, t);
-  }
+    @Override
+    public void warn(@NonNls String message, @Nullable Throwable t) {
+        myLogger.warn(message, t);
+    }
 
-  @Override
-  public void error(@NonNls String message, @Nullable Throwable t, @NonNls @NotNull String... details) {
-    String fullMessage = details.length > 0 ? message + "\nDetails: " + StringUtil.join(details, "\n") : message;
-    myLogger.error(fullMessage, t);
-  }
+    @Override
+    public void error(@NonNls String message, @Nullable Throwable t, @NonNls @NotNull String... details) {
+        String fullMessage = details.length > 0 ? message + "\nDetails: " + StringUtil.join(details, "\n") : message;
+        myLogger.error(fullMessage, t);
+    }
 
-  @Override
-  public void setLevel(Level level) {
-    myLogger.setLevel(level);
-  }
+    @Override
+    public void setLevel(Level level) {
+        myLogger.setLevel(level);
+    }
 }

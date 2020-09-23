@@ -23,12 +23,12 @@ import java.awt.*;
  * @author kir
  */
 public class FlowLayoutWrapper extends NonOpaquePanel {
-  public FlowLayoutWrapper(JComponent wrapped) {
-    super(new FlowLayout(FlowLayout.LEFT, 0, 0), wrapped);
-  }
+    public FlowLayoutWrapper(JComponent wrapped) {
+        super(new FlowLayout(FlowLayout.LEFT, 0, 0), wrapped);
+    }
 
-  public FlowLayoutWrapper(JComponent component, Border border) {
-    this(component);
-    setBorder(border);
-  }
+    public FlowLayoutWrapper(JComponent component, Border border) {
+        this(component);
+        setBorder(border);
+    }
 }

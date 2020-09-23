@@ -20,30 +20,30 @@ import java.awt.*;
 
 public class HorizontalBox extends JPanel {
 
-  private final Box myBox;
+    private final Box myBox;
 
-  public HorizontalBox() {
-    setLayout(new BorderLayout());
-    myBox = new Box(BoxLayout.X_AXIS) {
-      public Component add(Component comp) {
-        ((JComponent) comp).setAlignmentY(0f);
-        return super.add(comp);
-      }
-    };
-    add(myBox, BorderLayout.CENTER);
-    setOpaque(false);
-  }
+    public HorizontalBox() {
+        setLayout(new BorderLayout());
+        myBox = new Box(BoxLayout.X_AXIS) {
+            public Component add(Component comp) {
+                ((JComponent) comp).setAlignmentY(0f);
+                return super.add(comp);
+            }
+        };
+        add(myBox, BorderLayout.CENTER);
+        setOpaque(false);
+    }
 
-  public Component add(Component aComponent) {
-    return myBox.add(aComponent);
-  }
+    public Component add(Component aComponent) {
+        return myBox.add(aComponent);
+    }
 
-  public void remove(Component aComponent) {
-    myBox.remove(aComponent);
-  }
+    public void remove(Component aComponent) {
+        myBox.remove(aComponent);
+    }
 
-  public void removeAll() {
-    myBox.removeAll();
-  }
+    public void removeAll() {
+        myBox.removeAll();
+    }
 
 }

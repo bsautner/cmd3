@@ -18,7 +18,7 @@ package com.intellij.util;
 import org.jetbrains.annotations.NotNull;
 
 public interface NotNullProducer<T> extends Producer<T> {
-  @Override
-  @NotNull
-  T produce();
+    @Override
+    @NotNull
+    T produce();
 }

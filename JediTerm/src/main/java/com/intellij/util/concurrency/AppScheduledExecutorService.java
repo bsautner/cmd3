@@ -32,169 +32,172 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Unlike the existing {@link ScheduledThreadPoolExecutor}, this pool is unbounded.
  */
 public class AppScheduledExecutorService extends SchedulingWrapper {
-  private static final Logger LOG = Logger.getInstance("#org.jetbrains.ide.PooledThreadExecutor");
-  static final String POOLED_THREAD_PREFIX = "ApplicationImpl pooled thread ";
-  @NotNull
-  private final String myName;
-  private Consumer<Thread> newThreadListener;
-  private final AtomicInteger counter = new AtomicInteger();
+    private static final Logger LOG = Logger.getInstance("#org.jetbrains.ide.PooledThreadExecutor");
+    static final String POOLED_THREAD_PREFIX = "ApplicationImpl pooled thread ";
+    @NotNull
+    private final String myName;
+    private Consumer<Thread> newThreadListener;
+    private final AtomicInteger counter = new AtomicInteger();
 
-  private static class Holder {
-    private static final AppScheduledExecutorService INSTANCE = new AppScheduledExecutorService("Global instance");
-  }
-
-  @NotNull
-  static ScheduledExecutorService getInstance() {
-    return Holder.INSTANCE;
-  }
-
-  AppScheduledExecutorService(@NotNull final String name) {
-    super(new BackendThreadPoolExecutor(), new AppDelayQueue());
-    myName = name;
-    ((BackendThreadPoolExecutor)backendExecutorService).doSetThreadFactory(new ThreadFactory() {
-      @NotNull
-      @Override
-      public Thread newThread(@NotNull final Runnable r) {
-        Thread thread = new Thread(r, POOLED_THREAD_PREFIX + counter.incrementAndGet());
-
-        thread.setPriority(Thread.NORM_PRIORITY - 1);
-
-        Consumer<Thread> listener = newThreadListener;
-        if (listener != null) {
-          listener.consume(thread);
-        }
-        return thread;
-      }
-    });
-  }
-
-  public void setNewThreadListener(@NotNull Consumer<Thread> threadListener) {
-    if (newThreadListener != null) throw new IllegalStateException("Listener was already set: "+newThreadListener);
-    newThreadListener = threadListener;
-  }
-
-  @NotNull
-  @Override
-  public List<Runnable> shutdownNow() {
-    return error();
-  }
-
-  @Override
-  public void shutdown() {
-    error();
-  }
-
-  static List<Runnable> error() {
-    throw new IllegalStateException("You must not call this method on the global app pool");
-  }
-
-  @Override
-  void doShutdown() {
-    super.doShutdown();
-    ((BackendThreadPoolExecutor)backendExecutorService).doShutdown();
-  }
-
-  @NotNull
-  @Override
-  List<Runnable> doShutdownNow() {
-    return Lists.newArrayList(Iterables.concat(super.doShutdownNow(), ((BackendThreadPoolExecutor)backendExecutorService).doShutdownNow()));
-  }
-
-  public void shutdownAppScheduledExecutorService() {
-    // LowMemoryWatcher starts background threads so stop it now to avoid RejectedExecutionException
-    delayQueue.shutdown(); // shutdown delay queue first to avoid rejected execution exceptions in Alarm
-    doShutdown();
-  }
-
-  @NotNull
-  @TestOnly
-  public String statistics() {
-    return myName + " threads created counter = " + counter;
-  }
-
-  public int getBackendPoolExecutorSize() {
-    return ((BackendThreadPoolExecutor)backendExecutorService).getPoolSize();
-  }
-  void setBackendPoolCorePoolSize(int size) {
-    ((BackendThreadPoolExecutor)backendExecutorService).doSetCorePoolSize(size);
-  }
-  int getBackendPoolCorePoolSize() {
-    return ((BackendThreadPoolExecutor)backendExecutorService).getCorePoolSize();
-  }
-
-  private static class BackendThreadPoolExecutor extends ThreadPoolExecutor {
-    BackendThreadPoolExecutor() {
-      super(1, Integer.MAX_VALUE, 1, TimeUnit.MINUTES, new SynchronousQueue<Runnable>());
-    }
-
-    @Override
-    protected void beforeExecute(Thread t, Runnable r) {
-      if (LOG.isTraceEnabled()) {
-      }
-    }
-
-    @Override
-    protected void afterExecute(Runnable r, Throwable t) {
-      if (LOG.isTraceEnabled()) {
-      }
-
-      if (t != null) {
-        LOG.error("Worker exited due to exception", t);
-      }
-    }
-
-    private void doShutdown() {
-      super.shutdown();
+    private static class Holder {
+        private static final AppScheduledExecutorService INSTANCE = new AppScheduledExecutorService("Global instance");
     }
 
     @NotNull
-    private List<Runnable> doShutdownNow() {
-      return super.shutdownNow();
+    static ScheduledExecutorService getInstance() {
+        return Holder.INSTANCE;
     }
 
-    private void doSetThreadFactory(@NotNull ThreadFactory threadFactory) {
-      super.setThreadFactory(threadFactory);
+    AppScheduledExecutorService(@NotNull final String name) {
+        super(new BackendThreadPoolExecutor(), new AppDelayQueue());
+        myName = name;
+        ((BackendThreadPoolExecutor) backendExecutorService).doSetThreadFactory(new ThreadFactory() {
+            @NotNull
+            @Override
+            public Thread newThread(@NotNull final Runnable r) {
+                Thread thread = new Thread(r, POOLED_THREAD_PREFIX + counter.incrementAndGet());
+
+                thread.setPriority(Thread.NORM_PRIORITY - 1);
+
+                Consumer<Thread> listener = newThreadListener;
+                if (listener != null) {
+                    listener.consume(thread);
+                }
+                return thread;
+            }
+        });
     }
 
-    // stub out sensitive methods
-    @Override
-    public void shutdown() {
-      error();
+    public void setNewThreadListener(@NotNull Consumer<Thread> threadListener) {
+        if (newThreadListener != null)
+            throw new IllegalStateException("Listener was already set: " + newThreadListener);
+        newThreadListener = threadListener;
     }
 
     @NotNull
     @Override
     public List<Runnable> shutdownNow() {
-      return error();
+        return error();
     }
 
     @Override
-    public void setCorePoolSize(int corePoolSize) {
-      error();
+    public void shutdown() {
+        error();
     }
 
-    private void doSetCorePoolSize(int corePoolSize) {
-      super.setCorePoolSize(corePoolSize);
-    }
-
-    @Override
-    public void allowCoreThreadTimeOut(boolean value) {
-      error();
+    static List<Runnable> error() {
+        throw new IllegalStateException("You must not call this method on the global app pool");
     }
 
     @Override
-    public void setMaximumPoolSize(int maximumPoolSize) {
-      error();
+    void doShutdown() {
+        super.doShutdown();
+        ((BackendThreadPoolExecutor) backendExecutorService).doShutdown();
     }
 
+    @NotNull
     @Override
-    public void setKeepAliveTime(long time, TimeUnit unit) {
-      error();
+    List<Runnable> doShutdownNow() {
+        return Lists.newArrayList(Iterables.concat(super.doShutdownNow(), ((BackendThreadPoolExecutor) backendExecutorService).doShutdownNow()));
     }
 
-    @Override
-    public void setThreadFactory(ThreadFactory threadFactory) {
-      error();
+    public void shutdownAppScheduledExecutorService() {
+        // LowMemoryWatcher starts background threads so stop it now to avoid RejectedExecutionException
+        delayQueue.shutdown(); // shutdown delay queue first to avoid rejected execution exceptions in Alarm
+        doShutdown();
     }
-  }
+
+    @NotNull
+    @TestOnly
+    public String statistics() {
+        return myName + " threads created counter = " + counter;
+    }
+
+    public int getBackendPoolExecutorSize() {
+        return ((BackendThreadPoolExecutor) backendExecutorService).getPoolSize();
+    }
+
+    void setBackendPoolCorePoolSize(int size) {
+        ((BackendThreadPoolExecutor) backendExecutorService).doSetCorePoolSize(size);
+    }
+
+    int getBackendPoolCorePoolSize() {
+        return ((BackendThreadPoolExecutor) backendExecutorService).getCorePoolSize();
+    }
+
+    private static class BackendThreadPoolExecutor extends ThreadPoolExecutor {
+        BackendThreadPoolExecutor() {
+            super(1, Integer.MAX_VALUE, 1, TimeUnit.MINUTES, new SynchronousQueue<Runnable>());
+        }
+
+        @Override
+        protected void beforeExecute(Thread t, Runnable r) {
+            if (LOG.isTraceEnabled()) {
+            }
+        }
+
+        @Override
+        protected void afterExecute(Runnable r, Throwable t) {
+            if (LOG.isTraceEnabled()) {
+            }
+
+            if (t != null) {
+                LOG.error("Worker exited due to exception", t);
+            }
+        }
+
+        private void doShutdown() {
+            super.shutdown();
+        }
+
+        @NotNull
+        private List<Runnable> doShutdownNow() {
+            return super.shutdownNow();
+        }
+
+        private void doSetThreadFactory(@NotNull ThreadFactory threadFactory) {
+            super.setThreadFactory(threadFactory);
+        }
+
+        // stub out sensitive methods
+        @Override
+        public void shutdown() {
+            error();
+        }
+
+        @NotNull
+        @Override
+        public List<Runnable> shutdownNow() {
+            return error();
+        }
+
+        @Override
+        public void setCorePoolSize(int corePoolSize) {
+            error();
+        }
+
+        private void doSetCorePoolSize(int corePoolSize) {
+            super.setCorePoolSize(corePoolSize);
+        }
+
+        @Override
+        public void allowCoreThreadTimeOut(boolean value) {
+            error();
+        }
+
+        @Override
+        public void setMaximumPoolSize(int maximumPoolSize) {
+            error();
+        }
+
+        @Override
+        public void setKeepAliveTime(long time, TimeUnit unit) {
+            error();
+        }
+
+        @Override
+        public void setThreadFactory(ThreadFactory threadFactory) {
+            error();
+        }
+    }
 }

@@ -27,58 +27,58 @@ import java.util.List;
 import java.util.Map;
 
 public class TablePassInfo extends LayoutPassInfo {
-  final List<TableRow> table = new ArrayList<>();
-  public Rectangle toFitRec;
-  final Map<TabInfo, TableRow> myInfo2Row = new HashMap<>();
+    final List<TableRow> table = new ArrayList<>();
+    public Rectangle toFitRec;
+    final Map<TabInfo, TableRow> myInfo2Row = new HashMap<>();
 
-  int requiredWidth;
-  int requiredRows;
-  int rowToFitMaxX;
+    int requiredWidth;
+    int requiredRows;
+    int rowToFitMaxX;
 
-  final JBTabsImpl myTabs;
+    final JBTabsImpl myTabs;
 
-  TablePassInfo(final JBTabsImpl tabs, List<TabInfo> visibleInfos) {
-    super(visibleInfos);
-    myTabs = tabs;
-  }
+    TablePassInfo(final JBTabsImpl tabs, List<TabInfo> visibleInfos) {
+        super(visibleInfos);
+        myTabs = tabs;
+    }
 
-  @Nullable
-  public TabInfo getPreviousFor(final TabInfo info) {
-    final TableRow row = myInfo2Row.get(info);
-    return row != null ? getPrevious(row.myColumns, row.myColumns.indexOf(info)) : null;
-  }
+    @Nullable
+    public TabInfo getPreviousFor(final TabInfo info) {
+        final TableRow row = myInfo2Row.get(info);
+        return row != null ? getPrevious(row.myColumns, row.myColumns.indexOf(info)) : null;
+    }
 
-  @Nullable
-  public TabInfo getNextFor(final TabInfo info) {
-    final TableRow row = myInfo2Row.get(info);
-    return row != null ? getNext(row.myColumns, row.myColumns.indexOf(info)) : null;
-  }
+    @Nullable
+    public TabInfo getNextFor(final TabInfo info) {
+        final TableRow row = myInfo2Row.get(info);
+        return row != null ? getNext(row.myColumns, row.myColumns.indexOf(info)) : null;
+    }
 
-  public boolean isInSelectionRow(final TabInfo tabInfo) {
-    final TableRow row = myInfo2Row.get(tabInfo);
-    final int index = table.indexOf(row);
-    return index != -1 && index == table.size() - 1;
-  }
+    public boolean isInSelectionRow(final TabInfo tabInfo) {
+        final TableRow row = myInfo2Row.get(tabInfo);
+        final int index = table.indexOf(row);
+        return index != -1 && index == table.size() - 1;
+    }
 
-  public int getRowCount() {
-    return table.size();
-  }
+    public int getRowCount() {
+        return table.size();
+    }
 
-  public int getColumnCount(final int row) {
-    return table.get(row).myColumns.size();
-  }
+    public int getColumnCount(final int row) {
+        return table.get(row).myColumns.size();
+    }
 
-  public TabInfo getTabAt(final int row, final int column) {
-    return table.get(row).myColumns.get(column);
-  }
+    public TabInfo getTabAt(final int row, final int column) {
+        return table.get(row).myColumns.get(column);
+    }
 
-  public boolean hasCurveSpaceFor(final TabInfo tabInfo) {
-    final TableRow row = myInfo2Row.get(tabInfo);
-    return row != null ? row.myColumns.indexOf(tabInfo) < row.myColumns.size() - 1 : false;
-  }
+    public boolean hasCurveSpaceFor(final TabInfo tabInfo) {
+        final TableRow row = myInfo2Row.get(tabInfo);
+        return row != null ? row.myColumns.indexOf(tabInfo) < row.myColumns.size() - 1 : false;
+    }
 
-  @Override
-  public Rectangle getHeaderRectangle() {
-    return (Rectangle)toFitRec.clone();
-  }
+    @Override
+    public Rectangle getHeaderRectangle() {
+        return (Rectangle) toFitRec.clone();
+    }
 }

@@ -19,4 +19,5 @@ package com.intellij.openapi.diagnostic;
  * A marker interface for exceptions that should never be logged.
  */
 @SuppressWarnings("NonExceptionNameEndsWithException")
-public interface ControlFlowException { }
+public interface ControlFlowException {
+}

@@ -21,23 +21,24 @@ import java.util.Collection;
 
 @SuppressWarnings("ClassNameSameAsAncestorName")
 class LinkedHashSet<E> extends java.util.LinkedHashSet<E> {
-  public LinkedHashSet() { }
+    public LinkedHashSet() {
+    }
 
-  public LinkedHashSet(@NotNull Collection<? extends E> collection) {
-    super(collection);
-  }
+    public LinkedHashSet(@NotNull Collection<? extends E> collection) {
+        super(collection);
+    }
 
-  public LinkedHashSet(int i, float v) {
-    super(i, v);
-  }
+    public LinkedHashSet(int i, float v) {
+        super(i, v);
+    }
 
-  public LinkedHashSet(int i) {
-    super(i);
-  }
+    public LinkedHashSet(int i) {
+        super(i);
+    }
 
-  @Override
-  public void clear() {
-    if (size() == 0) return; // optimization
-    super.clear();
-  }
+    @Override
+    public void clear() {
+        if (size() == 0) return; // optimization
+        super.clear();
+    }
 }

@@ -28,52 +28,52 @@ import java.awt.image.ImageObserver;
  * @author Konstantin Bulenkov
  */
 public class RetinaImage {
-  /**
-   * Creates a Retina-aware wrapper over a raw image.
-   * The raw image should be provided in the specified scale.
-   * The wrapper will represent the raw image in the user coordinate space.
-   *
-   * @param image the raw image
-   * @param scale the raw image scale
-   * @param observer the raw image observer
-   * @return the Retina-aware wrapper
-   */
-  @NotNull
-  public static Image createFrom(Image image, final int scale, ImageObserver observer) {
-    int w = image.getWidth(observer);
-    int h = image.getHeight(observer);
+    /**
+     * Creates a Retina-aware wrapper over a raw image.
+     * The raw image should be provided in the specified scale.
+     * The wrapper will represent the raw image in the user coordinate space.
+     *
+     * @param image    the raw image
+     * @param scale    the raw image scale
+     * @param observer the raw image observer
+     * @return the Retina-aware wrapper
+     */
+    @NotNull
+    public static Image createFrom(Image image, final int scale, ImageObserver observer) {
+        int w = image.getWidth(observer);
+        int h = image.getHeight(observer);
 
-    Image hidpi = create(image, w / scale, h / scale, BufferedImage.TYPE_INT_ARGB);
-    if (SystemInfo.isAppleJvm) {
-      Graphics2D g = (Graphics2D)hidpi.getGraphics();
-      g.scale(1f / scale, 1f / scale);
-      g.drawImage(image, 0, 0, null);
-      g.dispose();
+        Image hidpi = create(image, w / scale, h / scale, BufferedImage.TYPE_INT_ARGB);
+        if (SystemInfo.isAppleJvm) {
+            Graphics2D g = (Graphics2D) hidpi.getGraphics();
+            g.scale(1f / scale, 1f / scale);
+            g.drawImage(image, 0, 0, null);
+            g.dispose();
+        }
+
+        return hidpi;
     }
 
-    return hidpi;
-  }
-
-  @NotNull
-  public static BufferedImage create(final int width, int height, int type) {
-    return create(null, width, height, type);
-  }
-
-
-  @NotNull
-  private static BufferedImage create(Image image, final int width, int height, int type) {
-    if (SystemInfo.isAppleJvm) {
-      return AppleHiDPIScaledImage.create(width, height, type);
-    } else {
-      if (image == null) {
-        return new JBHiDPIScaledImage(width, height, type);
-      } else {
-        return new JBHiDPIScaledImage(image, width, height, type);
-      }
+    @NotNull
+    public static BufferedImage create(final int width, int height, int type) {
+        return create(null, width, height, type);
     }
-  }
 
-  public static boolean isAppleHiDPIScaledImage(Image image) {
-    return DrawUtil.isAppleRetina() && AppleHiDPIScaledImage.is(image);
-  }
+
+    @NotNull
+    private static BufferedImage create(Image image, final int width, int height, int type) {
+        if (SystemInfo.isAppleJvm) {
+            return AppleHiDPIScaledImage.create(width, height, type);
+        } else {
+            if (image == null) {
+                return new JBHiDPIScaledImage(width, height, type);
+            } else {
+                return new JBHiDPIScaledImage(image, width, height, type);
+            }
+        }
+    }
+
+    public static boolean isAppleHiDPIScaledImage(Image image) {
+        return DrawUtil.isAppleRetina() && AppleHiDPIScaledImage.is(image);
+    }
 }

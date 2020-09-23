@@ -20,5 +20,5 @@ package com.intellij.util;
  * @author peter
  */
 public interface PairConsumer<S, T> {
-  void consume(S s, T t);
+    void consume(S s, T t);
 }

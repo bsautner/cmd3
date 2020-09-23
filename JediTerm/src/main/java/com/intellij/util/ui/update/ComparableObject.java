@@ -18,36 +18,36 @@ package com.intellij.util.ui.update;
 import org.jetbrains.annotations.NotNull;
 
 public interface ComparableObject {
-  Object[] NONE = new Object[0];
-
-  @NotNull
-  Object[] getEqualityObjects();
-
-  class Impl implements ComparableObject {
-    private final Object[] myObjects;
-
-    public Impl() {
-      this(NONE);
-    }
-
-    public Impl(@NotNull Object... objects) {
-      myObjects = objects;
-    }
+    Object[] NONE = new Object[0];
 
     @NotNull
-    @Override
-    public Object[] getEqualityObjects() {
-      return myObjects;
-    }
+    Object[] getEqualityObjects();
 
-    @Override
-    public final boolean equals(Object obj) {
-      return ComparableObjectCheck.equals(this, obj);
-    }
+    class Impl implements ComparableObject {
+        private final Object[] myObjects;
 
-    @Override
-    public final int hashCode() {
-      return ComparableObjectCheck.hashCode(this, super.hashCode());
+        public Impl() {
+            this(NONE);
+        }
+
+        public Impl(@NotNull Object... objects) {
+            myObjects = objects;
+        }
+
+        @NotNull
+        @Override
+        public Object[] getEqualityObjects() {
+            return myObjects;
+        }
+
+        @Override
+        public final boolean equals(Object obj) {
+            return ComparableObjectCheck.equals(this, obj);
+        }
+
+        @Override
+        public final int hashCode() {
+            return ComparableObjectCheck.hashCode(this, super.hashCode());
+        }
     }
-  }
 }

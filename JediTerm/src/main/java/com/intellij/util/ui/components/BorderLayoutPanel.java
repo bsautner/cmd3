@@ -24,36 +24,36 @@ import java.awt.*;
  * @author Konstantin Bulenkov
  */
 public class BorderLayoutPanel extends JBPanel<BorderLayoutPanel> {
-  public BorderLayoutPanel() {
-    this(0, 0);
-  }
+    public BorderLayoutPanel() {
+        this(0, 0);
+    }
 
-  public BorderLayoutPanel(int hgap, int vgap) {
-    super(new BorderLayout(JBUI.scale(hgap), JBUI.scale(vgap)));
-  }
+    public BorderLayoutPanel(int hgap, int vgap) {
+        super(new BorderLayout(JBUI.scale(hgap), JBUI.scale(vgap)));
+    }
 
-  public BorderLayoutPanel addToCenter(Component comp) {
-    add(comp, BorderLayout.CENTER);
-    return this;
-  }
+    public BorderLayoutPanel addToCenter(Component comp) {
+        add(comp, BorderLayout.CENTER);
+        return this;
+    }
 
-  public BorderLayoutPanel addToRight(Component comp) {
-    add(comp, BorderLayout.EAST);
-    return this;
-  }
+    public BorderLayoutPanel addToRight(Component comp) {
+        add(comp, BorderLayout.EAST);
+        return this;
+    }
 
-  public BorderLayoutPanel addToLeft(Component comp) {
-    add(comp, BorderLayout.WEST);
-    return this;
-  }
+    public BorderLayoutPanel addToLeft(Component comp) {
+        add(comp, BorderLayout.WEST);
+        return this;
+    }
 
-  public BorderLayoutPanel addToTop(Component comp) {
-    add(comp, BorderLayout.NORTH);
-    return this;
-  }
+    public BorderLayoutPanel addToTop(Component comp) {
+        add(comp, BorderLayout.NORTH);
+        return this;
+    }
 
-  public BorderLayoutPanel addToBottom(Component comp) {
-    add(comp, BorderLayout.SOUTH);
-    return this;
-  }
+    public BorderLayoutPanel addToBottom(Component comp) {
+        add(comp, BorderLayout.SOUTH);
+        return this;
+    }
 }

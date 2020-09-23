@@ -17,6 +17,6 @@ package com.intellij.openapi.diagnostic;
 
 public interface ApplicationInfoProvider {
 
-  String getInfo();
+    String getInfo();
 
 }

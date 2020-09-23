@@ -208,8 +208,7 @@ public class DrawUtil {
                                           final boolean opaque) {
         if ((SystemInfo.isMac && !isRetina()) || SystemInfo.isLinux) {
             drawAppleDottedLine(g, startX, endX, lineY, bgColor, fgColor, opaque);
-        }
-        else {
+        } else {
             drawBoringDottedLine(g, startX, endX, lineY, bgColor, fgColor, opaque);
         }
     }

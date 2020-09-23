@@ -29,61 +29,61 @@ import java.awt.event.MouseEvent;
 
 public abstract class ClickListener {
 
-  private static final int EPS = 4;
-  private MouseAdapter myListener;
+    private static final int EPS = 4;
+    private MouseAdapter myListener;
 
-  public abstract boolean onClick(@NotNull MouseEvent event, int clickCount);
+    public abstract boolean onClick(@NotNull MouseEvent event, int clickCount);
 
-  public void installOn(@NotNull Component c) {
-    myListener = new MouseAdapter() {
-      private Point pressPoint;
-      private Point lastClickPoint;
-      private long lastTimeClicked = -1;
-      private int clickCount = 0;
+    public void installOn(@NotNull Component c) {
+        myListener = new MouseAdapter() {
+            private Point pressPoint;
+            private Point lastClickPoint;
+            private long lastTimeClicked = -1;
+            private int clickCount = 0;
 
-      @Override
-      public void mousePressed(MouseEvent e) {
-        final Point point = e.getPoint();
-        SwingUtilities.convertPointToScreen(point, e.getComponent());
+            @Override
+            public void mousePressed(MouseEvent e) {
+                final Point point = e.getPoint();
+                SwingUtilities.convertPointToScreen(point, e.getComponent());
 
-        if (Math.abs(lastTimeClicked - e.getWhen()) > UIUtil.getMultiClickInterval() || lastClickPoint != null && !isWithinEps(lastClickPoint, point)) {
-          clickCount = 0;
-          lastClickPoint = null;
-        }
-        clickCount++;
-        lastTimeClicked = e.getWhen();
+                if (Math.abs(lastTimeClicked - e.getWhen()) > UIUtil.getMultiClickInterval() || lastClickPoint != null && !isWithinEps(lastClickPoint, point)) {
+                    clickCount = 0;
+                    lastClickPoint = null;
+                }
+                clickCount++;
+                lastTimeClicked = e.getWhen();
 
-        if (!e.isPopupTrigger()) {
-          pressPoint = point;
-        }
-      }
+                if (!e.isPopupTrigger()) {
+                    pressPoint = point;
+                }
+            }
 
-      @Override
-      public void mouseReleased(MouseEvent e) {
-        Point releasedAt = e.getPoint();
-        SwingUtilities.convertPointToScreen(releasedAt, e.getComponent());
-        Point clickedAt = pressPoint;
-        lastClickPoint = clickedAt;
-        pressPoint = null;
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                Point releasedAt = e.getPoint();
+                SwingUtilities.convertPointToScreen(releasedAt, e.getComponent());
+                Point clickedAt = pressPoint;
+                lastClickPoint = clickedAt;
+                pressPoint = null;
 
-        if (e.isConsumed() || clickedAt == null || e.isPopupTrigger() || !e.getComponent().contains(e.getPoint())) {
-          return;
-        }
+                if (e.isConsumed() || clickedAt == null || e.isPopupTrigger() || !e.getComponent().contains(e.getPoint())) {
+                    return;
+                }
 
-        if (isWithinEps(releasedAt, clickedAt) && onClick(e, clickCount)) {
-          e.consume();
-        }
-      }
-    };
+                if (isWithinEps(releasedAt, clickedAt) && onClick(e, clickCount)) {
+                    e.consume();
+                }
+            }
+        };
 
-    c.addMouseListener(myListener);
-  }
+        c.addMouseListener(myListener);
+    }
 
-  private static boolean isWithinEps(Point releasedAt, Point clickedAt) {
-    return Math.abs(clickedAt.x - releasedAt.x) < EPS && Math.abs(clickedAt.y - releasedAt.y) < EPS;
-  }
+    private static boolean isWithinEps(Point releasedAt, Point clickedAt) {
+        return Math.abs(clickedAt.x - releasedAt.x) < EPS && Math.abs(clickedAt.y - releasedAt.y) < EPS;
+    }
 
-  public void uninstall(Component c) {
-    c.removeMouseListener(myListener);
-  }
+    public void uninstall(Component c) {
+        c.removeMouseListener(myListener);
+    }
 }

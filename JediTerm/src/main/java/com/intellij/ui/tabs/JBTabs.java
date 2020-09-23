@@ -24,58 +24,58 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public interface JBTabs  {
+public interface JBTabs {
 
-  @NotNull
-  TabInfo addTab(TabInfo info, int index);
-
-  @NotNull
-  TabInfo addTab(TabInfo info);
-
-  @NotNull
-  ActionCallback removeTab(@Nullable TabInfo info);
-
-  void removeAllTabs();
-
-  @NotNull
-  ActionCallback select(@NotNull TabInfo info, boolean requestFocus);
-
-  @Nullable
-  TabInfo getSelectedInfo();
-
-  @NotNull
-  TabInfo getTabAt(int tabIndex);
-
-  int getTabCount();
-
-  @NotNull
-  JBTabsPresentation getPresentation();
-
-  @Nullable
-  TabInfo getTargetInfo();
-
-  @NotNull
-  JBTabs addTabMouseListener(@NotNull MouseListener listener);
-
-  JBTabs addListener(@NotNull TabsListener listener);
-
-  JBTabs setSelectionChangeHandler(SelectionChangeHandler handler);
-
-  @NotNull
-  JComponent getComponent();
-
-  @Nullable
-  TabInfo findInfo(MouseEvent event);
-
-  @Nullable
-  TabInfo findInfo(Object object);
-
-  int getIndexOf(@Nullable final TabInfo tabInfo);
-
-  void requestFocus();
-
-  interface SelectionChangeHandler {
     @NotNull
-    ActionCallback execute(final TabInfo info, final boolean requestFocus, @NotNull ActiveRunnable doChangeSelection);
-  }
+    TabInfo addTab(TabInfo info, int index);
+
+    @NotNull
+    TabInfo addTab(TabInfo info);
+
+    @NotNull
+    ActionCallback removeTab(@Nullable TabInfo info);
+
+    void removeAllTabs();
+
+    @NotNull
+    ActionCallback select(@NotNull TabInfo info, boolean requestFocus);
+
+    @Nullable
+    TabInfo getSelectedInfo();
+
+    @NotNull
+    TabInfo getTabAt(int tabIndex);
+
+    int getTabCount();
+
+    @NotNull
+    JBTabsPresentation getPresentation();
+
+    @Nullable
+    TabInfo getTargetInfo();
+
+    @NotNull
+    JBTabs addTabMouseListener(@NotNull MouseListener listener);
+
+    JBTabs addListener(@NotNull TabsListener listener);
+
+    JBTabs setSelectionChangeHandler(SelectionChangeHandler handler);
+
+    @NotNull
+    JComponent getComponent();
+
+    @Nullable
+    TabInfo findInfo(MouseEvent event);
+
+    @Nullable
+    TabInfo findInfo(Object object);
+
+    int getIndexOf(@Nullable final TabInfo tabInfo);
+
+    void requestFocus();
+
+    interface SelectionChangeHandler {
+        @NotNull
+        ActionCallback execute(final TabInfo info, final boolean requestFocus, @NotNull ActiveRunnable doChangeSelection);
+    }
 }

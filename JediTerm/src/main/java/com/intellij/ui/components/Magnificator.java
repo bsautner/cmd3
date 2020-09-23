@@ -24,6 +24,7 @@ import com.intellij.openapi.util.Key;
 import java.awt.*;
 
 public interface Magnificator {
-  Key<Magnificator> CLIENT_PROPERTY_KEY = Key.create("MagnifiableComponent");
-  Point magnify(double scale, Point at);
+    Key<Magnificator> CLIENT_PROPERTY_KEY = Key.create("MagnifiableComponent");
+
+    Point magnify(double scale, Point at);
 }

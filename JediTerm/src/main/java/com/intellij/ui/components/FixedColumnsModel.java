@@ -20,38 +20,38 @@ import javax.swing.*;
 /**
  * @author Konstantin Bulenkov
  */
-public class FixedColumnsModel  extends MultiColumnListModel {
-  private final int myMaxColumns;
+public class FixedColumnsModel extends MultiColumnListModel {
+    private final int myMaxColumns;
 
-  public FixedColumnsModel(ListModel model, int maxColumns) {
-    super(model);
-    myMaxColumns = maxColumns;
-  }
+    public FixedColumnsModel(ListModel model, int maxColumns) {
+        super(model);
+        myMaxColumns = maxColumns;
+    }
 
-  @Override
-  public int getRowCount() {
-    final int columns = getColumnCount();
-    return columns == 0 ? 0 : getSize() / columns + 1;
-  }
+    @Override
+    public int getRowCount() {
+        final int columns = getColumnCount();
+        return columns == 0 ? 0 : getSize() / columns + 1;
+    }
 
-  @Override
-  public int getColumnCount() {
-    return Math.min(myMaxColumns, getSize());
-  }
+    @Override
+    public int getColumnCount() {
+        return Math.min(myMaxColumns, getSize());
+    }
 
-  @Override
-  public int toListIndex(int row, int column) {
-    final int columns = getColumnCount();
-    return columns == 0 ? -1 : row * columns + column;
-  }
+    @Override
+    public int toListIndex(int row, int column) {
+        final int columns = getColumnCount();
+        return columns == 0 ? -1 : row * columns + column;
+    }
 
-  @Override
-  public int getColumn(int listIndex) {
-    return listIndex % myMaxColumns;
-  }
+    @Override
+    public int getColumn(int listIndex) {
+        return listIndex % myMaxColumns;
+    }
 
-  @Override
-  public int getRow(int listIndex) {
-    return listIndex / myMaxColumns;
-  }
+    @Override
+    public int getRow(int listIndex) {
+        return listIndex / myMaxColumns;
+    }
 }

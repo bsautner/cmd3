@@ -6,13 +6,13 @@ import org.jetbrains.annotations.NotNull;
  * @author traff
  */
 public class LinkInfo {
-  private final Runnable myNavigateCallback;
+    private final Runnable myNavigateCallback;
 
-  public LinkInfo(@NotNull Runnable navigateCallback) {
-    myNavigateCallback = navigateCallback;
-  }
+    public LinkInfo(@NotNull Runnable navigateCallback) {
+        myNavigateCallback = navigateCallback;
+    }
 
-  public void navigate() {
-    myNavigateCallback.run();
-  }
+    public void navigate() {
+        myNavigateCallback.run();
+    }
 }

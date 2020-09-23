@@ -22,58 +22,59 @@ import java.awt.*;
 
 public interface JBTabsPresentation {
 
-  boolean isHideTabs();
+    boolean isHideTabs();
 
-  void setHideTabs(boolean hideTabs);
+    void setHideTabs(boolean hideTabs);
 
-  JBTabsPresentation setPaintBorder(int top, int left, int right, int bottom);
-  JBTabsPresentation setTabSidePaintBorder(int size);
+    JBTabsPresentation setPaintBorder(int top, int left, int right, int bottom);
 
-  JBTabsPresentation setPaintFocus(boolean paintFocus);
+    JBTabsPresentation setTabSidePaintBorder(int size);
 
-  JBTabsPresentation setAlwaysPaintSelectedTab(final boolean paintSelected);
+    JBTabsPresentation setPaintFocus(boolean paintFocus);
 
-  JBTabsPresentation setStealthTabMode(boolean stealthTabMode);
+    JBTabsPresentation setAlwaysPaintSelectedTab(final boolean paintSelected);
 
-  JBTabsPresentation setSideComponentVertical(boolean vertical);
+    JBTabsPresentation setStealthTabMode(boolean stealthTabMode);
 
-  JBTabsPresentation setSideComponentOnTabs(boolean onTabs);
+    JBTabsPresentation setSideComponentVertical(boolean vertical);
 
-  JBTabsPresentation setSingleRow(boolean singleRow);
+    JBTabsPresentation setSideComponentOnTabs(boolean onTabs);
 
-  boolean isSingleRow();
+    JBTabsPresentation setSingleRow(boolean singleRow);
 
-  JBTabsPresentation setUiDecorator(@Nullable UiDecorator decorator);
+    boolean isSingleRow();
 
-  JBTabsPresentation setRequestFocusOnLastFocusedComponent(boolean request);
+    JBTabsPresentation setUiDecorator(@Nullable UiDecorator decorator);
 
-  void setPaintBlocked(boolean blocked, final boolean takeSnapshot);
+    JBTabsPresentation setRequestFocusOnLastFocusedComponent(boolean request);
 
-  JBTabsPresentation setInnerInsets(Insets innerInsets);
+    void setPaintBlocked(boolean blocked, final boolean takeSnapshot);
 
-  JBTabsPresentation setGhostsAlwaysVisible(boolean visible);
+    JBTabsPresentation setInnerInsets(Insets innerInsets);
 
-  JBTabsPresentation setFocusCycle(final boolean root);
+    JBTabsPresentation setGhostsAlwaysVisible(boolean visible);
 
-  @NotNull
-  JBTabsPresentation setToDrawBorderIfTabsHidden(boolean draw);
+    JBTabsPresentation setFocusCycle(final boolean root);
 
-  @NotNull
-  JBTabs getJBTabs();
+    @NotNull
+    JBTabsPresentation setToDrawBorderIfTabsHidden(boolean draw);
 
-  @NotNull
-  JBTabsPresentation setActiveTabFillIn(@Nullable Color color);
+    @NotNull
+    JBTabs getJBTabs();
 
-  @NotNull
-  JBTabsPresentation setTabLabelActionsAutoHide(boolean autoHide);
-  
-  @NotNull
-  JBTabsPresentation setTabsPosition(JBTabsPosition position);
+    @NotNull
+    JBTabsPresentation setActiveTabFillIn(@Nullable Color color);
 
-  JBTabsPosition getTabsPosition();
+    @NotNull
+    JBTabsPresentation setTabLabelActionsAutoHide(boolean autoHide);
 
-  JBTabsPresentation setTabDraggingEnabled(boolean enabled);
+    @NotNull
+    JBTabsPresentation setTabsPosition(JBTabsPosition position);
 
-  JBTabsPresentation setProvideSwitchTargets(boolean provide);
+    JBTabsPosition getTabsPosition();
+
+    JBTabsPresentation setTabDraggingEnabled(boolean enabled);
+
+    JBTabsPresentation setProvideSwitchTargets(boolean provide);
 
 }

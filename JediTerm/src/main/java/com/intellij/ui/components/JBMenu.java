@@ -22,23 +22,23 @@ import javax.accessibility.AccessibleStateSet;
 import javax.swing.*;
 
 public class JBMenu extends JMenu implements Accessible {
-  @Override
-  public AccessibleContext getAccessibleContext() {
-    if (accessibleContext == null) {
-      accessibleContext = new AccessibleJBMenu();
-    }
-    return accessibleContext;
-  }
-
-  protected class AccessibleJBMenu extends AccessibleJMenu {
     @Override
-    public AccessibleStateSet getAccessibleStateSet() {
-      AccessibleStateSet set = super.getAccessibleStateSet();
-      // Due to a bug in JMenu, CHECKED is added if the menu is enabled. That
-      // is incorrect -- checked should be added only in the case of a "checkbox"
-      // style menu.
-      set.remove(AccessibleState.CHECKED);
-      return set;
+    public AccessibleContext getAccessibleContext() {
+        if (accessibleContext == null) {
+            accessibleContext = new AccessibleJBMenu();
+        }
+        return accessibleContext;
     }
-  }
+
+    protected class AccessibleJBMenu extends AccessibleJMenu {
+        @Override
+        public AccessibleStateSet getAccessibleStateSet() {
+            AccessibleStateSet set = super.getAccessibleStateSet();
+            // Due to a bug in JMenu, CHECKED is added if the menu is enabled. That
+            // is incorrect -- checked should be added only in the case of a "checkbox"
+            // style menu.
+            set.remove(AccessibleState.CHECKED);
+            return set;
+        }
+    }
 }

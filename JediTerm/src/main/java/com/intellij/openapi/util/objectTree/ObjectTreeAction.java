@@ -19,8 +19,8 @@ import org.jetbrains.annotations.NotNull;
 
 public interface ObjectTreeAction<T> {
 
-  void execute(@NotNull T each);
+    void execute(@NotNull T each);
 
-  void beforeTreeExecution(@NotNull T parent);
+    void beforeTreeExecution(@NotNull T parent);
 
 }

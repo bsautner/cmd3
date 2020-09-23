@@ -27,19 +27,22 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public interface IdeGlassPane {
-  void addMousePreprocessor(MouseListener listener, Disposable parent);
-  void addMouseMotionPreprocessor(MouseMotionListener listener, Disposable parent);
+    void addMousePreprocessor(MouseListener listener, Disposable parent);
 
-  void addPainter(final Component component, Painter painter, Disposable parent);
-  void removePainter(final Painter painter);
+    void addMouseMotionPreprocessor(MouseMotionListener listener, Disposable parent);
+
+    void addPainter(final Component component, Painter painter, Disposable parent);
+
+    void removePainter(final Painter painter);
 
 
-  void removeMousePreprocessor(MouseListener listener);
-  void removeMouseMotionPreprocessor(MouseMotionListener listener);
+    void removeMousePreprocessor(MouseListener listener);
 
-  void setCursor(@Nullable Cursor cursor, @NotNull Object requestor);
+    void removeMouseMotionPreprocessor(MouseMotionListener listener);
 
-  interface TopComponent {
-    boolean canBePreprocessed(MouseEvent e);
-  }
+    void setCursor(@Nullable Cursor cursor, @NotNull Object requestor);
+
+    interface TopComponent {
+        boolean canBePreprocessed(MouseEvent e);
+    }
 }

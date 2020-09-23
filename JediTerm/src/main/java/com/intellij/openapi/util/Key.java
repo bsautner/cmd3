@@ -31,51 +31,51 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @SuppressWarnings({"EqualsWhichDoesntCheckParameterClass"})
 public class Key<T> {
-  private static final AtomicInteger ourKeysCounter = new AtomicInteger();
-  private final int myIndex = ourKeysCounter.getAndIncrement();
-  private final String myName; // for debug purposes only
-  private static final Map<Integer, Key> allKeys = Maps.newConcurrentMap();
+    private static final AtomicInteger ourKeysCounter = new AtomicInteger();
+    private final int myIndex = ourKeysCounter.getAndIncrement();
+    private final String myName; // for debug purposes only
+    private static final Map<Integer, Key> allKeys = Maps.newConcurrentMap();
 
-  public Key(@NotNull @NonNls String name) {
-    myName = name;
-    allKeys.put(myIndex, this);
-  }
-
-  // made final because many classes depend on one-to-one key index <-> key instance relationship. See e.g. UserDataHolderBase
-  @Override
-  public final int hashCode() {
-    return myIndex;
-  }
-
-  @Override
-  public final boolean equals(Object obj) {
-    return obj == this;
-  }
-
-  @Override
-  public String toString() {
-    return myName;
-  }
-
-  public static <T> Key<T> create(@NotNull @NonNls String name) {
-    return new Key<T>(name);
-  }
-
-  public T get(@Nullable Map<Key, ?> holder) {
-    //noinspection unchecked
-    return holder == null ? null : (T)holder.get(this);
-  }
-
-
-  public void set(@Nullable Map<Key, Object> holder, T value) {
-    if (holder != null) {
-      holder.put(this, value);
+    public Key(@NotNull @NonNls String name) {
+        myName = name;
+        allKeys.put(myIndex, this);
     }
-  }
 
-  @Nullable("can become null if the key has been gc-ed")
-  public static <T> Key<T> getKeyByIndex(int index) {
-    //noinspection unchecked
-    return (Key<T>)allKeys.get(index);
-  }
+    // made final because many classes depend on one-to-one key index <-> key instance relationship. See e.g. UserDataHolderBase
+    @Override
+    public final int hashCode() {
+        return myIndex;
+    }
+
+    @Override
+    public final boolean equals(Object obj) {
+        return obj == this;
+    }
+
+    @Override
+    public String toString() {
+        return myName;
+    }
+
+    public static <T> Key<T> create(@NotNull @NonNls String name) {
+        return new Key<T>(name);
+    }
+
+    public T get(@Nullable Map<Key, ?> holder) {
+        //noinspection unchecked
+        return holder == null ? null : (T) holder.get(this);
+    }
+
+
+    public void set(@Nullable Map<Key, Object> holder, T value) {
+        if (holder != null) {
+            holder.put(this, value);
+        }
+    }
+
+    @Nullable("can become null if the key has been gc-ed")
+    public static <T> Key<T> getKeyByIndex(int index) {
+        //noinspection unchecked
+        return (Key<T>) allKeys.get(index);
+    }
 }

@@ -20,20 +20,19 @@ import apple.awt.CImage;
 import java.awt.image.BufferedImage;
 
 class IsRetina {
-  public static boolean isRetina() {
-    try {
-      final boolean[] isRetina = new boolean[1];
-      new CImage.HiDPIScaledImage(1, 1, BufferedImage.TYPE_INT_ARGB) {
-        @Override
-        public void drawIntoImage(BufferedImage image, float v) {
-          isRetina[0] = v > 1;
+    public static boolean isRetina() {
+        try {
+            final boolean[] isRetina = new boolean[1];
+            new CImage.HiDPIScaledImage(1, 1, BufferedImage.TYPE_INT_ARGB) {
+                @Override
+                public void drawIntoImage(BufferedImage image, float v) {
+                    isRetina[0] = v > 1;
+                }
+            };
+            return isRetina[0];
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return false;
         }
-      };
-      return isRetina[0];
     }
-    catch (Throwable e) {
-      e.printStackTrace();
-      return false;
-    }
-  }
 }

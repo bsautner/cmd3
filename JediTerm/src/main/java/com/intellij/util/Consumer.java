@@ -16,13 +16,14 @@
 package com.intellij.util;
 
 public interface Consumer<T> {
-  Consumer EMPTY_CONSUMER = new Consumer() {
-    public void consume(Object t) { }
-  };
+    Consumer EMPTY_CONSUMER = new Consumer() {
+        public void consume(Object t) {
+        }
+    };
 
-  /**
-   * @param t consequently takes value of each element of the set this processor is passed to for processing.
-   * t is supposed to be a not-null value. If you need to pass {@code null}s to the consumer use {@link NullableConsumer} instead
-   */
-  void consume(T t);
+    /**
+     * @param t consequently takes value of each element of the set this processor is passed to for processing.
+     *          t is supposed to be a not-null value. If you need to pass {@code null}s to the consumer use {@link NullableConsumer} instead
+     */
+    void consume(T t);
 }

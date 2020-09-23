@@ -19,98 +19,95 @@ import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.concurrent.*;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.*;
 
 public class FutureResult<T> implements Future<T> {
-  private final Semaphore mySema = new Semaphore(0);
-  private volatile Pair<Object, Boolean> myValue;
+    private final Semaphore mySema = new Semaphore(0);
+    private volatile Pair<Object, Boolean> myValue;
 
-  public FutureResult() {
-  }
-  
-  public FutureResult(@Nullable T result) {
-    set(result);
-  }
-  
-  public synchronized void set(@Nullable T result) {
-    assertNotSet();
-
-    myValue = Pair.create((Object)result, true);
-    mySema.release();
-  }
-
-  public synchronized void setException(@NotNull Throwable e) {
-    assertNotSet();
-
-    myValue = Pair.create((Object)e, false);
-    mySema.release();
-  }
-
-  public synchronized void reset() {
-    try {
-      // wait till readers get their results
-      if (isDone()) mySema.acquire();
+    public FutureResult() {
     }
-    catch (InterruptedException ignore) {
-      return;
+
+    public FutureResult(@Nullable T result) {
+        set(result);
     }
-    myValue = null;
-  }
 
-  private void assertNotSet() {
-    if (isDone()) throw new IllegalStateException("Result is already set");
-  }
+    public synchronized void set(@Nullable T result) {
+        assertNotSet();
 
-  @Override
-  public boolean cancel(boolean mayInterruptIfRunning) {
-    return false;
-  }
-
-  @Override
-  public boolean isCancelled() {
-    return false;
-  }
-
-  @Override
-  public boolean isDone() {
-    return myValue != null;
-  }
-
-  @Override
-  public T get() throws InterruptedException, ExecutionException {
-    mySema.acquire();
-    try {
-      return doGet();
+        myValue = Pair.create((Object) result, true);
+        mySema.release();
     }
-    finally {
-      mySema.release();
+
+    public synchronized void setException(@NotNull Throwable e) {
+        assertNotSet();
+
+        myValue = Pair.create((Object) e, false);
+        mySema.release();
     }
-  }
 
-  @Override
-  public T get(long timeout, @NotNull TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
-    if (!mySema.tryAcquire(timeout, unit)) throw new TimeoutException();
-    try {
-      return doGet();
+    public synchronized void reset() {
+        try {
+            // wait till readers get their results
+            if (isDone()) mySema.acquire();
+        } catch (InterruptedException ignore) {
+            return;
+        }
+        myValue = null;
     }
-    finally {
-      mySema.release();
+
+    private void assertNotSet() {
+        if (isDone()) throw new IllegalStateException("Result is already set");
     }
-  }
 
-  @Nullable
-  public T tryGet() throws ExecutionException {
-    return doGet();
-  }
+    @Override
+    public boolean cancel(boolean mayInterruptIfRunning) {
+        return false;
+    }
 
-  @Nullable
-  private T doGet() throws ExecutionException {
-    Pair<Object, Boolean> pair = myValue;
-    if (pair == null) return null;
+    @Override
+    public boolean isCancelled() {
+        return false;
+    }
 
-    if (!pair.second) throw new ExecutionException(((Throwable)pair.first).getMessage(), (Throwable)pair.first);
-    //noinspection unchecked
-    return (T)pair.first;
-  }
+    @Override
+    public boolean isDone() {
+        return myValue != null;
+    }
+
+    @Override
+    public T get() throws InterruptedException, ExecutionException {
+        mySema.acquire();
+        try {
+            return doGet();
+        } finally {
+            mySema.release();
+        }
+    }
+
+    @Override
+    public T get(long timeout, @NotNull TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+        if (!mySema.tryAcquire(timeout, unit)) throw new TimeoutException();
+        try {
+            return doGet();
+        } finally {
+            mySema.release();
+        }
+    }
+
+    @Nullable
+    public T tryGet() throws ExecutionException {
+        return doGet();
+    }
+
+    @Nullable
+    private T doGet() throws ExecutionException {
+        Pair<Object, Boolean> pair = myValue;
+        if (pair == null) return null;
+
+        if (!pair.second) throw new ExecutionException(((Throwable) pair.first).getMessage(), (Throwable) pair.first);
+        //noinspection unchecked
+        return (T) pair.first;
+    }
 }

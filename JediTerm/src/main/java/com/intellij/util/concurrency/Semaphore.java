@@ -19,81 +19,80 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 public class Semaphore {
-  /**
-   * Creates Semaphore in an up state
-   */
-  public Semaphore() { }
-
-  private static final class Sync extends AbstractQueuedSynchronizer {
-    @Override
-    public int tryAcquireShared(int acquires) {
-      return getState() == 0 ? 1 : -1;
+    /**
+     * Creates Semaphore in an up state
+     */
+    public Semaphore() {
     }
 
-    @Override
-    public boolean tryReleaseShared(int releases) {
-      // Decrement count; signal when transition to zero
-      while (true) {
-        int c = getState();
-        if (c == 0) return false;
-        int next = c - 1;
-        if (compareAndSetState(c, next)) return next == 0;
-      }
+    private static final class Sync extends AbstractQueuedSynchronizer {
+        @Override
+        public int tryAcquireShared(int acquires) {
+            return getState() == 0 ? 1 : -1;
+        }
+
+        @Override
+        public boolean tryReleaseShared(int releases) {
+            // Decrement count; signal when transition to zero
+            while (true) {
+                int c = getState();
+                if (c == 0) return false;
+                int next = c - 1;
+                if (compareAndSetState(c, next)) return next == 0;
+            }
+        }
+
+        private void down() {
+            while (true) {
+                int current = getState();
+                int next = current + 1;
+                if (compareAndSetState(current, next)) return;
+            }
+        }
+
+        private boolean isAcquired() {
+            return getState() != 0;
+        }
     }
 
-    private void down() {
-      while (true) {
-        int current = getState();
-        int next = current + 1;
-        if (compareAndSetState(current, next)) return;
-      }
+    private final Sync sync = new Sync();
+
+    public void up() {
+        tryUp();
     }
 
-    private boolean isAcquired() {
-      return getState() != 0;
+    public boolean tryUp() {
+        return sync.releaseShared(1);
     }
-  }
 
-  private final Sync sync = new Sync();
-
-  public void up() {
-    tryUp();
-  }
-
-  public boolean tryUp() {
-    return sync.releaseShared(1);
-  }
-
-  public void down() {
-    sync.down();
-  }
-
-  public void waitFor() {
-    try {
-      waitForUnsafe();
+    public void down() {
+        sync.down();
     }
-    catch (InterruptedException e) {
-      throw new RuntimeException(e);
-    }
-  }
 
-  public void waitForUnsafe() throws InterruptedException {
-    sync.acquireSharedInterruptibly(1);
-  }
-
-  // true if semaphore became free
-  public boolean waitFor(final long msTimeout) {
-    try {
-      return waitForUnsafe(msTimeout);
+    public void waitFor() {
+        try {
+            waitForUnsafe();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
-    catch (InterruptedException e) {
-      throw new RuntimeException(e);
-    }
-  }
 
-  // true if semaphore became free
-  public boolean waitForUnsafe(long msTimeout) throws InterruptedException {
-    if (sync.tryAcquireShared(1) >= 0) return true;
-    return sync.tryAcquireSharedNanos(1, TimeUnit.MILLISECONDS.toNanos(msTimeout));
-  }
+    public void waitForUnsafe() throws InterruptedException {
+        sync.acquireSharedInterruptibly(1);
+    }
+
+    // true if semaphore became free
+    public boolean waitFor(final long msTimeout) {
+        try {
+            return waitForUnsafe(msTimeout);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // true if semaphore became free
+    public boolean waitForUnsafe(long msTimeout) throws InterruptedException {
+        if (sync.tryAcquireShared(1) >= 0) return true;
+        return sync.tryAcquireSharedNanos(1, TimeUnit.MILLISECONDS.toNanos(msTimeout));
+    }
 }

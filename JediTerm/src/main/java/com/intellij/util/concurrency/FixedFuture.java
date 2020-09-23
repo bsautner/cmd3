@@ -22,48 +22,48 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 public class FixedFuture<T> implements Future<T> {
-  private final T myValue;
-  private final Throwable myThrowable;
+    private final T myValue;
+    private final Throwable myThrowable;
 
-  public FixedFuture(T value) {
-    myValue = value;
-    myThrowable = null;
-  }
-
-  private FixedFuture(@NotNull Throwable throwable) {
-    myValue = null;
-    myThrowable = throwable;
-  }
-
-  public static <T> FixedFuture<T> completeExceptionally(@NotNull Throwable throwable) {
-    return new FixedFuture<T>(throwable);
-  }
-
-  @Override
-  public boolean cancel(boolean mayInterruptIfRunning) {
-    return false;
-  }
-
-  @Override
-  public boolean isCancelled() {
-    return false;
-  }
-
-  @Override
-  public boolean isDone() {
-    return true;
-  }
-
-  @Override
-  public T get() throws ExecutionException {
-    if (myThrowable != null) {
-      throw new ExecutionException(myThrowable);
+    public FixedFuture(T value) {
+        myValue = value;
+        myThrowable = null;
     }
-    return myValue;
-  }
 
-  @Override
-  public T get(long timeout, @NotNull TimeUnit unit) {
-    return myValue;
-  }
+    private FixedFuture(@NotNull Throwable throwable) {
+        myValue = null;
+        myThrowable = throwable;
+    }
+
+    public static <T> FixedFuture<T> completeExceptionally(@NotNull Throwable throwable) {
+        return new FixedFuture<T>(throwable);
+    }
+
+    @Override
+    public boolean cancel(boolean mayInterruptIfRunning) {
+        return false;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return false;
+    }
+
+    @Override
+    public boolean isDone() {
+        return true;
+    }
+
+    @Override
+    public T get() throws ExecutionException {
+        if (myThrowable != null) {
+            throw new ExecutionException(myThrowable);
+        }
+        return myValue;
+    }
+
+    @Override
+    public T get(long timeout, @NotNull TimeUnit unit) {
+        return myValue;
+    }
 }

@@ -24,73 +24,73 @@ import org.jetbrains.annotations.Nullable;
  * @author peter
  */
 public class ObjectUtils {
-  private ObjectUtils() {
-  }
-
-  public static final Object NULL = new Object();
-
-  @NotNull
-  public static <T> T assertNotNull(@Nullable T t) {
-    return notNull(t);
-  }
-
-  public static <T> void assertAllElementsNotNull(@NotNull T[] array) {
-    for (int i = 0; i < array.length; i++) {
-      T t = array[i];
-      if (t == null) {
-        throw new NullPointerException("Element [" + i + "] is null");
-      }
+    private ObjectUtils() {
     }
-  }
 
-  @Contract("null, null -> null")
-  public static <T> T chooseNotNull(@Nullable T t1, @Nullable T t2) {
-    return t1 == null? t2 : t1;
-  }
+    public static final Object NULL = new Object();
 
-  @Contract("null,null->null")
-  public static <T> T coalesce(@Nullable T t1, @Nullable T t2) {
-    return t1 != null ? t1 : t2;
-  }
-
-  @Contract("null,null,null->null")
-  public static <T> T coalesce(@Nullable T t1, @Nullable T t2, @Nullable T t3) {
-    return t1 != null ? t1 : t2 != null ? t2 : t3;
-  }
-
-  @Nullable
-  public static <T> T coalesce(@Nullable Iterable<T> o) {
-    if (o == null) return null;
-    for (T t : o) {
-      if (t != null) return t;
+    @NotNull
+    public static <T> T assertNotNull(@Nullable T t) {
+        return notNull(t);
     }
-    return null;
-  }
 
-  @NotNull
-  public static <T> T notNull(@Nullable T value) {
-    //noinspection ConstantConditions
-    return notNull(value, value);
-  }
-
-  @NotNull
-  public static <T> T notNull(@Nullable T value, @NotNull T defaultValue) {
-    return value == null ? defaultValue : value;
-  }
-
-  @Nullable
-  public static <T> T tryCast(@Nullable Object obj, @NotNull Class<T> clazz) {
-    if (clazz.isInstance(obj)) {
-      return clazz.cast(obj);
+    public static <T> void assertAllElementsNotNull(@NotNull T[] array) {
+        for (int i = 0; i < array.length; i++) {
+            T t = array[i];
+            if (t == null) {
+                throw new NullPointerException("Element [" + i + "] is null");
+            }
+        }
     }
-    return null;
-  }
 
-  @Nullable
-  public static <T> T nullizeByCondition(@Nullable final T obj, @NotNull final Condition<T> condition) {
-    if (condition.value(obj)) {
-      return null;
+    @Contract("null, null -> null")
+    public static <T> T chooseNotNull(@Nullable T t1, @Nullable T t2) {
+        return t1 == null ? t2 : t1;
     }
-    return obj;
-  }
+
+    @Contract("null,null->null")
+    public static <T> T coalesce(@Nullable T t1, @Nullable T t2) {
+        return t1 != null ? t1 : t2;
+    }
+
+    @Contract("null,null,null->null")
+    public static <T> T coalesce(@Nullable T t1, @Nullable T t2, @Nullable T t3) {
+        return t1 != null ? t1 : t2 != null ? t2 : t3;
+    }
+
+    @Nullable
+    public static <T> T coalesce(@Nullable Iterable<T> o) {
+        if (o == null) return null;
+        for (T t : o) {
+            if (t != null) return t;
+        }
+        return null;
+    }
+
+    @NotNull
+    public static <T> T notNull(@Nullable T value) {
+        //noinspection ConstantConditions
+        return notNull(value, value);
+    }
+
+    @NotNull
+    public static <T> T notNull(@Nullable T value, @NotNull T defaultValue) {
+        return value == null ? defaultValue : value;
+    }
+
+    @Nullable
+    public static <T> T tryCast(@Nullable Object obj, @NotNull Class<T> clazz) {
+        if (clazz.isInstance(obj)) {
+            return clazz.cast(obj);
+        }
+        return null;
+    }
+
+    @Nullable
+    public static <T> T nullizeByCondition(@Nullable final T obj, @NotNull final Condition<T> condition) {
+        if (condition.value(obj)) {
+            return null;
+        }
+        return obj;
+    }
 }

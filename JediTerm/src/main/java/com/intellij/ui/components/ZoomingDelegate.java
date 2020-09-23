@@ -27,99 +27,99 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ZoomingDelegate {
-  private final JComponent myContentComponent;
-  private final JComponent myViewportComponent;
+    private final JComponent myContentComponent;
+    private final JComponent myViewportComponent;
 
-  private BufferedImage myCachedImage;
-  private Point myMagnificationPoint;
-  private double myMagnification;
+    private BufferedImage myCachedImage;
+    private Point myMagnificationPoint;
+    private double myMagnification;
 
-  public ZoomingDelegate(JComponent contentComponent, JComponent viewportComponent) {
-    myContentComponent = contentComponent;
-    myViewportComponent = viewportComponent;
-  }
-
-  public void paint(Graphics g) {
-    if (myCachedImage != null && myMagnificationPoint != null && myMagnification != 0) {
-      double scale = magnificationToScale(myMagnification);
-      int xoffset = (int)(myMagnificationPoint.x - myMagnificationPoint.x * scale);
-      int yoffset = (int)(myMagnificationPoint.y - myMagnificationPoint.y * scale);
-
-      Rectangle clip = g.getClipBounds();
-
-      g.setColor(Gray._120);
-      g.fillRect(clip.x, clip.y, clip.width, clip.height);
-
-      Graphics2D translated = (Graphics2D)g.create();
-      translated.translate(xoffset, yoffset);
-      translated.scale(scale, scale);
-
-      UIUtil.drawImage(translated, myCachedImage, 0, 0, null);
+    public ZoomingDelegate(JComponent contentComponent, JComponent viewportComponent) {
+        myContentComponent = contentComponent;
+        myViewportComponent = viewportComponent;
     }
-  }
 
-  public void magnificationStarted(Point at) {
-    myMagnificationPoint = at;
-  }
+    public void paint(Graphics g) {
+        if (myCachedImage != null && myMagnificationPoint != null && myMagnification != 0) {
+            double scale = magnificationToScale(myMagnification);
+            int xoffset = (int) (myMagnificationPoint.x - myMagnificationPoint.x * scale);
+            int yoffset = (int) (myMagnificationPoint.y - myMagnificationPoint.y * scale);
 
-  public void magnificationFinished(double magnification) {
-    if (myMagnification != 0) {
-      Magnificator magnificator = ((ZoomableViewport)myViewportComponent).getMagnificator();
+            Rectangle clip = g.getClipBounds();
 
-      if (magnificator != null) {
-        Point inContent = convertToContentCoordinates(myMagnificationPoint);
+            g.setColor(Gray._120);
+            g.fillRect(clip.x, clip.y, clip.width, clip.height);
 
-        final Point inContentScaled = magnificator.magnify(magnificationToScale(magnification), inContent);
+            Graphics2D translated = (Graphics2D) g.create();
+            translated.translate(xoffset, yoffset);
+            translated.scale(scale, scale);
 
-        int voffset = inContentScaled.y - myMagnificationPoint.y;
-        int hoffset = inContentScaled.x - myMagnificationPoint.x;
+            UIUtil.drawImage(translated, myCachedImage, 0, 0, null);
+        }
+    }
+
+    public void magnificationStarted(Point at) {
+        myMagnificationPoint = at;
+    }
+
+    public void magnificationFinished(double magnification) {
+        if (myMagnification != 0) {
+            Magnificator magnificator = ((ZoomableViewport) myViewportComponent).getMagnificator();
+
+            if (magnificator != null) {
+                Point inContent = convertToContentCoordinates(myMagnificationPoint);
+
+                final Point inContentScaled = magnificator.magnify(magnificationToScale(magnification), inContent);
+
+                int voffset = inContentScaled.y - myMagnificationPoint.y;
+                int hoffset = inContentScaled.x - myMagnificationPoint.x;
+                myViewportComponent.repaint();
+                myViewportComponent.validate();
+
+                scrollTo(voffset, hoffset);
+            }
+        }
+
+        myMagnificationPoint = null;
+        myMagnification = 0;
+        myCachedImage = null;
+    }
+
+    protected void scrollTo(int voffset, int hoffset) {
+        JScrollPane pane = JBScrollPane.findScrollPane(myViewportComponent);
+        JScrollBar vsb = pane.getVerticalScrollBar();
+        vsb.setValue(voffset);
+        JScrollBar hsb = pane.getHorizontalScrollBar();
+        hsb.setValue(hoffset);
+    }
+
+    protected Point convertToContentCoordinates(Point point) {
+        return SwingUtilities.convertPoint(myViewportComponent, point, myContentComponent);
+    }
+
+    public boolean isActive() {
+        return myCachedImage != null;
+    }
+
+    private static double magnificationToScale(double magnification) {
+        return magnification < 0 ? 1f / (1 - magnification) : (1 + magnification);
+    }
+
+    public void magnify(double magnification) {
+        if (myMagnification != magnification) {
+            myMagnification = magnification;
+
+            if (myCachedImage == null) {
+                Rectangle bounds = myViewportComponent.getBounds();
+                BufferedImage image = UIUtil.createImage(bounds.width, bounds.height, BufferedImage.TYPE_INT_RGB);
+
+                Graphics graphics = image.getGraphics();
+                graphics.setClip(0, 0, bounds.width, bounds.height);
+                myViewportComponent.paint(graphics);
+
+                myCachedImage = image;
+            }
+        }
         myViewportComponent.repaint();
-        myViewportComponent.validate();
-
-        scrollTo(voffset, hoffset);
-      }
     }
-
-    myMagnificationPoint = null;
-    myMagnification = 0;
-    myCachedImage = null;
-  }
-
-  protected void scrollTo(int voffset, int hoffset) {
-    JScrollPane pane = JBScrollPane.findScrollPane(myViewportComponent);
-    JScrollBar vsb = pane.getVerticalScrollBar();
-    vsb.setValue(voffset);
-    JScrollBar hsb = pane.getHorizontalScrollBar();
-    hsb.setValue(hoffset);
-  }
-  
-  protected Point convertToContentCoordinates(Point point) {
-    return SwingUtilities.convertPoint(myViewportComponent, point, myContentComponent);
-  }
-
-  public boolean isActive() {
-    return myCachedImage != null;
-  }
-
-  private static double magnificationToScale(double magnification) {
-    return magnification < 0 ? 1f / (1 - magnification) : (1 + magnification);
-  }
-
-  public void magnify(double magnification) {
-    if (myMagnification != magnification) {
-      myMagnification = magnification;
-
-      if (myCachedImage == null) {
-        Rectangle bounds = myViewportComponent.getBounds();
-        BufferedImage image = UIUtil.createImage(bounds.width, bounds.height, BufferedImage.TYPE_INT_RGB);
-
-        Graphics graphics = image.getGraphics();
-        graphics.setClip(0, 0, bounds.width, bounds.height);
-        myViewportComponent.paint(graphics);
-
-        myCachedImage = image;
-      }
-    }
-    myViewportComponent.repaint();
-  }
 }

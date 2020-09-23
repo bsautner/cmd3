@@ -17,7 +17,6 @@ package com.intellij.ui;
 
 import com.intellij.openapi.ui.RoundedLineBorder;
 import com.intellij.openapi.ui.SideBorder;
-import com.intellij.ui.JBColor;
 import com.intellij.util.ui.JBInsets;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
@@ -27,56 +26,57 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class IdeBorderFactory {
-  public static final int BORDER_ROUNDNESS = 5;
-  public static final int TITLED_BORDER_TOP_INSET = 7;
-  public static final int TITLED_BORDER_LEFT_INSET = 0;
-  public static final int TITLED_BORDER_BOTTOM_INSET = 10;
-  public static final int TITLED_BORDER_RIGHT_INSET = 0;
-  public static final int TITLED_BORDER_INDENT = 20;
+    public static final int BORDER_ROUNDNESS = 5;
+    public static final int TITLED_BORDER_TOP_INSET = 7;
+    public static final int TITLED_BORDER_LEFT_INSET = 0;
+    public static final int TITLED_BORDER_BOTTOM_INSET = 10;
+    public static final int TITLED_BORDER_RIGHT_INSET = 0;
+    public static final int TITLED_BORDER_INDENT = 20;
 
-  private IdeBorderFactory() {
-  }
+    private IdeBorderFactory() {
+    }
 
-  public static Border createBorder() {
-    return createBorder(SideBorder.ALL);
-  }
+    public static Border createBorder() {
+        return createBorder(SideBorder.ALL);
+    }
 
-  public static Border createBorder(@MagicConstant(flagsFromClass = SideBorder.class) int borders) {
-    return new SideBorder(getBorderColor(), borders);
-  }
+    public static Border createBorder(@MagicConstant(flagsFromClass = SideBorder.class) int borders) {
+        return new SideBorder(getBorderColor(), borders);
+    }
 
-  @NotNull
-  public static RoundedLineBorder createRoundedBorder() {
-    return createRoundedBorder(BORDER_ROUNDNESS);
-  }
+    @NotNull
+    public static RoundedLineBorder createRoundedBorder() {
+        return createRoundedBorder(BORDER_ROUNDNESS);
+    }
 
-  @NotNull
-  public static RoundedLineBorder createRoundedBorder(int arcSize) {
-    return new RoundedLineBorder(getBorderColor(), arcSize);
-  }
+    @NotNull
+    public static RoundedLineBorder createRoundedBorder(int arcSize) {
+        return new RoundedLineBorder(getBorderColor(), arcSize);
+    }
 
-  @NotNull
-  public static RoundedLineBorder createRoundedBorder(int arcSize, final int thickness) {
-    return new RoundedLineBorder(getBorderColor(), arcSize, thickness);
-  }
+    @NotNull
+    public static RoundedLineBorder createRoundedBorder(int arcSize, final int thickness) {
+        return new RoundedLineBorder(getBorderColor(), arcSize, thickness);
+    }
 
-  public static Border createEmptyBorder(Insets insets) {
-    return new EmptyBorder(JBInsets.create(insets));
-  }
+    public static Border createEmptyBorder(Insets insets) {
+        return new EmptyBorder(JBInsets.create(insets));
+    }
 
-  public static Border createEmptyBorder() {
-    return createEmptyBorder(0);
-  }
-  public static Border createEmptyBorder(int thickness) {
-    return new EmptyBorder(new JBInsets(thickness, thickness, thickness, thickness));
-  }
+    public static Border createEmptyBorder() {
+        return createEmptyBorder(0);
+    }
 
-  public static Border createEmptyBorder(int top, int left, int bottom, int right) {
-    return new EmptyBorder(new JBInsets(top, left, bottom, right));
-  }
+    public static Border createEmptyBorder(int thickness) {
+        return new EmptyBorder(new JBInsets(thickness, thickness, thickness, thickness));
+    }
 
-  private static Color getBorderColor() {
-    return JBColor.border();
-  }
+    public static Border createEmptyBorder(int top, int left, int bottom, int right) {
+        return new EmptyBorder(new JBInsets(top, left, bottom, right));
+    }
+
+    private static Color getBorderColor() {
+        return JBColor.border();
+    }
 
 }

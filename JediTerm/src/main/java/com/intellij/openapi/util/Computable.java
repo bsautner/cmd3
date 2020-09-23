@@ -19,57 +19,57 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- *  @author dsl
+ * @author dsl
  */
 public interface Computable<T> {
 
-  T compute();
+    T compute();
 
-  class PredefinedValueComputable<T> implements Computable<T> {
+    class PredefinedValueComputable<T> implements Computable<T> {
 
-    private final T myValue;
+        private final T myValue;
 
-    public PredefinedValueComputable(@Nullable T value) {
-      myValue = value;
+        public PredefinedValueComputable(@Nullable T value) {
+            myValue = value;
+        }
+
+        @Override
+        public T compute() {
+            return myValue;
+        }
     }
 
-    @Override
-    public T compute() {
-      return myValue;
+    abstract class NotNullCachedComputable<T> implements Computable<T> {
+        private T myValue;
+
+        @NotNull
+        protected abstract T internalCompute();
+
+        @NotNull
+        @Override
+        public final T compute() {
+            if (myValue == null) {
+                myValue = internalCompute();
+            }
+            return myValue;
+        }
     }
-  }
 
-  abstract class NotNullCachedComputable<T> implements Computable<T> {
-    private T myValue;
+    abstract class NullableCachedComputable<T> implements Computable<T> {
+        private static final Object NULL_VALUE = new Object();
+        private Object myValue;
 
-    @NotNull
-    protected abstract T internalCompute();
+        @Nullable
+        protected abstract T internalCompute();
 
-    @NotNull
-    @Override
-    public final T compute() {
-      if (myValue == null) {
-        myValue = internalCompute();
-      }
-      return myValue;
+        @Nullable
+        @Override
+        public final T compute() {
+            if (myValue == null) {
+                final T value = internalCompute();
+                myValue = value != null ? value : NULL_VALUE;
+            }
+            return myValue != NULL_VALUE ? (T) myValue : null;
+        }
     }
-  }
-
-  abstract class NullableCachedComputable<T> implements Computable<T> {
-    private static final Object NULL_VALUE = new Object();
-    private Object myValue;
-
-    @Nullable
-    protected abstract T internalCompute();
-
-    @Nullable
-    @Override
-    public final T compute() {
-      if (myValue == null) {
-        final T value = internalCompute();
-        myValue = value != null ? value : NULL_VALUE;
-      }
-      return myValue != NULL_VALUE ? (T)myValue : null;
-    }
-  }
 }

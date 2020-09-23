@@ -15,7 +15,6 @@
  */
 package com.intellij.openapi.diagnostic;
 
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.ExceptionUtil;
 import org.apache.log4j.Level;
 import org.jetbrains.annotations.NonNls;
@@ -23,62 +22,69 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class DefaultLogger extends Logger {
-  @SuppressWarnings("UnusedParameters")
-  public DefaultLogger(String category) { }
-
-  @Override
-  public boolean isDebugEnabled() {
-    return false;
-  }
-
-  @Override
-  public void debug(String message) { }
-
-  @Override
-  public void debug(Throwable t) { }
-
-  @Override
-  public void debug(@NonNls String message, Throwable t) { }
-
-  @Override
-  public void info(String message) { }
-
-  @Override
-  public void info(String message, Throwable t) { }
-
-  @Override
-  @SuppressWarnings("UseOfSystemOutOrSystemErr")
-  public void warn(@NonNls String message, @Nullable Throwable t) {
-    t = checkException(t);
-    System.err.println("WARN: " + message);
-    if (t != null) t.printStackTrace(System.err);
-  }
-
-  @Override
-  @SuppressWarnings("UseOfSystemOutOrSystemErr")
-  public void error(String message, @Nullable Throwable t, @NotNull String... details) {
-    t = checkException(t);
-    message += attachmentsToString(t);
-    System.err.println("ERROR: " + message);
-    if (t != null) t.printStackTrace(System.err);
-    if (details.length > 0) {
-      System.out.println("details: ");
-      for (String detail : details) {
-        System.out.println(detail);
-      }
+    @SuppressWarnings("UnusedParameters")
+    public DefaultLogger(String category) {
     }
 
-    AssertionError error = new AssertionError(message);
-    error.initCause(t);
-    throw error;
-  }
+    @Override
+    public boolean isDebugEnabled() {
+        return false;
+    }
 
-  @Override
-  public void setLevel(Level level) { }
+    @Override
+    public void debug(String message) {
+    }
 
-  public static String attachmentsToString(@Nullable Throwable t) {
-    //noinspection ThrowableResultOfMethodCallIgnored
-    Throwable rootCause = t == null ? null : ExceptionUtil.getRootCause(t);
-    return "";
-  }
+    @Override
+    public void debug(Throwable t) {
+    }
+
+    @Override
+    public void debug(@NonNls String message, Throwable t) {
+    }
+
+    @Override
+    public void info(String message) {
+    }
+
+    @Override
+    public void info(String message, Throwable t) {
+    }
+
+    @Override
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    public void warn(@NonNls String message, @Nullable Throwable t) {
+        t = checkException(t);
+        System.err.println("WARN: " + message);
+        if (t != null) t.printStackTrace(System.err);
+    }
+
+    @Override
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    public void error(String message, @Nullable Throwable t, @NotNull String... details) {
+        t = checkException(t);
+        message += attachmentsToString(t);
+        System.err.println("ERROR: " + message);
+        if (t != null) t.printStackTrace(System.err);
+        if (details.length > 0) {
+            System.out.println("details: ");
+            for (String detail : details) {
+                System.out.println(detail);
+            }
+        }
+
+        AssertionError error = new AssertionError(message);
+        error.initCause(t);
+        throw error;
+    }
+
+    @Override
+    public void setLevel(Level level) {
+    }
+
+    public static String attachmentsToString(@Nullable Throwable t) {
+        //noinspection ThrowableResultOfMethodCallIgnored
+        Throwable rootCause = t == null ? null : ExceptionUtil.getRootCause(t);
+        return "";
+    }
 }

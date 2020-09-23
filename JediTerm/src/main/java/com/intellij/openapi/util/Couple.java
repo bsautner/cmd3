@@ -21,20 +21,20 @@ import org.jetbrains.annotations.NotNull;
  * @author Konstantin Bulenkov
  */
 public class Couple<T> extends Pair<T, T> {
-  private static final Couple EMPTY_COUPLE = new Couple<Object>(null, null);
+    private static final Couple EMPTY_COUPLE = new Couple<Object>(null, null);
 
-  public Couple(T first, T second) {
-    super(first, second);
-  }
+    public Couple(T first, T second) {
+        super(first, second);
+    }
 
-  @NotNull
-  public static <T> Couple<T> of(T first, T second) {
-    return new Couple<T>(first, second);
-  }
+    @NotNull
+    public static <T> Couple<T> of(T first, T second) {
+        return new Couple<T>(first, second);
+    }
 
-  @NotNull
-  public static <T> Couple<T> getEmpty() {
-    //noinspection unchecked
-    return EMPTY_COUPLE;
-  }
+    @NotNull
+    public static <T> Couple<T> getEmpty() {
+        //noinspection unchecked
+        return EMPTY_COUPLE;
+    }
 }

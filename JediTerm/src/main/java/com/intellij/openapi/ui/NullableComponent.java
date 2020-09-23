@@ -20,22 +20,22 @@ import java.awt.*;
 
 public interface NullableComponent {
 
-  boolean isNull();
+    boolean isNull();
 
-  class Check {
-    private Check() {
-    }
+    class Check {
+        private Check() {
+        }
 
-    public static boolean isNull(Component c) {
-      return c == null || c instanceof NullableComponent && ((NullableComponent)c).isNull();
-    }
+        public static boolean isNull(Component c) {
+            return c == null || c instanceof NullableComponent && ((NullableComponent) c).isNull();
+        }
 
-    public static boolean isNullOrHidden(Component c) {
-      return c != null && !c.isShowing() || isNull(c);
-    }
+        public static boolean isNullOrHidden(Component c) {
+            return c != null && !c.isShowing() || isNull(c);
+        }
 
-    public static boolean isNotNullAndVisible(Component c) {
-      return !isNull(c) && c.isVisible();
+        public static boolean isNotNullAndVisible(Component c) {
+            return !isNull(c) && c.isVisible();
+        }
     }
-  }
 }

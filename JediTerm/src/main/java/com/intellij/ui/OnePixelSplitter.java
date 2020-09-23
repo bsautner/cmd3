@@ -26,59 +26,59 @@ import java.awt.*;
  * @author Konstantin Bulenkov
  */
 public class OnePixelSplitter extends JBSplitter {
-  private Producer<Insets> myBlindZone;
+    private Producer<Insets> myBlindZone;
 
-  public OnePixelSplitter() {
-    super();
-    init();
-  }
+    public OnePixelSplitter() {
+        super();
+        init();
+    }
 
-  public OnePixelSplitter(boolean vertical) {
-    super(vertical);
-    init();
-  }
+    public OnePixelSplitter(boolean vertical) {
+        super(vertical);
+        init();
+    }
 
-  public OnePixelSplitter(boolean vertical, @NotNull String proportionKey, float defaultProportion) {
-    super(vertical, proportionKey, defaultProportion);
-    init();
-  }
+    public OnePixelSplitter(boolean vertical, @NotNull String proportionKey, float defaultProportion) {
+        super(vertical, proportionKey, defaultProportion);
+        init();
+    }
 
-  public OnePixelSplitter(boolean vertical, float proportion) {
-    super(vertical, proportion);
-    init();
-  }
+    public OnePixelSplitter(boolean vertical, float proportion) {
+        super(vertical, proportion);
+        init();
+    }
 
-  public OnePixelSplitter(@NotNull String proportionKey, float defaultProportion) {
-    super(proportionKey, defaultProportion);
+    public OnePixelSplitter(@NotNull String proportionKey, float defaultProportion) {
+        super(proportionKey, defaultProportion);
 
-    init();
-  }
+        init();
+    }
 
-  public OnePixelSplitter(float proportion) {
-    super(proportion);
-    init();
-  }
+    public OnePixelSplitter(float proportion) {
+        super(proportion);
+        init();
+    }
 
-  public OnePixelSplitter(boolean vertical, float proportion, float minProp, float maxProp) {
-    super(vertical, proportion, minProp, maxProp);
-    init();
-  }
+    public OnePixelSplitter(boolean vertical, float proportion, float minProp, float maxProp) {
+        super(vertical, proportion, minProp, maxProp);
+        init();
+    }
 
-  protected void init() {
-    setDividerWidth(1);
-  }
+    protected void init() {
+        setDividerWidth(1);
+    }
 
-  @Override
-  protected Divider createDivider() {
-    return new OnePixelDivider(isVertical(), this);
-  }
+    @Override
+    protected Divider createDivider() {
+        return new OnePixelDivider(isVertical(), this);
+    }
 
-  public void setBlindZone(Producer<Insets> blindZone) {
-    myDivider.setOpaque(blindZone == null);
-    myBlindZone = blindZone;
-  }
+    public void setBlindZone(Producer<Insets> blindZone) {
+        myDivider.setOpaque(blindZone == null);
+        myBlindZone = blindZone;
+    }
 
-  public Producer<Insets> getBlindZone() {
-    return myBlindZone;
-  }
+    public Producer<Insets> getBlindZone() {
+        return myBlindZone;
+    }
 }

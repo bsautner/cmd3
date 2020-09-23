@@ -23,11 +23,11 @@ import javax.swing.border.Border;
  * @author Konstantin Bulenkov
  */
 public interface JBComponent<T extends JBComponent> {
-  T withBorder(Border border);
+    T withBorder(Border border);
 
-  T withFont(JBFont font);
+    T withFont(JBFont font);
 
-  T andTransparent();
+    T andTransparent();
 
-  T andOpaque();
+    T andOpaque();
 }

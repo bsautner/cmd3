@@ -19,7 +19,8 @@ import org.jetbrains.annotations.NotNull;
 
 public interface ObjectTreeListener {
 
-  void objectRegistered(@NotNull Object node);
-  void objectExecuted(@NotNull Object node);
+    void objectRegistered(@NotNull Object node);
+
+    void objectExecuted(@NotNull Object node);
 
 }

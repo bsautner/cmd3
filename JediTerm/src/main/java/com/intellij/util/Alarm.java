@@ -82,7 +82,6 @@ public class Alarm implements Disposable {
 
         /**
          * Run requests in one of application pooled threads.
-         *
          */
         POOLED_THREAD,
 

@@ -21,20 +21,20 @@ import javax.accessibility.AccessibleRole;
 import javax.swing.*;
 
 public class JBCheckBoxMenuItem extends JCheckBoxMenuItem implements Accessible {
-  @Override
-  public AccessibleContext getAccessibleContext() {
-    if (accessibleContext == null) {
-      accessibleContext = new AccessibleJBCheckBoxMenuItem();
-    }
-    return accessibleContext;
-  }
-
-  protected class AccessibleJBCheckBoxMenuItem extends AccessibleJCheckBoxMenuItem {
     @Override
-    public AccessibleRole getAccessibleRole() {
-      // The base class implementation returns the CHECK_BOX role, which is incorrect
-      // for a menu item.
-      return AccessibleRole.MENU_ITEM;
+    public AccessibleContext getAccessibleContext() {
+        if (accessibleContext == null) {
+            accessibleContext = new AccessibleJBCheckBoxMenuItem();
+        }
+        return accessibleContext;
     }
-  }
+
+    protected class AccessibleJBCheckBoxMenuItem extends AccessibleJCheckBoxMenuItem {
+        @Override
+        public AccessibleRole getAccessibleRole() {
+            // The base class implementation returns the CHECK_BOX role, which is incorrect
+            // for a menu item.
+            return AccessibleRole.MENU_ITEM;
+        }
+    }
 }

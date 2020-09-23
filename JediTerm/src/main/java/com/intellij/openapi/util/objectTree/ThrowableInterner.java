@@ -19,23 +19,23 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Please don't look, there's nothing interesting here.
- *
- *
- *
- *
+ * <p>
+ * <p>
+ * <p>
+ * <p>
  * If you insist, JVM stores stacktrace information in compact form in Throwable.backtrace field, but blocks reflective access to this field.
  * This class uses this field for comparing Throwables.
  * The available method Throwable.getStackTrace() unfortunately can't be used for that because it's
  * 1) too slow and 2) explodes Throwable retained size by polluting Throwable.stackTrace fields.
  */
 public class ThrowableInterner {
-  // all removed
-  private static Object[] getBacktrace(@NotNull Throwable throwable) {
-    return throwable.getStackTrace();
-  }
+    // all removed
+    private static Object[] getBacktrace(@NotNull Throwable throwable) {
+        return throwable.getStackTrace();
+    }
 
-  @NotNull
-  public static Throwable intern(@NotNull Throwable throwable) {
-    return throwable;
-  }
+    @NotNull
+    public static Throwable intern(@NotNull Throwable throwable) {
+        return throwable;
+    }
 }

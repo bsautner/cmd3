@@ -24,10 +24,10 @@ package com.intellij.openapi;
  * there might be any object registered in chain.
  */
 public interface Disposable {
-  void dispose();
+    void dispose();
 
-  interface Parent extends Disposable {
-    void beforeTreeDispose();
-  }
+    interface Parent extends Disposable {
+        void beforeTreeDispose();
+    }
 
 }

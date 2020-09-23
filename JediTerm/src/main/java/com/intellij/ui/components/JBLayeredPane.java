@@ -23,10 +23,10 @@ import java.awt.*;
  */
 public class JBLayeredPane extends JLayeredPane {
 
-  @Override
-  public Dimension getMinimumSize() {
-    if (!isMinimumSizeSet())
-      return new Dimension(0, 0);
-    return super.getMinimumSize();
-  }
+    @Override
+    public Dimension getMinimumSize() {
+        if (!isMinimumSizeSet())
+            return new Dimension(0, 0);
+        return super.getMinimumSize();
+    }
 }

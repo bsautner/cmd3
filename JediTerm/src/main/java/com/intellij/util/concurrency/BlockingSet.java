@@ -31,53 +31,51 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author Alexander Koshevoy
  */
 public class BlockingSet<T> {
-  private final Set<T> set;
+    private final Set<T> set;
 
-  private final Condition unlock;
-  private final Lock lock;
+    private final Condition unlock;
+    private final Lock lock;
 
-  public BlockingSet() {
-    set = new HashSet<T>();
-    lock = new ReentrantLock();
-    unlock = lock.newCondition();
-  }
-
-  /**
-   * Acquires lock by {@code key}. If lock by {@code key} has been already acquired wait until it is released. Acquire is <b>not</b> reentrant.
-   */
-  public void put(@NotNull T key) {
-    lock.lock();
-    try {
-      while (set.contains(key)) {
-        unlock.awaitUninterruptibly();
-      }
-      set.add(key);
+    public BlockingSet() {
+        set = new HashSet<T>();
+        lock = new ReentrantLock();
+        unlock = lock.newCondition();
     }
-    finally {
-      lock.unlock();
-    }
-  }
 
-  /**
-   * Releases lock by {@code key}. If lock has not been acquired throws {@link IllegalStateException}.
-   *
-   * @throws IllegalStateException if lock by {@code key} has not been acquired.
-   */
-  public void remove(@NotNull T key) throws IllegalStateException {
-    lock.lock();
-    try {
-      if (!set.contains(key)) {
-        throw new IllegalStateException();
-      }
-      set.remove(key);
-      unlock.signalAll();
+    /**
+     * Acquires lock by {@code key}. If lock by {@code key} has been already acquired wait until it is released. Acquire is <b>not</b> reentrant.
+     */
+    public void put(@NotNull T key) {
+        lock.lock();
+        try {
+            while (set.contains(key)) {
+                unlock.awaitUninterruptibly();
+            }
+            set.add(key);
+        } finally {
+            lock.unlock();
+        }
     }
-    finally {
-      lock.unlock();
-    }
-  }
 
-  public static <T> BlockingSet<T> newInstance() {
-    return new BlockingSet<T>();
-  }
+    /**
+     * Releases lock by {@code key}. If lock has not been acquired throws {@link IllegalStateException}.
+     *
+     * @throws IllegalStateException if lock by {@code key} has not been acquired.
+     */
+    public void remove(@NotNull T key) throws IllegalStateException {
+        lock.lock();
+        try {
+            if (!set.contains(key)) {
+                throw new IllegalStateException();
+            }
+            set.remove(key);
+            unlock.signalAll();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public static <T> BlockingSet<T> newInstance() {
+        return new BlockingSet<T>();
+    }
 }

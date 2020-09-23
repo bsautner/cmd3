@@ -25,20 +25,20 @@ import java.util.concurrent.FutureTask;
  * ExecutorService which limits the number of tasks running simultaneously.
  * The number of submitted tasks is unrestricted.
  */
-public class BoundedTaskExecutor  {
+public class BoundedTaskExecutor {
 
-  // for diagnostics
-  static Object info(Runnable info) {
-    Object task = info;
-    String extra = null;
-    if (task instanceof FutureTask) {
-      extra = ((FutureTask)task).isCancelled() ? " (future cancelled)" : ((FutureTask)task).isDone() ? " (future done)" : null;
-      task = ObjectUtils.chooseNotNull(ReflectionUtil.getField(task.getClass(), task, Callable.class, "callable"), task);
+    // for diagnostics
+    static Object info(Runnable info) {
+        Object task = info;
+        String extra = null;
+        if (task instanceof FutureTask) {
+            extra = ((FutureTask) task).isCancelled() ? " (future cancelled)" : ((FutureTask) task).isDone() ? " (future done)" : null;
+            task = ObjectUtils.chooseNotNull(ReflectionUtil.getField(task.getClass(), task, Callable.class, "callable"), task);
+        }
+        if (task instanceof Callable && task.getClass().getName().equals("java.util.concurrent.Executors$RunnableAdapter")) {
+            task = ObjectUtils.chooseNotNull(ReflectionUtil.getField(task.getClass(), task, Runnable.class, "task"), task);
+        }
+        return extra == null ? task : task == null ? extra : task.getClass() + extra;
     }
-    if (task instanceof Callable && task.getClass().getName().equals("java.util.concurrent.Executors$RunnableAdapter")) {
-      task = ObjectUtils.chooseNotNull(ReflectionUtil.getField(task.getClass(), task, Runnable.class, "task"), task);
-    }
-    return extra == null ? task : task == null ? extra : task.getClass() + extra;
-  }
 
 }

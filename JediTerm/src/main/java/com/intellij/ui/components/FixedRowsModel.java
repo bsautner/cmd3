@@ -18,40 +18,40 @@ package com.intellij.ui.components;
 import javax.swing.*;
 
 /**
-* @author Konstantin Bulenkov
-*/
+ * @author Konstantin Bulenkov
+ */
 class FixedRowsModel extends MultiColumnListModel {
-  private final int myMaxRows;
+    private final int myMaxRows;
 
-  public FixedRowsModel(ListModel model, int rows) {
-    super(model);
-    myMaxRows = rows;
-  }
+    public FixedRowsModel(ListModel model, int rows) {
+        super(model);
+        myMaxRows = rows;
+    }
 
-  @Override
-  public int getRowCount() {
-    return Math.min(myMaxRows, getSize());
-  }
+    @Override
+    public int getRowCount() {
+        return Math.min(myMaxRows, getSize());
+    }
 
-  @Override
-  public int getColumnCount() {
-    final int rows = getRowCount();
-    return rows == 0 ? 0 : getSize() / rows + 1;
-  }
+    @Override
+    public int getColumnCount() {
+        final int rows = getRowCount();
+        return rows == 0 ? 0 : getSize() / rows + 1;
+    }
 
-  @Override
-  public int toListIndex(int row, int column) {
-    final int rows = getRowCount();
-    return rows == 0 ? -1 : column * rows + row;
-  }
+    @Override
+    public int toListIndex(int row, int column) {
+        final int rows = getRowCount();
+        return rows == 0 ? -1 : column * rows + row;
+    }
 
-  @Override
-  public int getColumn(int listIndex) {
-    return listIndex / myMaxRows;
-  }
+    @Override
+    public int getColumn(int listIndex) {
+        return listIndex / myMaxRows;
+    }
 
-  @Override
-  public int getRow(int listIndex) {
-    return listIndex % myMaxRows;
-  }
+    @Override
+    public int getRow(int listIndex) {
+        return listIndex % myMaxRows;
+    }
 }

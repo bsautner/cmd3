@@ -34,55 +34,6 @@ import java.awt.image.BufferedImage;
  * @see com.sun.java.swing.Painter
  */
 public interface RegionPainter<T> {
-  /**
-   * Renders to the given {@link Graphics2D} object.
-   *
-   * @param g      the {@code Graphics2D} object to render to
-   * @param x      X position of the area to paint
-   * @param y      Y position of the area to paint
-   * @param width  width of the area to paint
-   * @param height height of the area to paint
-   * @param object an optional configuration parameter
-   */
-  void paint(Graphics2D g, int x, int y, int width, int height, T object);
-
-  /**
-   * This class provides a base functionality to paint a region with the specified alpha.
-   */
-  abstract class Alpha implements RegionPainter<Float> {
-    @Override
-    public final void paint(Graphics2D g, int x, int y, int width, int height, Float value) {
-      float alpha = getAlpha(value);
-      if (alpha > 0) {
-        Composite composite = g.getComposite();
-        g.setComposite(getComposite(alpha));
-        paint(g, x, y, width, height);
-        g.setComposite(composite);
-      }
-    }
-
-    /**
-     * Calculates alpha from the specified value.
-     *
-     * @param value a configuration parameter used to calculate alpha
-     * @return an alpha calculated from the specified value
-     */
-    protected float getAlpha(Float value) {
-      return value != null ? value : 0;
-    }
-
-    /**
-     * Returns new composite with the specified alpha.
-     *
-     * @param alpha the constant alpha to be multiplied with the alpha of the source
-     * @return new composite with the specified alpha
-     */
-    protected Composite getComposite(float alpha) {
-      return alpha < 1
-             ? AlphaComposite.SrcOver.derive(alpha)
-             : AlphaComposite.SrcOver;
-    }
-
     /**
      * Renders to the given {@link Graphics2D} object.
      *
@@ -91,57 +42,105 @@ public interface RegionPainter<T> {
      * @param y      Y position of the area to paint
      * @param width  width of the area to paint
      * @param height height of the area to paint
+     * @param object an optional configuration parameter
      */
-    protected abstract void paint(Graphics2D g, int x, int y, int width, int height);
-  }
-
-  /**
-   * This class provides a caching functionality for a region painter.
-   */
-  class Image implements RegionPainter<Object> {
-    private BufferedImage myImage;
+    void paint(Graphics2D g, int x, int y, int width, int height, T object);
 
     /**
-     * This method is called for the cached image before {@code drawImage}.
-     * It should be overridden if the image must be updated without creating a new image.
-     *
-     * @param image the cached image to update
+     * This class provides a base functionality to paint a region with the specified alpha.
      */
-    protected void updateImage(BufferedImage image) {
+    abstract class Alpha implements RegionPainter<Float> {
+        @Override
+        public final void paint(Graphics2D g, int x, int y, int width, int height, Float value) {
+            float alpha = getAlpha(value);
+            if (alpha > 0) {
+                Composite composite = g.getComposite();
+                g.setComposite(getComposite(alpha));
+                paint(g, x, y, width, height);
+                g.setComposite(composite);
+            }
+        }
+
+        /**
+         * Calculates alpha from the specified value.
+         *
+         * @param value a configuration parameter used to calculate alpha
+         * @return an alpha calculated from the specified value
+         */
+        protected float getAlpha(Float value) {
+            return value != null ? value : 0;
+        }
+
+        /**
+         * Returns new composite with the specified alpha.
+         *
+         * @param alpha the constant alpha to be multiplied with the alpha of the source
+         * @return new composite with the specified alpha
+         */
+        protected Composite getComposite(float alpha) {
+            return alpha < 1
+                    ? AlphaComposite.SrcOver.derive(alpha)
+                    : AlphaComposite.SrcOver;
+        }
+
+        /**
+         * Renders to the given {@link Graphics2D} object.
+         *
+         * @param g      the {@code Graphics2D} object to render to
+         * @param x      X position of the area to paint
+         * @param y      Y position of the area to paint
+         * @param width  width of the area to paint
+         * @param height height of the area to paint
+         */
+        protected abstract void paint(Graphics2D g, int x, int y, int width, int height);
     }
 
     /**
-     * This method is called if the cached image is invalidated or it's size is changed.
-     * It must be overridden to paint on newly created image.
-     *
-     * @param width  width of the new image
-     * @param height height of the new image
-     * @return new {@link BufferedImage} object
+     * This class provides a caching functionality for a region painter.
      */
-    protected BufferedImage createImage(int width, int height) {
-      return DrawUtil.createImage(width, height, BufferedImage.TYPE_INT_ARGB);
-    }
+    class Image implements RegionPainter<Object> {
+        private BufferedImage myImage;
 
-    /**
-     * This method is called to invalidate the cached image.
-     */
-    protected void invalidate() {
-      myImage = null;
-    }
+        /**
+         * This method is called for the cached image before {@code drawImage}.
+         * It should be overridden if the image must be updated without creating a new image.
+         *
+         * @param image the cached image to update
+         */
+        protected void updateImage(BufferedImage image) {
+        }
 
-    @Override
-    public void paint(Graphics2D g, int x, int y, int width, int height, Object object) {
-      if (width > 0 && height > 0) {
-        if (myImage == null || width != myImage.getWidth() || height != myImage.getHeight()) {
-          myImage = createImage(width, height);
+        /**
+         * This method is called if the cached image is invalidated or it's size is changed.
+         * It must be overridden to paint on newly created image.
+         *
+         * @param width  width of the new image
+         * @param height height of the new image
+         * @return new {@link BufferedImage} object
+         */
+        protected BufferedImage createImage(int width, int height) {
+            return DrawUtil.createImage(width, height, BufferedImage.TYPE_INT_ARGB);
         }
-        else if (myImage != null) {
-          updateImage(myImage);
+
+        /**
+         * This method is called to invalidate the cached image.
+         */
+        protected void invalidate() {
+            myImage = null;
         }
-        if (myImage != null) {
-          DrawUtil.drawImage(g, myImage, null, x, y);
+
+        @Override
+        public void paint(Graphics2D g, int x, int y, int width, int height, Object object) {
+            if (width > 0 && height > 0) {
+                if (myImage == null || width != myImage.getWidth() || height != myImage.getHeight()) {
+                    myImage = createImage(width, height);
+                } else if (myImage != null) {
+                    updateImage(myImage);
+                }
+                if (myImage != null) {
+                    DrawUtil.drawImage(g, myImage, null, x, y);
+                }
+            }
         }
-      }
     }
-  }
 }

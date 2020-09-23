@@ -23,43 +23,43 @@ package com.intellij.openapi.util;
  * @author dsl
  */
 public interface Condition<T> {
-  boolean value(T t);
+    boolean value(T t);
 
-  Condition<Object> NOT_NULL = new Condition<Object>() {
-    public boolean value(final Object object) {
-      return object != null;
-    }
+    Condition<Object> NOT_NULL = new Condition<Object>() {
+        public boolean value(final Object object) {
+            return object != null;
+        }
 
-    @Override
-    public String toString() {
-      return "Condition.NOT_NULL";
-    }
-  };
+        @Override
+        public String toString() {
+            return "Condition.NOT_NULL";
+        }
+    };
 
-  /**
-   * @see Conditions#alwaysTrue()
-   */
-  Condition TRUE = new Condition() {
-    public boolean value(final Object object) {
-      return true;
-    }
+    /**
+     * @see Conditions#alwaysTrue()
+     */
+    Condition TRUE = new Condition() {
+        public boolean value(final Object object) {
+            return true;
+        }
 
-    @Override
-    public String toString() {
-      return "Condition.TRUE";
-    }
-  };
-  /**
-   * @see Conditions#alwaysFalse()
-   */
-  Condition FALSE = new Condition() {
-    public boolean value(final Object object) {
-      return false;
-    }
+        @Override
+        public String toString() {
+            return "Condition.TRUE";
+        }
+    };
+    /**
+     * @see Conditions#alwaysFalse()
+     */
+    Condition FALSE = new Condition() {
+        public boolean value(final Object object) {
+            return false;
+        }
 
-    @Override
-    public String toString() {
-      return "Condition.FALSE";
-    }
-  };
+        @Override
+        public String toString() {
+            return "Condition.FALSE";
+        }
+    };
 }

@@ -26,166 +26,165 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public abstract class Animator implements Disposable {
-  private final String myName;
-  private final int myTotalFrames;
-  private final int myCycleDuration;
-  private final boolean myForward;
-  private final boolean myRepeatable;
+    private final String myName;
+    private final int myTotalFrames;
+    private final int myCycleDuration;
+    private final boolean myForward;
+    private final boolean myRepeatable;
 
-  private ScheduledFuture<?> myTicker;
+    private ScheduledFuture<?> myTicker;
 
-  private int myCurrentFrame;
-  private long myStartTime;
-  private long myStartDeltaTime;
-  private boolean myInitialStep;
-  private volatile boolean myDisposed;
+    private int myCurrentFrame;
+    private long myStartTime;
+    private long myStartDeltaTime;
+    private boolean myInitialStep;
+    private volatile boolean myDisposed;
 
-  public Animator(@NonNls final String name,
-                  final int totalFrames,
-                  final int cycleDuration,
-                  boolean repeatable) {
-    this(name, totalFrames, cycleDuration, repeatable, true);
-  }
-
-  public Animator(@NonNls final String name,
-                  final int totalFrames,
-                  final int cycleDuration,
-                  boolean repeatable,
-                  boolean forward) {
-    myName = name;
-    myTotalFrames = totalFrames;
-    myCycleDuration = cycleDuration;
-    myRepeatable = repeatable;
-    myForward = forward;
-
-    reset();
-
-    if (skipAnimation()) {
-      animationDone();
-    }
-  }
-
-  private void onTick() {
-    if (isDisposed()) return;
-
-    if (myInitialStep) {
-      myInitialStep = false;
-      myStartTime = System.currentTimeMillis() - myStartDeltaTime; // keep animation state on suspend
-      paint();
-      return;
+    public Animator(@NonNls final String name,
+                    final int totalFrames,
+                    final int cycleDuration,
+                    boolean repeatable) {
+        this(name, totalFrames, cycleDuration, repeatable, true);
     }
 
-    double cycleTime = System.currentTimeMillis() - myStartTime;
-    if (cycleTime < 0) return; // currentTimeMillis() is not monotonic - let's pretend that animation didn't changed
+    public Animator(@NonNls final String name,
+                    final int totalFrames,
+                    final int cycleDuration,
+                    boolean repeatable,
+                    boolean forward) {
+        myName = name;
+        myTotalFrames = totalFrames;
+        myCycleDuration = cycleDuration;
+        myRepeatable = repeatable;
+        myForward = forward;
 
-    long newFrame = (long)(cycleTime * myTotalFrames / myCycleDuration);
+        reset();
 
-    if (myRepeatable) {
-      newFrame %= myTotalFrames;
+        if (skipAnimation()) {
+            animationDone();
+        }
     }
 
-    if (newFrame == myCurrentFrame) return;
+    private void onTick() {
+        if (isDisposed()) return;
 
-    if (!myRepeatable && newFrame >= myTotalFrames) {
-      animationDone();
-      return;
-    }
-
-    myCurrentFrame = (int)newFrame;
-
-    paint();
-  }
-
-  private void paint() {
-    paintNow(myForward ? myCurrentFrame : myTotalFrames - myCurrentFrame - 1, myTotalFrames, myCycleDuration);
-  }
-
-  private void animationDone() {
-    stopTicker();
-
-    SwingUtilities.invokeLater(() -> paintCycleEnd());
-  }
-
-  private void stopTicker() {
-    if (myTicker != null) {
-      myTicker.cancel(false);
-      myTicker = null;
-    }
-  }
-
-  protected void paintCycleEnd() {
-
-  }
-
-  public void suspend() {
-    myStartDeltaTime = System.currentTimeMillis() - myStartTime;
-    myInitialStep = true;
-    stopTicker();
-  }
-
-  public void resume() {
-    if (skipAnimation()) {
-      animationDone();
-      return;
-    }
-
-    if (myCycleDuration == 0) {
-      myCurrentFrame = myTotalFrames - 1;
-      paint();
-      animationDone();
-    }
-    else if (myTicker == null) {
-      myTicker = EdtExecutorService.getScheduledExecutorInstance().scheduleWithFixedDelay(new Runnable() {
-        @Override
-        public void run() {
-          onTick();
+        if (myInitialStep) {
+            myInitialStep = false;
+            myStartTime = System.currentTimeMillis() - myStartDeltaTime; // keep animation state on suspend
+            paint();
+            return;
         }
 
-        @Override
-        public String toString() {
-          return "Scheduled "+Animator.this;
+        double cycleTime = System.currentTimeMillis() - myStartTime;
+        if (cycleTime < 0) return; // currentTimeMillis() is not monotonic - let's pretend that animation didn't changed
+
+        long newFrame = (long) (cycleTime * myTotalFrames / myCycleDuration);
+
+        if (myRepeatable) {
+            newFrame %= myTotalFrames;
         }
-      }, 0, myCycleDuration * 1000 / myTotalFrames, TimeUnit.MICROSECONDS);
+
+        if (newFrame == myCurrentFrame) return;
+
+        if (!myRepeatable && newFrame >= myTotalFrames) {
+            animationDone();
+            return;
+        }
+
+        myCurrentFrame = (int) newFrame;
+
+        paint();
     }
-  }
 
-  private static boolean skipAnimation() {
-    if (GraphicsEnvironment.isHeadless()) {
-      return true;
+    private void paint() {
+        paintNow(myForward ? myCurrentFrame : myTotalFrames - myCurrentFrame - 1, myTotalFrames, myCycleDuration);
     }
-    return false;
-  }
 
-  public abstract void paintNow(int frame, int totalFrames, int cycle);
+    private void animationDone() {
+        stopTicker();
 
-  @Override
-  public void dispose() {
-    stopTicker();
-    myDisposed = true;
-  }
+        SwingUtilities.invokeLater(() -> paintCycleEnd());
+    }
 
-  public boolean isRunning() {
-    return myTicker != null;
-  }
+    private void stopTicker() {
+        if (myTicker != null) {
+            myTicker.cancel(false);
+            myTicker = null;
+        }
+    }
 
-  public void reset() {
-    myCurrentFrame = 0;
-    myStartDeltaTime = 0;
-    myInitialStep = true;
-  }
+    protected void paintCycleEnd() {
 
-  public final boolean isForward() {
-    return myForward;
-  }
+    }
 
-  public boolean isDisposed() {
-    return myDisposed;
-  }
+    public void suspend() {
+        myStartDeltaTime = System.currentTimeMillis() - myStartTime;
+        myInitialStep = true;
+        stopTicker();
+    }
 
-  @Override
-  public String toString() {
-    ScheduledFuture<?> future = myTicker;
-    return "Animator '"+myName+"' @" + System.identityHashCode(this) +
-           (future == null || future.isDone() ? " (stopped)": " (running "+myCurrentFrame+"/"+myTotalFrames +" frame)");
-  }
+    public void resume() {
+        if (skipAnimation()) {
+            animationDone();
+            return;
+        }
+
+        if (myCycleDuration == 0) {
+            myCurrentFrame = myTotalFrames - 1;
+            paint();
+            animationDone();
+        } else if (myTicker == null) {
+            myTicker = EdtExecutorService.getScheduledExecutorInstance().scheduleWithFixedDelay(new Runnable() {
+                @Override
+                public void run() {
+                    onTick();
+                }
+
+                @Override
+                public String toString() {
+                    return "Scheduled " + Animator.this;
+                }
+            }, 0, myCycleDuration * 1000 / myTotalFrames, TimeUnit.MICROSECONDS);
+        }
+    }
+
+    private static boolean skipAnimation() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return true;
+        }
+        return false;
+    }
+
+    public abstract void paintNow(int frame, int totalFrames, int cycle);
+
+    @Override
+    public void dispose() {
+        stopTicker();
+        myDisposed = true;
+    }
+
+    public boolean isRunning() {
+        return myTicker != null;
+    }
+
+    public void reset() {
+        myCurrentFrame = 0;
+        myStartDeltaTime = 0;
+        myInitialStep = true;
+    }
+
+    public final boolean isForward() {
+        return myForward;
+    }
+
+    public boolean isDisposed() {
+        return myDisposed;
+    }
+
+    @Override
+    public String toString() {
+        ScheduledFuture<?> future = myTicker;
+        return "Animator '" + myName + "' @" + System.identityHashCode(this) +
+                (future == null || future.isDone() ? " (stopped)" : " (running " + myCurrentFrame + "/" + myTotalFrames + " frame)");
+    }
 }

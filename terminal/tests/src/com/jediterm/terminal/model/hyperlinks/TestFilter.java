@@ -20,31 +20,31 @@ import org.jetbrains.annotations.Nullable;
 
 public class TestFilter implements HyperlinkFilter {
 
-  public static final String PREFIX = "my_link:";
+    public static final String PREFIX = "my_link:";
 
-  @Nullable
-  @Override
-  public LinkResult apply(@NotNull String line) {
-    int startInd = line.indexOf(PREFIX);
-    if (startInd >= 0) {
-      int endInd = startInd;
-      while (endInd < line.length()) {
-        char ch = line.charAt(endInd);
-        if (!Character.isLetterOrDigit(ch) && "_:".indexOf(ch) < 0) {
-          break;
+    @Nullable
+    @Override
+    public LinkResult apply(@NotNull String line) {
+        int startInd = line.indexOf(PREFIX);
+        if (startInd >= 0) {
+            int endInd = startInd;
+            while (endInd < line.length()) {
+                char ch = line.charAt(endInd);
+                if (!Character.isLetterOrDigit(ch) && "_:".indexOf(ch) < 0) {
+                    break;
+                }
+                endInd++;
+            }
+            if (endInd > 0) {
+                return new LinkResult(new LinkResultItem(startInd, endInd, new LinkInfo(() -> {
+                })));
+            }
         }
-        endInd++;
-      }
-      if (endInd > 0) {
-        return new LinkResult(new LinkResultItem(startInd, endInd, new LinkInfo(() -> {
-        })));
-      }
+        return null;
     }
-    return null;
-  }
 
-  @NotNull
-  public static String formatLink(@NotNull String text) {
-    return PREFIX + text;
-  }
+    @NotNull
+    public static String formatLink(@NotNull String text) {
+        return PREFIX + text;
+    }
 }

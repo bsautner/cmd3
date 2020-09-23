@@ -23,70 +23,70 @@ import java.awt.*;
 
 public class TabsBorder {
 
-  private Insets myBorderSize;
-  private int myTabBorderSize;
+    private Insets myBorderSize;
+    private int myTabBorderSize;
 
-  private final JBTabsImpl myTabs;
+    private final JBTabsImpl myTabs;
 
-  private JBTabsPosition myPosition;
+    private JBTabsPosition myPosition;
 
-  private Insets myEffectiveBorder;
+    private Insets myEffectiveBorder;
 
-  public TabsBorder(JBTabsImpl tabs) {
-    myTabs = tabs;
-    myBorderSize = new Insets(JBTabsImpl.getBorder(-1), JBTabsImpl.getBorder(-1), JBTabsImpl.getBorder(-1), JBTabsImpl.getBorder(-1));
-    myTabBorderSize = JBTabsImpl.getBorder(-1);
-  }
-
-  public JBTabsPresentation setPaintBorder(int top, int left, int right, int bottom) {
-    final Insets newBorder = new Insets(
-      JBTabsImpl.getBorder(top), JBTabsImpl.getBorder(left), JBTabsImpl.getBorder(bottom), JBTabsImpl.getBorder(right));
-    if (newBorder.equals(myBorderSize)) return myTabs;
-
-    myBorderSize = newBorder;
-
-    myEffectiveBorder = null;
-
-    myTabs.relayout(true, false);
-
-    return myTabs;
-  }
-
-  public JBTabsPresentation setTabSidePaintBorder(int size) {
-    final int newSize = JBTabsImpl.getBorder(size);
-    if (myTabBorderSize == newSize) return myTabs;
-
-    myTabBorderSize = newSize;
-    myEffectiveBorder = null;
-
-    myTabs.revalidateAndRepaint(false);
-
-    return myTabs;
-  }
-
-  public int getTabBorderSize() {
-    return myTabBorderSize;
-  }
-
-  public Insets getEffectiveBorder() {
-    if (myEffectiveBorder != null && myTabs.getTabsPosition() == myPosition) return (Insets)myEffectiveBorder.clone();
-
-    myPosition = myTabs.getTabsPosition();
-
-    if (myTabs.isEditorTabs()) {
-      // it seems like all of the borders should be defined in splitters. this is wrong, but I just can not fix it right now :(
-      myEffectiveBorder = new Insets(myPosition == JBTabsPosition.top ? TabsUtil.TABS_BORDER : 0, 0, 0, 0);
-    }
-    else {
-      myEffectiveBorder = new Insets(
-        myPosition == JBTabsPosition.top ? myTabBorderSize : myBorderSize.top,
-        myPosition == JBTabsPosition.left ? myTabBorderSize : myBorderSize.left,
-        myPosition == JBTabsPosition.bottom ? myTabBorderSize : myBorderSize.bottom,
-        myPosition == JBTabsPosition.right ? myTabBorderSize : myBorderSize.right
-      );
+    public TabsBorder(JBTabsImpl tabs) {
+        myTabs = tabs;
+        myBorderSize = new Insets(JBTabsImpl.getBorder(-1), JBTabsImpl.getBorder(-1), JBTabsImpl.getBorder(-1), JBTabsImpl.getBorder(-1));
+        myTabBorderSize = JBTabsImpl.getBorder(-1);
     }
 
+    public JBTabsPresentation setPaintBorder(int top, int left, int right, int bottom) {
+        final Insets newBorder = new Insets(
+                JBTabsImpl.getBorder(top), JBTabsImpl.getBorder(left), JBTabsImpl.getBorder(bottom), JBTabsImpl.getBorder(right));
+        if (newBorder.equals(myBorderSize)) return myTabs;
 
-    return (Insets)myEffectiveBorder.clone();
-  }
+        myBorderSize = newBorder;
+
+        myEffectiveBorder = null;
+
+        myTabs.relayout(true, false);
+
+        return myTabs;
+    }
+
+    public JBTabsPresentation setTabSidePaintBorder(int size) {
+        final int newSize = JBTabsImpl.getBorder(size);
+        if (myTabBorderSize == newSize) return myTabs;
+
+        myTabBorderSize = newSize;
+        myEffectiveBorder = null;
+
+        myTabs.revalidateAndRepaint(false);
+
+        return myTabs;
+    }
+
+    public int getTabBorderSize() {
+        return myTabBorderSize;
+    }
+
+    public Insets getEffectiveBorder() {
+        if (myEffectiveBorder != null && myTabs.getTabsPosition() == myPosition)
+            return (Insets) myEffectiveBorder.clone();
+
+        myPosition = myTabs.getTabsPosition();
+
+        if (myTabs.isEditorTabs()) {
+            // it seems like all of the borders should be defined in splitters. this is wrong, but I just can not fix it right now :(
+            myEffectiveBorder = new Insets(myPosition == JBTabsPosition.top ? TabsUtil.TABS_BORDER : 0, 0, 0, 0);
+        } else {
+            myEffectiveBorder = new Insets(
+                    myPosition == JBTabsPosition.top ? myTabBorderSize : myBorderSize.top,
+                    myPosition == JBTabsPosition.left ? myTabBorderSize : myBorderSize.left,
+                    myPosition == JBTabsPosition.bottom ? myTabBorderSize : myBorderSize.bottom,
+                    myPosition == JBTabsPosition.right ? myTabBorderSize : myBorderSize.right
+            );
+        }
+
+
+        return (Insets) myEffectiveBorder.clone();
+    }
 }

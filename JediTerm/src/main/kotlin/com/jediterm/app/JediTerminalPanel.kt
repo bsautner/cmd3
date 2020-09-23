@@ -16,9 +16,11 @@ import java.awt.image.BufferedImage
 import java.awt.image.ImageObserver
 
 
-class JediTerminalPanel(private val mySettingsProvider: SettingsProvider,
-                        styleState: StyleState,
-                        backBuffer: TerminalTextBuffer) : TerminalPanel(mySettingsProvider, backBuffer, styleState), Disposable {
+class JediTerminalPanel(
+    private val mySettingsProvider: SettingsProvider,
+    styleState: StyleState,
+    backBuffer: TerminalTextBuffer
+) : TerminalPanel(mySettingsProvider, backBuffer, styleState), Disposable {
     override fun dispose() {
         //TODO
     }
@@ -32,7 +34,18 @@ class JediTerminalPanel(private val mySettingsProvider: SettingsProvider,
         DrawUtil.drawImage(gfx, image, x, y, observer)
     }
 
-    override fun drawImage(g: Graphics2D, image: BufferedImage, dx1: Int, dy1: Int, dx2: Int, dy2: Int, sx1: Int, sy1: Int, sx2: Int, sy2: Int) {
+    override fun drawImage(
+        g: Graphics2D,
+        image: BufferedImage,
+        dx1: Int,
+        dy1: Int,
+        dx2: Int,
+        dy2: Int,
+        sx1: Int,
+        sy1: Int,
+        sx2: Int,
+        sy2: Int
+    ) {
         drawImage(g, image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null)
     }
 
@@ -47,17 +60,19 @@ class JediTerminalPanel(private val mySettingsProvider: SettingsProvider,
 
 
     companion object {
-        fun drawImage(g: Graphics,
-                      image: Image,
-                      dx1: Int,
-                      dy1: Int,
-                      dx2: Int,
-                      dy2: Int,
-                      sx1: Int,
-                      sy1: Int,
-                      sx2: Int,
-                      sy2: Int,
-                      observer: ImageObserver?) {
+        fun drawImage(
+            g: Graphics,
+            image: Image,
+            dx1: Int,
+            dy1: Int,
+            dx2: Int,
+            dy2: Int,
+            sx1: Int,
+            sy1: Int,
+            sx2: Int,
+            sy2: Int,
+            observer: ImageObserver?
+        ) {
             if (image is JBHiDPIScaledImage) {
                 val newG = g.create(0, 0, image.getWidth(observer), image.getHeight(observer)) as Graphics2D
                 newG.scale(0.5, 0.5)

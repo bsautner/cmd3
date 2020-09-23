@@ -19,16 +19,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class NSWorkspace {
-  @Nullable
-  public static String absolutePathForAppBundleWithIdentifier(@NotNull String bundleID) {
-    Foundation.NSAutoreleasePool pool = new Foundation.NSAutoreleasePool();
-    try {
-      ID workspace = Foundation.invoke(Foundation.getObjcClass("NSWorkspace"), "sharedWorkspace");
-      return Foundation.toStringViaUTF8(Foundation.invoke(workspace, "absolutePathForAppBundleWithIdentifier:", 
-                                                          Foundation.nsString(bundleID)));
+    @Nullable
+    public static String absolutePathForAppBundleWithIdentifier(@NotNull String bundleID) {
+        Foundation.NSAutoreleasePool pool = new Foundation.NSAutoreleasePool();
+        try {
+            ID workspace = Foundation.invoke(Foundation.getObjcClass("NSWorkspace"), "sharedWorkspace");
+            return Foundation.toStringViaUTF8(Foundation.invoke(workspace, "absolutePathForAppBundleWithIdentifier:",
+                    Foundation.nsString(bundleID)));
+        } finally {
+            pool.drain();
+        }
     }
-    finally {
-      pool.drain();
-    }
-  }
 }

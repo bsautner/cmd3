@@ -29,11 +29,10 @@ package com.jediterm.terminal.ui;/*
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import com.jediterm.terminal.ui.CommandListener;
-
-import java.awt.*;
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 
 //com.jediterm.terminal.ui.SplitPaneDemo itself is not a visible component.
 public class SplitPaneDemo extends JPanel
@@ -42,8 +41,9 @@ public class SplitPaneDemo extends JPanel
     private JList list;
     private JSplitPane splitPane;
     final CommandListener commandListener;
-    private String[] imageNames = { "Bird", "Cat", "Dog", "Rabbit", "Pig", "dukeWaveRed",
+    private String[] imageNames = {"Bird", "Cat", "Dog", "Rabbit", "Pig", "dukeWaveRed",
             "kathyCosmo", "lainesTongue", "left", "middle", "right", "stickerface"};
+
     public SplitPaneDemo(CommandListener commandListener) {
         this.commandListener = commandListener;
         //Create the list of images and put it in a scroll pane.
@@ -56,8 +56,8 @@ public class SplitPaneDemo extends JPanel
 
         JScrollPane listScrollPane = new JScrollPane(list);
         picture = new JPanel();
-       // picture.setFont(picture.getFont().deriveFont(Font.ITALIC));
-       // picture.setHorizontalAlignment(JLabel.CENTER);
+        // picture.setFont(picture.getFont().deriveFont(Font.ITALIC));
+        // picture.setHorizontalAlignment(JLabel.CENTER);
 
         JScrollPane pictureScrollPane = new JScrollPane(picture);
 
@@ -79,12 +79,12 @@ public class SplitPaneDemo extends JPanel
 
     //Listens to the list
     public void valueChanged(ListSelectionEvent e) {
-        JList list = (JList)e.getSource();
+        JList list = (JList) e.getSource();
         updateLabel(imageNames[list.getSelectedIndex()]);
     }
 
     //Renders the selected image
-    protected void updateLabel (String name) {
+    protected void updateLabel(String name) {
 
         commandListener.itemSelected(name);
 
@@ -99,11 +99,6 @@ public class SplitPaneDemo extends JPanel
 
         return splitPane;
     }
-
-
-
-
-
 
 
 }

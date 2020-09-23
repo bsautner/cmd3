@@ -21,51 +21,51 @@ import javax.swing.*;
 import java.awt.*;
 
 public class NonOpaquePanel extends Wrapper {
-  public NonOpaquePanel() {
-    setOpaque(false);
-  }
-
-  public NonOpaquePanel(JComponent wrapped) {
-    super(wrapped);
-    setOpaque(false);
-  }
-
-  public NonOpaquePanel(LayoutManager layout, JComponent wrapped) {
-    super(layout, wrapped);
-    setOpaque(false);
-  }
-
-  public NonOpaquePanel(boolean isDoubleBuffered) {
-    super(isDoubleBuffered);
-    setOpaque(false);
-  }
-
-  public NonOpaquePanel(LayoutManager layout) {
-    super(layout);
-    setOpaque(false);
-  }
-
-  public NonOpaquePanel(LayoutManager layout, boolean isDoubleBuffered) {
-    super(layout, isDoubleBuffered);
-    setOpaque(false);
-  }
-
-  @Override
-  public void setOpaque(boolean isOpaque) {
-    super.setOpaque(isOpaque);
-    setDoubleBuffered(false);
-
-    if (!isOpaque && UIUtil.isUnderNimbusLookAndFeel()) {
-      if (UIUtil.isUnderNimbusLookAndFeel()) {
-        setBackground(UIUtil.TRANSPARENT_COLOR);
-      }
+    public NonOpaquePanel() {
+        setOpaque(false);
     }
-  }
 
-  public static void setTransparent(JComponent c) {
-    c.setOpaque(false);
-    if (UIUtil.isUnderNimbusLookAndFeel()) {
-      c.setBackground(UIUtil.TRANSPARENT_COLOR);
+    public NonOpaquePanel(JComponent wrapped) {
+        super(wrapped);
+        setOpaque(false);
     }
-  }
+
+    public NonOpaquePanel(LayoutManager layout, JComponent wrapped) {
+        super(layout, wrapped);
+        setOpaque(false);
+    }
+
+    public NonOpaquePanel(boolean isDoubleBuffered) {
+        super(isDoubleBuffered);
+        setOpaque(false);
+    }
+
+    public NonOpaquePanel(LayoutManager layout) {
+        super(layout);
+        setOpaque(false);
+    }
+
+    public NonOpaquePanel(LayoutManager layout, boolean isDoubleBuffered) {
+        super(layout, isDoubleBuffered);
+        setOpaque(false);
+    }
+
+    @Override
+    public void setOpaque(boolean isOpaque) {
+        super.setOpaque(isOpaque);
+        setDoubleBuffered(false);
+
+        if (!isOpaque && UIUtil.isUnderNimbusLookAndFeel()) {
+            if (UIUtil.isUnderNimbusLookAndFeel()) {
+                setBackground(UIUtil.TRANSPARENT_COLOR);
+            }
+        }
+    }
+
+    public static void setTransparent(JComponent c) {
+        c.setOpaque(false);
+        if (UIUtil.isUnderNimbusLookAndFeel()) {
+            c.setBackground(UIUtil.TRANSPARENT_COLOR);
+        }
+    }
 }

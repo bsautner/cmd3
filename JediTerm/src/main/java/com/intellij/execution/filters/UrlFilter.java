@@ -32,41 +32,41 @@ import java.util.regex.Matcher;
  * @author yole
  */
 public class UrlFilter implements HyperlinkFilter {
-  @Nullable
-  @Override
-  public LinkResult apply(String line) {
-    if (!URLUtil.canContainUrl(line)) return null;
+    @Nullable
+    @Override
+    public LinkResult apply(String line) {
+        if (!URLUtil.canContainUrl(line)) return null;
 
-    int textStartOffset = 0;
-    Matcher m = URLUtil.URL_PATTERN.matcher(line);
-    LinkResultItem item = null;
-    List<LinkResultItem> items = null;
-    while (m.find()) {
-      if (item != null) {
-        if (items == null) {
-          items = new ArrayList<>(2);
-          items.add(item);
+        int textStartOffset = 0;
+        Matcher m = URLUtil.URL_PATTERN.matcher(line);
+        LinkResultItem item = null;
+        List<LinkResultItem> items = null;
+        while (m.find()) {
+            if (item != null) {
+                if (items == null) {
+                    items = new ArrayList<>(2);
+                    items.add(item);
+                }
+            }
+
+            String url = m.group();
+            item = new LinkResultItem(textStartOffset + m.start(), textStartOffset + m.end(), new LinkInfo(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Desktop.getDesktop().browse(new URI(url));
+                    } catch (Exception e) {
+                        //pass
+                    }
+                }
+            }));
+
+            if (items != null) {
+                items.add(item);
+            }
         }
-      }
-
-      String url = m.group();
-      item = new LinkResultItem(textStartOffset + m.start(), textStartOffset + m.end(), new LinkInfo(new Runnable() {
-        @Override
-        public void run() {
-          try {
-            Desktop.getDesktop().browse(new URI(url));
-          } catch (Exception e) {
-            //pass
-          }
-        }
-      }));
-
-      if (items != null) {
-        items.add(item);
-      }
+        return items != null ? new LinkResult(items)
+                : item != null ? new LinkResult(item)
+                : null;
     }
-    return items != null ? new LinkResult(items)
-            : item != null ? new LinkResult(item)
-            : null;
-  }
 }

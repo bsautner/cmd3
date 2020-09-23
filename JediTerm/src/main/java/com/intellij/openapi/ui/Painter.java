@@ -23,14 +23,16 @@ import java.awt.*;
 
 public interface Painter {
 
-  boolean needsRepaint();
-  void paint(Component component, final Graphics2D g);
+    boolean needsRepaint();
 
-  void addListener(Listener listener);
-  void removeListener(Listener listener);
+    void paint(Component component, final Graphics2D g);
 
-  interface Listener {
-    void onNeedsRepaint(Painter painter, @Nullable JComponent dirtyComponent);
-  }
+    void addListener(Listener listener);
+
+    void removeListener(Listener listener);
+
+    interface Listener {
+        void onNeedsRepaint(Painter painter, @Nullable JComponent dirtyComponent);
+    }
 
 }
