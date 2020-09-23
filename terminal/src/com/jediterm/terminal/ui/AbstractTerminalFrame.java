@@ -26,15 +26,15 @@ public abstract class AbstractTerminalFrame {
 
     private JFrame myBufferFrame;
 
-    private TerminalWidget myTerminal;
+    private final TerminalWidget myTerminal;
 
-    private AbstractAction myOpenAction = new AbstractAction("New Session") {
+    private final AbstractAction myOpenAction = new AbstractAction("New Session") {
         public void actionPerformed(final ActionEvent e) {
             openSession(myTerminal);
         }
     };
 
-    private AbstractAction myShowBuffersAction = new AbstractAction("Show buffers") {
+    private final AbstractAction myShowBuffersAction = new AbstractAction("Show buffers") {
         public void actionPerformed(final ActionEvent e) {
             if (myBufferFrame == null) {
                 showBuffers();
@@ -42,14 +42,14 @@ public abstract class AbstractTerminalFrame {
         }
     };
 
-    private AbstractAction myDumpDimension = new AbstractAction("Dump terminal dimension") {
+    private final AbstractAction myDumpDimension = new AbstractAction("Dump terminal dimension") {
         public void actionPerformed(final ActionEvent e) {
             LOG.info(myTerminal.getTerminalDisplay().getColumnCount() +
                     "x" + myTerminal.getTerminalDisplay().getRowCount());
         }
     };
 
-    private AbstractAction myDumpSelection = new AbstractAction("Dump selection") {
+    private final AbstractAction myDumpSelection = new AbstractAction("Dump selection") {
         public void actionPerformed(final ActionEvent e) {
             Pair<Point, Point> points = myTerminal.getTerminalDisplay()
                     .getSelection().pointsForRun(myTerminal.getTerminalDisplay().getColumnCount());
@@ -58,26 +58,26 @@ public abstract class AbstractTerminalFrame {
         }
     };
 
-    private AbstractAction myDumpCursorPosition = new AbstractAction("Dump cursor position") {
+    private final AbstractAction myDumpCursorPosition = new AbstractAction("Dump cursor position") {
         public void actionPerformed(final ActionEvent e) {
             LOG.info(myTerminal.getCurrentSession().getTerminal().getCursorX() +
                     "x" + myTerminal.getCurrentSession().getTerminal().getCursorY());
         }
     };
 
-    private AbstractAction myCursor0x0 = new AbstractAction("1x1") {
+    private final AbstractAction myCursor0x0 = new AbstractAction("1x1") {
         public void actionPerformed(final ActionEvent e) {
             myTerminal.getCurrentSession().getTerminal().cursorPosition(1, 1);
         }
     };
 
-    private AbstractAction myCursor10x10 = new AbstractAction("10x10") {
+    private final AbstractAction myCursor10x10 = new AbstractAction("10x10") {
         public void actionPerformed(final ActionEvent e) {
             myTerminal.getCurrentSession().getTerminal().cursorPosition(10, 10);
         }
     };
 
-    private AbstractAction myCursor80x24 = new AbstractAction("80x24") {
+    private final AbstractAction myCursor80x24 = new AbstractAction("80x24") {
         public void actionPerformed(final ActionEvent e) {
             myTerminal.getCurrentSession().getTerminal().cursorPosition(80, 24);
         }
@@ -152,8 +152,11 @@ public abstract class AbstractTerminalFrame {
         frame.setJMenuBar(mb);
         sizeFrameForTerm(frame);
 
-        CommandListener commandListener = value -> {
-            myTerminal.sendCommand(value);
+        CommandListener commandListener = new CommandListener() {
+            @Override
+            public void itemSelected(@NotNull String s) {
+                myTerminal.sendCommand(s);
+            }
         };
 
         // frame.getContentPane().add("Center", myTerminal.getComponent());

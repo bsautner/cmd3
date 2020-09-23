@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.jediterm.terminal.*;
 import com.jediterm.terminal.SubstringFinder.FindResult.FindItem;
 import com.jediterm.terminal.TextStyle.Option;
+import com.jediterm.terminal.command.CommmandProcessor;
 import com.jediterm.terminal.emulator.ColorPalette;
 import com.jediterm.terminal.emulator.charset.CharacterSets;
 import com.jediterm.terminal.emulator.mouse.MouseMode;
@@ -97,6 +98,8 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
 
     private int myCursorType = Cursor.DEFAULT_CURSOR;
     private final TerminalKeyHandler myTerminalKeyHandler = new TerminalKeyHandler();
+
+    private final CommmandProcessor commmandProcessor = new CommmandProcessor();
 
     public TerminalPanel(@NotNull SettingsProvider settingsProvider, @NotNull TerminalTextBuffer terminalTextBuffer, @NotNull StyleState styleState) {
         mySettingsProvider = settingsProvider;
@@ -871,6 +874,8 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
         } else if (id == KeyEvent.KEY_TYPED) {
             for (KeyListener keyListener : myCustomKeyListeners) {
                 keyListener.keyTyped(e);
+                System.out.println(e.getKeyChar());
+               commmandProcessor.keyTyped(e);
             }
         }
     }

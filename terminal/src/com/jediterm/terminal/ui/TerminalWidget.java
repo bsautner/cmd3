@@ -32,5 +32,6 @@ public interface TerminalWidget {
 
     void removeListener(TerminalWidgetListener listener);
 
+
     void sendCommand(String command);
 }

@@ -75,6 +75,7 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
         myTerminal.setModeEnabled(TerminalMode.AltSendsEscape, mySettingsProvider.altSendsEscape());
 
         myTerminalPanel.addTerminalMouseListener(myTerminal);
+
         myTerminalPanel.setNextProvider(this);
         myTerminalPanel.setCoordAccessor(myTerminal);
 
@@ -648,6 +649,7 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
     public void removeListener(TerminalWidgetListener listener) {
         myListeners.remove(listener);
     }
+
 
     @Override
     public void sendCommand(String command) {

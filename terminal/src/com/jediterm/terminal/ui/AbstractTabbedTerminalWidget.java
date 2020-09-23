@@ -64,10 +64,12 @@ public abstract class AbstractTabbedTerminalWidget<T extends JediTermWidget> ext
         return terminal;
     }
 
+
     @Override
     public void sendCommand(String command) {
         if (myTermWidget != null) {
             myTermWidget.sendCommand(command);
+            myTermWidget.grabFocus();
         }
     }
 

@@ -74,26 +74,20 @@ public class SplitPaneDemo extends JPanel
 
         //Provide a preferred size for the split pane.
         splitPane.setPreferredSize(new Dimension(1200, 800));
-        updateLabel(imageNames[list.getSelectedIndex()]);
+
     }
 
     //Listens to the list
     public void valueChanged(ListSelectionEvent e) {
-        JList list = (JList) e.getSource();
-        updateLabel(imageNames[list.getSelectedIndex()]);
-    }
 
-    //Renders the selected image
-    protected void updateLabel(String name) {
+        if (!e.getValueIsAdjusting()) {//This line prevents double events
+            commandListener.itemSelected(imageNames[list.getSelectedIndex()]);
 
-        commandListener.itemSelected(name);
+        }
+
 
     }
 
-    //Used by SplitPaneDemo2
-    public JList getImageList() {
-        return list;
-    }
 
     public JSplitPane getSplitPane() {
 
