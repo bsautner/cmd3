@@ -30,17 +30,19 @@ sourceSets {
 }
 
 dependencies {
+    implementation 'junit:junit:4.12'
     compile project(':pty')
 
     compile ":eawtstub:"
 
     testCompile 'junit:junit:4.12'
-
+    compile group: 'com.h2database', name: 'h2', version: '1.4.200'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains:annotations:13.0"
     compile 'net.java.dev.jna:jna:4.5.0'
     compile 'net.java.dev.jna:jna-platform:4.5.0'
     compile ":trove4j:"
+    testCompile 'junit:junit:4.12'
 }
 
 mainClassName = "com.jediterm.app.JediTermMain"
