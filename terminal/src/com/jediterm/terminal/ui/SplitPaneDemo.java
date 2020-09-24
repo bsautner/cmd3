@@ -29,6 +29,8 @@ package com.jediterm.terminal.ui;/*
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import com.jediterm.terminal.command.CommandListener;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -81,7 +83,7 @@ public class SplitPaneDemo extends JPanel
     public void valueChanged(ListSelectionEvent e) {
 
         if (!e.getValueIsAdjusting()) {//This line prevents double events
-            commandListener.itemSelected(imageNames[list.getSelectedIndex()]);
+            commandListener.commandSelected(imageNames[list.getSelectedIndex()]);
 
         }
 

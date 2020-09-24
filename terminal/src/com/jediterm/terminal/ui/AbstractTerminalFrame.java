@@ -4,6 +4,7 @@ package com.jediterm.terminal.ui;
 import com.jediterm.terminal.RequestOrigin;
 import com.jediterm.terminal.TabbedTerminalWidget;
 import com.jediterm.terminal.TtyConnector;
+import com.jediterm.terminal.command.CommandListener;
 import com.jediterm.terminal.debug.BufferPanel;
 import com.jediterm.terminal.model.SelectionUtil;
 import com.jediterm.terminal.ui.settings.DefaultTabbedSettingsProvider;
@@ -27,10 +28,11 @@ public abstract class AbstractTerminalFrame {
     private JFrame myBufferFrame;
 
     private final TerminalWidget myTerminal;
+    private final CommandListener commandListener;
 
     private final AbstractAction myOpenAction = new AbstractAction("New Session") {
         public void actionPerformed(final ActionEvent e) {
-            openSession(myTerminal);
+            openSession(commandListener, myTerminal);
         }
     };
 
@@ -121,23 +123,24 @@ public abstract class AbstractTerminalFrame {
     }
 
     @Nullable
-    protected JediTermWidget openSession(TerminalWidget terminal) {
+    protected JediTermWidget openSession(CommandListener commandListener, TerminalWidget terminal) {
         if (terminal.canOpenSession()) {
-            return openSession(terminal, createTtyConnector());
+            return openSession(commandListener, terminal, createTtyConnector());
         }
         return null;
     }
 
-    public JediTermWidget openSession(TerminalWidget terminal, TtyConnector ttyConnector) {
-        JediTermWidget session = terminal.createTerminalSession(ttyConnector);
+    public JediTermWidget openSession(CommandListener commandListener, TerminalWidget terminal, TtyConnector ttyConnector) {
+        JediTermWidget session = terminal.createTerminalSession(commandListener, ttyConnector);
         session.start();
         return session;
     }
 
     public abstract TtyConnector createTtyConnector();
 
-    protected AbstractTerminalFrame() {
-        myTerminal = createTabbedTerminalWidget();
+    protected AbstractTerminalFrame(CommandListener commandListener) {
+        this.myTerminal = createTabbedTerminalWidget(commandListener);
+        this.commandListener = commandListener;
 
         final JFrame frame = new JFrame("CMD3");
 
@@ -152,12 +155,6 @@ public abstract class AbstractTerminalFrame {
         frame.setJMenuBar(mb);
         sizeFrameForTerm(frame);
 
-        CommandListener commandListener = new CommandListener() {
-            @Override
-            public void itemSelected(@NotNull String s) {
-                myTerminal.sendCommand(s);
-            }
-        };
 
         // frame.getContentPane().add("Center", myTerminal.getComponent());
         SplitPaneDemo splitPaneDemo = new SplitPaneDemo(commandListener);
@@ -189,23 +186,24 @@ public abstract class AbstractTerminalFrame {
             }
         });
 
-        openSession(myTerminal);
+        openSession(commandListener, myTerminal);
         splitPaneDemo.getSplitPane().setRightComponent(myTerminal.getComponent());
 
     }
 
     @NotNull
-    protected AbstractTabbedTerminalWidget createTabbedTerminalWidget() {
-        return new TabbedTerminalWidget(new DefaultTabbedSettingsProvider(), this::openSession) {
-            @Override
-            public JediTermWidget createInnerTerminalWidget() {
-                return createTerminalWidget(getSettingsProvider());
-            }
-        };
+    protected AbstractTabbedTerminalWidget createTabbedTerminalWidget(CommandListener commandListener) {
+        return null;
+//        return new TabbedTerminalWidget(new DefaultTabbedSettingsProvider(), this::openSession) {
+//            @Override
+//            public JediTermWidget createInnerTerminalWidget(CommandListener commandListener) {
+//                return createTerminalWidget(commandListener, getSettingsProvider());
+//            }
+//        };
     }
 
-    protected JediTermWidget createTerminalWidget(@NotNull TabbedSettingsProvider settingsProvider) {
-        return new JediTermWidget(settingsProvider);
+    protected JediTermWidget createTerminalWidget(@NotNull CommandListener commandListener, @NotNull TabbedSettingsProvider settingsProvider) {
+        return new JediTermWidget(commandListener, settingsProvider);
     }
 
     private void sizeFrameForTerm(final JFrame frame) {
@@ -243,4 +241,8 @@ public abstract class AbstractTerminalFrame {
         });
     }
 
+    public void sendCommand(@NotNull String command) {
+
+        myTerminal.sendCommand(command);
+    }
 }

@@ -2,6 +2,7 @@ package com.jediterm.terminal.ui;
 
 import com.jediterm.terminal.TerminalDisplay;
 import com.jediterm.terminal.TtyConnector;
+import com.jediterm.terminal.command.CommandListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.*;
  * @author traff
  */
 public interface TerminalWidget {
-    JediTermWidget createTerminalSession(TtyConnector ttyConnector);
+    JediTermWidget createTerminalSession(CommandListener commandListener, TtyConnector ttyConnector);
 
     JComponent getComponent();
 

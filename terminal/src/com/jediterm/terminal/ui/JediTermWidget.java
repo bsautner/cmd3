@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.jediterm.terminal.SubstringFinder.FindResult;
 import com.jediterm.terminal.SubstringFinder.FindResult.FindItem;
 import com.jediterm.terminal.*;
+import com.jediterm.terminal.command.CommandListener;
 import com.jediterm.terminal.debug.DebugBufferType;
 import com.jediterm.terminal.model.JediTerminal;
 import com.jediterm.terminal.model.StyleState;
@@ -48,15 +49,15 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
     private final TextProcessing myTextProcessing;
     private final List<TerminalWidgetListener> myListeners = new CopyOnWriteArrayList<>();
 
-    public JediTermWidget(@NotNull SettingsProvider settingsProvider) {
-        this(80, 24, settingsProvider);
+    public JediTermWidget(CommandListener commandListener, @NotNull SettingsProvider settingsProvider) {
+        this(commandListener, 80, 24, settingsProvider);
     }
 
-    public JediTermWidget(Dimension dimension, SettingsProvider settingsProvider) {
-        this(dimension.width, dimension.height, settingsProvider);
+    public JediTermWidget(CommandListener commandListener, Dimension dimension, SettingsProvider settingsProvider) {
+        this(commandListener, dimension.width, dimension.height, settingsProvider);
     }
 
-    public JediTermWidget(int columns, int lines, SettingsProvider settingsProvider) {
+    public JediTermWidget(CommandListener commandListener, int columns, int lines, SettingsProvider settingsProvider) {
         super(new BorderLayout());
 
         mySettingsProvider = settingsProvider;
@@ -69,7 +70,7 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
         TerminalTextBuffer terminalTextBuffer = new TerminalTextBuffer(columns, lines, styleState, settingsProvider.getBufferMaxLinesCount(), myTextProcessing);
         myTextProcessing.setTerminalTextBuffer(terminalTextBuffer);
 
-        myTerminalPanel = createTerminalPanel(mySettingsProvider, styleState, terminalTextBuffer);
+        myTerminalPanel = createTerminalPanel(commandListener, mySettingsProvider, styleState, terminalTextBuffer);
         myTerminal = new JediTerminal(myTerminalPanel, terminalTextBuffer, styleState);
 
         myTerminal.setModeEnabled(TerminalMode.AltSendsEscape, mySettingsProvider.altSendsEscape());
@@ -113,8 +114,8 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
         return styleState;
     }
 
-    protected TerminalPanel createTerminalPanel(@NotNull SettingsProvider settingsProvider, @NotNull StyleState styleState, @NotNull TerminalTextBuffer terminalTextBuffer) {
-        return new TerminalPanel(settingsProvider, terminalTextBuffer, styleState);
+    protected TerminalPanel createTerminalPanel(@NotNull CommandListener commandListener, @NotNull SettingsProvider settingsProvider, @NotNull StyleState styleState, @NotNull TerminalTextBuffer terminalTextBuffer) {
+        return new TerminalPanel(commandListener, settingsProvider, terminalTextBuffer, styleState);
     }
 
     protected PreConnectHandler createPreConnectHandler(JediTerminal terminal) {
@@ -217,7 +218,7 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
     }
 
     @Override
-    public JediTermWidget createTerminalSession(TtyConnector ttyConnector) {
+    public JediTermWidget createTerminalSession(CommandListener commandListener, TtyConnector ttyConnector) {
         setTtyConnector(ttyConnector);
         return this;
     }

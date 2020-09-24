@@ -2,40 +2,45 @@ package com.jediterm.app.data
 
 import java.sql.Connection
 import java.sql.DriverManager
-import java.sql.PreparedStatement
 import java.util.*
 
-class H2() {
+class H2 {
 
-    val conn : Connection = DriverManager.getConnection("jdbc:h2:file:~/test3.db", "sa", "")
-    private val IN = "INSERT INTO CMDS" +
-            "  (command) VALUES " +
-            " (?);"
+    private val connection : Connection = DriverManager.getConnection("jdbc:h2:file:~/.cmd3/test3.db", "sa", "")
 
-    val cc =
+    private val insertCommandSql = """
+        INSERT INTO COMMANDS (command) VALUES (?);"
+    """.trimIndent()
+
+    private val createCommandsTable =
        """
-create table IF NOT EXISTS CMDS
+create table IF NOT EXISTS COMMANDS
 (
     COMMAND VARCHAR       not null,
     COUNT   INT default 0 not null
 );
 
-create unique index IF NOT EXISTS CMDS2_UINDEX
+create unique index IF NOT EXISTS COMMANDS_UINDEX
     on CMDS (COMMAND);
        """.trimIndent()
 
 
     fun connect() {
 
-        val c = conn.prepareStatement(cc)
+        val c = connection.prepareStatement(createCommandsTable)
         c.executeUpdate()
-        conn.commit()
+        connection.commit()
 
-        val s = conn.prepareStatement(IN)
-        s.setString(1, "test ${UUID.randomUUID()}")
+        connection.close()
+    }
+
+    fun insertCommand(command : String) {
+
+        val s = connection.prepareStatement(insertCommandSql)
+        s.setString(1, command)
         s.executeUpdate()
-        conn.commit()
-        conn.close()
+        connection.commit()
+        connection.close()
     }
 
 }

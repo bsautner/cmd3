@@ -3,16 +3,17 @@ package com.jediterm.terminal.command
 import java.awt.event.KeyEvent
 
 
-class CommmandProcessor()  {
+class CommandProcessor(private val commandListener: CommandListener)  {
 
     private val sb = StringBuilder()
+
 
     fun keyTyped(e: KeyEvent) {
 
         when(e.keyChar.toInt()) { //enter
             10 -> {
 
-                println(sb.toString())
+                commandListener.commandEntered(sb.toString())
                 sb.setLength(0)
 
 

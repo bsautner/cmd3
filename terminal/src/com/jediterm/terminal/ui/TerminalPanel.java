@@ -5,7 +5,8 @@ import com.google.common.collect.Lists;
 import com.jediterm.terminal.*;
 import com.jediterm.terminal.SubstringFinder.FindResult.FindItem;
 import com.jediterm.terminal.TextStyle.Option;
-import com.jediterm.terminal.command.CommmandProcessor;
+import com.jediterm.terminal.command.CommandListener;
+import com.jediterm.terminal.command.CommandProcessor;
 import com.jediterm.terminal.emulator.ColorPalette;
 import com.jediterm.terminal.emulator.charset.CharacterSets;
 import com.jediterm.terminal.emulator.mouse.MouseMode;
@@ -99,9 +100,9 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
     private int myCursorType = Cursor.DEFAULT_CURSOR;
     private final TerminalKeyHandler myTerminalKeyHandler = new TerminalKeyHandler();
 
-    private final CommmandProcessor commmandProcessor = new CommmandProcessor();
+    private final CommandProcessor commmandProcessor;
 
-    public TerminalPanel(@NotNull SettingsProvider settingsProvider, @NotNull TerminalTextBuffer terminalTextBuffer, @NotNull StyleState styleState) {
+    public TerminalPanel(@NotNull CommandListener commandListener, @NotNull SettingsProvider settingsProvider, @NotNull TerminalTextBuffer terminalTextBuffer, @NotNull StyleState styleState) {
         mySettingsProvider = settingsProvider;
         myTerminalTextBuffer = terminalTextBuffer;
         myStyleState = styleState;
@@ -109,6 +110,8 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
         myTermSize.height = terminalTextBuffer.getHeight();
         myMaxFPS = mySettingsProvider.maxRefreshRate();
         myCopyPasteHandler = createCopyPasteHandler();
+
+        this.commmandProcessor = new CommandProcessor(commandListener);
 
         updateScrolling(true);
 

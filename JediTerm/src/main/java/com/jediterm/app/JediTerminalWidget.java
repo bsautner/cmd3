@@ -9,6 +9,7 @@ import com.jediterm.terminal.SubstringFinder;
 import com.jediterm.terminal.TerminalStarter;
 import com.jediterm.terminal.TtyBasedArrayDataStream;
 import com.jediterm.terminal.TtyConnector;
+import com.jediterm.terminal.command.CommandListener;
 import com.jediterm.terminal.model.JediTerminal;
 import com.jediterm.terminal.model.StyleState;
 import com.jediterm.terminal.model.TerminalTextBuffer;
@@ -21,18 +22,19 @@ import java.awt.*;
 
 public class JediTerminalWidget extends JediTermWidget implements Disposable {
 
-    public JediTerminalWidget(SettingsProvider settingsProvider, Disposable parent) {
-        super(settingsProvider);
+    public JediTerminalWidget(CommandListener commandListener, SettingsProvider settingsProvider, Disposable parent) {
+        super(commandListener, settingsProvider);
         setName("terminal");
 
         Disposer.register(parent, this);
     }
 
     @Override
-    protected JediTerminalPanel createTerminalPanel(@NotNull SettingsProvider settingsProvider,
+    protected JediTerminalPanel createTerminalPanel(@NotNull CommandListener commandListener,
+                                                    @NotNull SettingsProvider settingsProvider,
                                                     @NotNull StyleState styleState,
                                                     @NotNull TerminalTextBuffer textBuffer) {
-        JediTerminalPanel panel = new JediTerminalPanel(settingsProvider, styleState, textBuffer);
+        JediTerminalPanel panel = new JediTerminalPanel(commandListener, settingsProvider, styleState, textBuffer);
         Disposer.register(this, panel);
         return panel;
     }

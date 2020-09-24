@@ -9,6 +9,7 @@ import com.intellij.util.EncodingEnvironmentUtil
 import com.jediterm.pty.PtyProcessTtyConnector
 import com.jediterm.terminal.LoggingTtyConnector
 import com.jediterm.terminal.TtyConnector
+import com.jediterm.terminal.command.CommandListener
 import com.jediterm.terminal.ui.AbstractTerminalFrame
 import com.jediterm.terminal.ui.TerminalWidget
 import com.jediterm.terminal.ui.UIUtil
@@ -24,27 +25,27 @@ import java.util.*
 import java.util.function.Function
 
 object JediTermMain {
-    @JvmStatic
-    fun main(arg: Array<String>) {
+
+    fun launch(commandListener: CommandListener) : JediTerm {
         BasicConfigurator.configure()
         Logger.getRootLogger().level = Level.INFO
-        JediTerm()
+        return JediTerm(commandListener)
     }
 }
 
-class JediTerm : AbstractTerminalFrame(), Disposable {
+class JediTerm(commandListener: CommandListener) : AbstractTerminalFrame(commandListener), Disposable {
     override fun dispose() {
         // TODO
     }
 
-    override fun createTabbedTerminalWidget(): JediTabbedTerminalWidget {
+    override fun createTabbedTerminalWidget(commandListener: CommandListener): JediTabbedTerminalWidget {
         return object : JediTabbedTerminalWidget(
             DefaultTabbedSettingsProvider(),
-            Function<Pair<TerminalWidget, String>, JediTerminalWidget> { pair -> openSession(pair?.first) as JediTerminalWidget },
+            Function<Pair<TerminalWidget, String>, JediTerminalWidget> { pair -> openSession(commandListener, pair.first) as JediTerminalWidget },
             this
         ) {
-            override fun createInnerTerminalWidget(): JediTerminalWidget {
-                return createTerminalWidget(settingsProvider)
+            override fun createInnerTerminalWidget(commandListener: CommandListener): JediTerminalWidget {
+                return createTerminalWidget(commandListener, settingsProvider)
             }
         }
     }
@@ -77,8 +78,8 @@ class JediTerm : AbstractTerminalFrame(), Disposable {
 
     }
 
-    override fun createTerminalWidget(settingsProvider: TabbedSettingsProvider): JediTerminalWidget {
-        val widget = JediTerminalWidget(settingsProvider, this)
+    override fun createTerminalWidget(commandListener : CommandListener,  settingsProvider: TabbedSettingsProvider): JediTerminalWidget {
+        val widget = JediTerminalWidget(commandListener, settingsProvider, this)
         widget.addHyperlinkFilter(UrlFilter())
         return widget
     }

@@ -8,6 +8,7 @@ import com.jediterm.terminal.RequestOrigin;
 import com.jediterm.terminal.TerminalDisplay;
 import com.jediterm.terminal.TtyConnector;
 import com.jediterm.terminal.TtyConnectorWaitFor;
+import com.jediterm.terminal.command.CommandListener;
 import com.jediterm.terminal.ui.settings.TabbedSettingsProvider;
 import com.jediterm.terminal.util.JTextFieldLimit;
 import org.jetbrains.annotations.NotNull;
@@ -56,10 +57,10 @@ public abstract class AbstractTabbedTerminalWidget<T extends JediTermWidget> ext
     }
 
     @Override
-    public T createTerminalSession(final TtyConnector ttyConnector) {
-        final T terminal = createNewTabWidget();
+    public T createTerminalSession(CommandListener commandListener, final TtyConnector ttyConnector) {
+        final T terminal = createNewTabWidget(commandListener);
 
-        initSession(ttyConnector, terminal);
+        initSession(commandListener, ttyConnector, terminal);
 
         return terminal;
     }
@@ -73,8 +74,8 @@ public abstract class AbstractTabbedTerminalWidget<T extends JediTermWidget> ext
         }
     }
 
-    public void initSession(TtyConnector ttyConnector, T terminal) {
-        terminal.createTerminalSession(ttyConnector);
+    public void initSession(CommandListener commandListener, TtyConnector ttyConnector, T terminal) {
+        terminal.createTerminalSession(commandListener, ttyConnector);
         if (myTabs != null) {
             int index = myTabs.indexOfComponent(terminal);
             if (index != -1) {
@@ -84,8 +85,8 @@ public abstract class AbstractTabbedTerminalWidget<T extends JediTermWidget> ext
         setupTtyConnectorWaitFor(ttyConnector, terminal);
     }
 
-    public T createNewTabWidget() {
-        final T terminal = createInnerTerminalWidget();
+    public T createNewTabWidget(CommandListener commandListener) {
+        final T terminal = createInnerTerminalWidget(commandListener);
 
         terminal.setNextProvider(this);
 
@@ -115,7 +116,7 @@ public abstract class AbstractTabbedTerminalWidget<T extends JediTermWidget> ext
         return terminal;
     }
 
-    public abstract T createInnerTerminalWidget();
+    public abstract T createInnerTerminalWidget(CommandListener commandListener);
 
     protected void setupTtyConnectorWaitFor(final TtyConnector ttyConnector, final T widget) {
         new TtyConnectorWaitFor(ttyConnector, Executors.newSingleThreadExecutor()).setTerminationCallback(integer -> {

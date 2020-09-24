@@ -4,12 +4,14 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jediterm.terminal.LoggingTtyConnector;
 import com.jediterm.terminal.TtyConnector;
+import com.jediterm.terminal.command.CommandListener;
 import com.jediterm.terminal.ui.AbstractTerminalFrame;
 import com.jediterm.terminal.ui.UIUtil;
 import com.pty4j.PtyProcess;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -21,6 +23,10 @@ import java.util.Map;
  * @author traff
  */
 public class PtyMain extends AbstractTerminalFrame {
+    protected PtyMain(CommandListener commandListener) {
+        super(commandListener);
+    }
+
     @Override
     public TtyConnector createTtyConnector() {
         try {
@@ -45,7 +51,17 @@ public class PtyMain extends AbstractTerminalFrame {
     public static void main(final String[] arg) {
         BasicConfigurator.configure();
         Logger.getRootLogger().setLevel(Level.INFO);
-        new PtyMain();
+        new PtyMain(new CommandListener() {
+            @Override
+            public void commandEntered(@NotNull String command) {
+
+            }
+
+            @Override
+            public void commandSelected(@NotNull String command) {
+
+            }
+        });
     }
 
 

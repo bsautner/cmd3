@@ -1,5 +1,6 @@
 package com.jediterm.terminal;
 
+import com.jediterm.terminal.command.CommandListener;
 import com.jediterm.terminal.ui.AbstractTabbedTerminalWidget;
 import com.jediterm.terminal.ui.AbstractTabs;
 import com.jediterm.terminal.ui.JediTermWidget;
@@ -18,8 +19,8 @@ public class TabbedTerminalWidget extends AbstractTabbedTerminalWidget<JediTermW
     }
 
     @Override
-    public JediTermWidget createInnerTerminalWidget() {
-        return new JediTermWidget(getSettingsProvider());
+    public JediTermWidget createInnerTerminalWidget(CommandListener commandListener) {
+        return new JediTermWidget(commandListener, getSettingsProvider());
     }
 
     @Override
