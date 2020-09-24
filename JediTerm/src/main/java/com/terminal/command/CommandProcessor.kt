@@ -1,6 +1,6 @@
 package com.terminal.command
 
-import app.data.H2
+import com.app.data.H2
 import java.awt.event.KeyEvent
 
 

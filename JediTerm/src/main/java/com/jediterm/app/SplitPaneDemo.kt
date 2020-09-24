@@ -1,7 +1,7 @@
 package com.jediterm.app
 
 
-import app.data.H2
+import com.app.data.H2
 import com.terminal.command.CommandProcessor
 import java.awt.Dimension
 import javax.swing.*
@@ -12,10 +12,10 @@ class SplitPaneDemo(private val selectionListener: SelectionListener) : JPanel()
     private val picture: JPanel
     private val list: JList<*>
     val splitPane: JSplitPane
-    var h2 : H2 = H2()
+    var dao : H2 = H2()
 
 
-    val commands = h2.getCommands()
+    val commands = dao.getCommands()
     //Listens to the list
     override fun valueChanged(e: ListSelectionEvent) {
         if (!e.valueIsAdjusting) { //This line prevents double events

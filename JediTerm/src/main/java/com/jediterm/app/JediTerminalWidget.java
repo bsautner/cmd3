@@ -1,6 +1,6 @@
 package com.jediterm.app;
 
-import app.JediTerminalPanel;
+import com.app.JediTerminalPanel;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.ui.components.JBScrollBar;
