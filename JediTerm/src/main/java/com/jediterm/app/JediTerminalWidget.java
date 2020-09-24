@@ -1,20 +1,21 @@
 package com.jediterm.app;
 
+import app.JediTerminalPanel;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.ui.components.JBScrollBar;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.util.ui.RegionPainter;
-import com.jediterm.terminal.SubstringFinder;
-import com.jediterm.terminal.TerminalStarter;
-import com.jediterm.terminal.TtyBasedArrayDataStream;
-import com.jediterm.terminal.TtyConnector;
-import com.jediterm.terminal.command.CommandListener;
-import com.jediterm.terminal.model.JediTerminal;
-import com.jediterm.terminal.model.StyleState;
-import com.jediterm.terminal.model.TerminalTextBuffer;
-import com.jediterm.terminal.ui.JediTermWidget;
-import com.jediterm.terminal.ui.settings.SettingsProvider;
+import com.terminal.SubstringFinder;
+import com.terminal.TerminalStarter;
+import com.terminal.TtyBasedArrayDataStream;
+import com.terminal.TtyConnector;
+
+import com.terminal.model.JediTerminal;
+import com.terminal.model.StyleState;
+import com.terminal.model.TerminalTextBuffer;
+import com.terminal.ui.JediTermWidget;
+import com.terminal.ui.settings.SettingsProvider;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -22,19 +23,18 @@ import java.awt.*;
 
 public class JediTerminalWidget extends JediTermWidget implements Disposable {
 
-    public JediTerminalWidget(CommandListener commandListener, SettingsProvider settingsProvider, Disposable parent) {
-        super(commandListener, settingsProvider);
-        setName("terminal");
+    public JediTerminalWidget(SettingsProvider settingsProvider, Disposable parent) {
+        super(settingsProvider);
+        setName("com/terminal");
 
         Disposer.register(parent, this);
     }
 
     @Override
-    protected JediTerminalPanel createTerminalPanel(@NotNull CommandListener commandListener,
-                                                    @NotNull SettingsProvider settingsProvider,
+    protected JediTerminalPanel createTerminalPanel(@NotNull SettingsProvider settingsProvider,
                                                     @NotNull StyleState styleState,
                                                     @NotNull TerminalTextBuffer textBuffer) {
-        JediTerminalPanel panel = new JediTerminalPanel(commandListener, settingsProvider, styleState, textBuffer);
+        JediTerminalPanel panel = new JediTerminalPanel(settingsProvider, styleState, textBuffer);
         Disposer.register(this, panel);
         return panel;
     }

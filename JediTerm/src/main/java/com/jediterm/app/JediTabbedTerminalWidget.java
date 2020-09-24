@@ -10,12 +10,12 @@ import com.intellij.ui.tabs.impl.JBEditorTabs;
 import com.intellij.ui.tabs.impl.JBTabsImpl;
 import com.intellij.ui.tabs.impl.TabLabel;
 import com.intellij.util.ui.UIUtil;
-import com.jediterm.terminal.command.CommandListener;
-import com.jediterm.terminal.ui.AbstractTabbedTerminalWidget;
-import com.jediterm.terminal.ui.AbstractTabs;
-import com.jediterm.terminal.ui.TerminalAction;
-import com.jediterm.terminal.ui.TerminalWidget;
-import com.jediterm.terminal.ui.settings.TabbedSettingsProvider;
+
+import com.terminal.ui.AbstractTabbedTerminalWidget;
+import com.terminal.ui.AbstractTabs;
+import com.terminal.ui.TerminalAction;
+import com.terminal.ui.TerminalWidget;
+import com.terminal.ui.settings.TabbedSettingsProvider;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -48,8 +48,8 @@ public class JediTabbedTerminalWidget extends AbstractTabbedTerminalWidget<JediT
 
 
     @Override
-    public JediTerminalWidget createInnerTerminalWidget(CommandListener commandListener) {
-        return new JediTerminalWidget(commandListener, mySettingsProvider, myParent);
+    public JediTerminalWidget createInnerTerminalWidget() {
+        return new JediTerminalWidget(mySettingsProvider, myParent);
     }
 
     @Override
