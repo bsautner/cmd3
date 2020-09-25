@@ -39,8 +39,7 @@ class MainMenuBar(val selectionListener: SelectionListener) : JMenuBar() {
         autoCommandCheckbox.state = true
         add(autoCommandCheckbox)
 
-        val clearConsole = JMenuItem(ImageIcon("clear-icon-9216.png"))
-        add(clearConsole)
+
 
     }
 

@@ -20,7 +20,7 @@ class CommandProcessor : CommandListener {
             10 -> {
 
                 commandEntered(sb.toString())
-                sb.setLength(0)
+                clear()
 
 
             }
@@ -46,6 +46,10 @@ class CommandProcessor : CommandListener {
 
     override fun commandSelected(command: String) {
         sb.append(command)
+    }
+
+    fun clear() {
+        sb.setLength(0)
     }
 
     companion object {

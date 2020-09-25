@@ -8,5 +8,6 @@ interface SelectionListener {
     fun deleteSelectedCommands()
     fun enableMultiSelect(enabled: Boolean)
     fun commandEntered()
+    fun clearConsole()
 
 }

@@ -2,10 +2,7 @@ package com.app
 
 import com.app.data.Command
 import com.app.data.H2
-import com.app.ux.CommandListPane
-import com.app.ux.MainMenuBar
-import com.app.ux.MainSplitPane
-import com.app.ux.SelectionListener
+import com.app.ux.*
 import com.terminal.command.CommandProcessor
 import org.apache.log4j.BasicConfigurator
 import org.apache.log4j.Level
@@ -14,6 +11,8 @@ import java.awt.BorderLayout
 import java.awt.EventQueue
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
+import java.awt.event.KeyEvent
+import java.awt.event.KeyListener
 import javax.swing.JFrame
 import javax.swing.JSplitPane
 
@@ -31,12 +30,13 @@ object Application {
 
     }
 
-    private class App : SelectionListener, ActionListener {
+    private class App : SelectionListener, ActionListener, KeyListener {
         private val dao = H2()
         private lateinit var term : JediTermMain
         private lateinit var mainFrame : JFrame
         private lateinit var listFrame : CommandListPane
         private lateinit var mainMenuBar : MainMenuBar
+        val jSplitPane : JSplitPane = MainSplitPane()
 
         fun launch() {
             CommandProcessor.instance.selectionListener = this
@@ -45,14 +45,18 @@ object Application {
             mainMenuBar = MainMenuBar(this)
 
             mainFrame.jMenuBar = mainMenuBar
+
             mainFrame.setSize(1200, 800)
             mainFrame.layout = BorderLayout()
             mainFrame.title = "CommandCube"
+
+            mainFrame.add(MainToolbar(this), BorderLayout.PAGE_START)
             listFrame = CommandListPane(this)
 
             term = JediTermMain()
+     
 
-            val jSplitPane : JSplitPane = MainSplitPane()
+
             jSplitPane.rightComponent = term.terminal.component
             jSplitPane.leftComponent = listFrame
             jSplitPane.setDividerLocation(0.4)
@@ -97,8 +101,28 @@ object Application {
             listFrame.commandEntered()
         }
 
+        override fun clearConsole() {
+            term = JediTermMain()
+            CommandProcessor.instance.clear()
+            jSplitPane.rightComponent = term.terminal.component
+        }
+
         override fun actionPerformed(p0: ActionEvent?) {
-            println("action")
+
+
+
+        }
+
+        override fun keyTyped(p0: KeyEvent?) {
+            TODO("Not yet implemented")
+        }
+
+        override fun keyPressed(p0: KeyEvent?) {
+            TODO("Not yet implemented")
+        }
+
+        override fun keyReleased(p0: KeyEvent?) {
+            TODO("Not yet implemented")
         }
 
     }

@@ -34,4 +34,8 @@ public class JSchExecTtyConnector extends JSchTtyConnector<ChannelExec> {
         channel.setPtySize(col, row, wp, hp);
     }
 
+    @Override
+    public void clear() {
+
+    }
 }

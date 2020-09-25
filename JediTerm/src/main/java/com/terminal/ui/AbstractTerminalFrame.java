@@ -70,4 +70,10 @@ public abstract class AbstractTerminalFrame {
         }
 
     }
+
+    public void clearConsole() {
+        terminal.getCurrentSession().getTtyConnector().clear();
+    }
+
+
 }

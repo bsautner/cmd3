@@ -23,6 +23,7 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
 
         list = JList<Command>()
 
+
         list.model = defaultListModel()
 
         list.selectionMode = ListSelectionModel.MULTIPLE_INTERVAL_SELECTION
@@ -69,6 +70,7 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
         if (!e.valueIsAdjusting && list.selectedIndex > -1) { //This line prevents double events
             CommandProcessor.instance.commandSelected((list.selectedValue as Command).cmd)
             selectionListener.commandSelected((list.selectedValue as Command))
+            list.clearSelection()
         }
     }
 
@@ -93,21 +95,19 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
         }
 
         list.model = defaultListModel()
+        list.clearSelection()
 
     }
 
     fun scriptSelectedCommands() {
         val selected =  list.selectedValuesList
 
-        for (i in selected) {
-            dao.deleteCommand(i as Command)
-        }
-
-        list.model = defaultListModel()
 
     }
 
     fun commandEntered() {
         list.model = defaultListModel()
     }
+
+
 }

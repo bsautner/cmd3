@@ -639,4 +639,6 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
         myListeners.remove(listener);
     }
 
+
+
 }

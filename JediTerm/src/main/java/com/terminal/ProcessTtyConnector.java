@@ -9,9 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-/**
- * @author traff
- */
+
 public abstract class ProcessTtyConnector implements TtyConnector {
     protected final InputStream myInputStream;
     protected final OutputStream myOutputStream;
@@ -19,7 +17,7 @@ public abstract class ProcessTtyConnector implements TtyConnector {
     protected Charset myCharset;
     private Dimension myPendingTermSize;
     private Dimension myPendingPixelSize;
-    private Process myProcess;
+    private final Process myProcess;
 
     public ProcessTtyConnector(@NotNull Process process, Charset charset) {
         myOutputStream = process.getOutputStream();
@@ -105,5 +103,14 @@ public abstract class ProcessTtyConnector implements TtyConnector {
     @Override
     public int waitFor() throws InterruptedException {
         return myProcess.waitFor();
+    }
+
+    @Override
+    public void clear() {
+        try {
+            myOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
