@@ -22,6 +22,7 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
 
 
         list = JList<Command>()
+
         list.model = defaultListModel()
 
         list.selectionMode = ListSelectionModel.MULTIPLE_INTERVAL_SELECTION
@@ -31,7 +32,8 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
 
 
         listScrollPane.minimumSize = minimumSize
-        listScrollPane.preferredSize = Dimension(350, 800)
+        listScrollPane.preferredSize = Dimension(350, 600)
+
         add(listScrollPane)
 
         list.addMouseListener(object : MouseAdapter() {

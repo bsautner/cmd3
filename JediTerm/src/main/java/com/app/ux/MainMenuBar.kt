@@ -1,9 +1,6 @@
 package com.app.ux
 
-import javax.swing.JCheckBoxMenuItem
-import javax.swing.JMenu
-import javax.swing.JMenuBar
-import javax.swing.JMenuItem
+import javax.swing.*
 
 
 class MainMenuBar(val selectionListener: SelectionListener) : JMenuBar() {
@@ -41,6 +38,9 @@ class MainMenuBar(val selectionListener: SelectionListener) : JMenuBar() {
         add(autoReturnCheckbox)
         autoCommandCheckbox.state = true
         add(autoCommandCheckbox)
+
+        val clearConsole = JMenuItem(ImageIcon("clear-icon-9216.png"))
+        add(clearConsole)
 
     }
 
