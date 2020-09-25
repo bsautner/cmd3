@@ -1,4 +1,4 @@
-package com.jediterm.app
+package com.app.ux
 
 
 import com.app.data.H2
@@ -30,7 +30,7 @@ class SplitPaneDemo(private val selectionListener: SelectionListener) : JPanel()
             commands[it].cmd
         }
         list = JList<String>(commandArray)
-        list.selectionMode = ListSelectionModel.SINGLE_SELECTION
+        list.selectionMode = ListSelectionModel.SINGLE_INTERVAL_SELECTION
         list.selectedIndex = 0
         list.addListSelectionListener(this)
         val listScrollPane = JScrollPane(list)
@@ -44,8 +44,9 @@ class SplitPaneDemo(private val selectionListener: SelectionListener) : JPanel()
             JSplitPane.HORIZONTAL_SPLIT,
             listScrollPane, pictureScrollPane
         )
+
         splitPane.isOneTouchExpandable = true
-        splitPane.dividerLocation = 150
+        splitPane.setDividerLocation(0.5)
 
         //Provide minimum sizes for the two components in the split pane.
         val minimumSize = Dimension(100, 50)

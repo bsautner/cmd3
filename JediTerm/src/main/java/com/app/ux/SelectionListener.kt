@@ -1,4 +1,4 @@
-package com.jediterm.app
+package com.app.ux
 
 interface SelectionListener {
 

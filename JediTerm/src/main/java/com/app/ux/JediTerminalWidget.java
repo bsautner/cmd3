@@ -1,4 +1,4 @@
-package com.jediterm.app;
+package com.app.ux;
 
 import com.app.JediTerminalPanel;
 import com.intellij.openapi.Disposable;
