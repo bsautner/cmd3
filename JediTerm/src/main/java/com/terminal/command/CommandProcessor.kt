@@ -1,6 +1,7 @@
 package com.terminal.command
 
 import com.app.data.H2
+import com.app.ux.SelectionListener
 import java.awt.event.KeyEvent
 
 
@@ -8,6 +9,7 @@ class CommandProcessor : CommandListener {
 
     private val sb = StringBuilder()
     private val dao = H2()
+    lateinit var selectionListener: SelectionListener
 
 
 
@@ -39,6 +41,7 @@ class CommandProcessor : CommandListener {
 
     override fun commandEntered(command: String) {
         dao.insertCommand(command)
+        selectionListener.commandEntered()
     }
 
     override fun commandSelected(command: String) {

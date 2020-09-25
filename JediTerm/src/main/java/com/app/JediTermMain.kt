@@ -19,7 +19,6 @@ import com.terminal.ui.settings.TabbedSettingsProvider
 import com.terminal.util.PtyProcessTtyConnector
 import java.io.IOException
 import java.nio.charset.Charset
-import java.util.*
 import java.util.function.Function
 
 class JediTermMain : AbstractTerminalFrame(), Disposable {
@@ -56,7 +55,7 @@ class JediTermMain : AbstractTerminalFrame(), Disposable {
                 command = arrayOf("cmd.exe")
             } else {
                 command = arrayOf("/bin/bash", "--login")
-                envs.put("TERM", "xterm")
+                envs["TERM"] = "xterm"
             }
 
             val process = PtyProcess.exec(command, envs, null)
@@ -83,7 +82,7 @@ class JediTermMain : AbstractTerminalFrame(), Disposable {
         override fun read(buf: CharArray, offset: Int, length: Int): Int {
             val len = super.read(buf, offset, length)
             if (len > 0) {
-                val arr = Arrays.copyOfRange(buf, offset, len)
+                val arr = buf.copyOfRange(offset, len)
                 myDataChunks.add(arr)
             }
             return len
@@ -95,13 +94,13 @@ class JediTermMain : AbstractTerminalFrame(), Disposable {
 
         @Throws(IOException::class)
         override fun write(string: String) {
-            AbstractTerminalFrame.LOG.debug("Writing in OutputStream : " + string)
+
             super.write(string)
         }
 
         @Throws(IOException::class)
         override fun write(bytes: ByteArray) {
-            AbstractTerminalFrame.LOG.debug("Writing in OutputStream : " + Arrays.toString(bytes) + " " + String(bytes))
+
             super.write(bytes)
         }
     }

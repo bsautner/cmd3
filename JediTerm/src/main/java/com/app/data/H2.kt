@@ -12,27 +12,15 @@ class H2 {
             }
 
 
+    private val deleteCommandSql = "DELETE FROM COMMANDS WHERE (command = ?);"
 
-    private val insertCommandSql =
-        """
-        INSERT INTO COMMANDS (command) VALUES (?);
-        """.trimIndent()
+    private val insertCommandSql = "INSERT INTO COMMANDS (command) VALUES (?);"
 
-    private val updateCountSql =
-        """
-            UPDATE COMMANDS 
-            set COUNT = ? where COMMAND = ?
-        """.trimIndent()
+    private val updateCountSql = "UPDATE COMMANDS set COUNT = ? where COMMAND = ?"
 
-    private val selectCommandSql =
-        """
-            select COMMAND, COUNT from COMMANDS where COMMAND = ? limit 1
-        """.trimIndent()
+    private val selectCommandSql = "select COMMAND, COUNT from COMMANDS where COMMAND = ? limit 1"
 
-    private val getCommandsSql =
-        """
-            select * from COMMANDS order by COUNT;
-        """.trimIndent()
+    private val getCommandsSql = "select * from COMMANDS order by COUNT DESC;"
 
     private val createCommandsTable =
        """
@@ -101,8 +89,15 @@ create unique index IF NOT EXISTS COMMANDS_UINDEX
 
     }
 
+    fun deleteCommand(c : Command) {
+
+        val s = connection.prepareStatement(deleteCommandSql)
+        s.setString(1, c.cmd)
+        s.execute()
+    }
+
     fun getCommands() : List<Command> {
-        val connection : Connection = DriverManager.getConnection("jdbc:h2:file:~/.cmd3/test4.db", "sa", "")
+
         val s = connection.prepareStatement(getCommandsSql)
         val res = s.executeQuery()
         val list : MutableList<Command> = ArrayList()

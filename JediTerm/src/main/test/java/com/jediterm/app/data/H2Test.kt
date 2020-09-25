@@ -1,8 +1,8 @@
 package com.jediterm.app.data
 
+import com.app.data.Command
 import com.app.data.H2
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import java.util.*
@@ -35,6 +35,16 @@ internal class H2Test {
         assertEquals(2, c?.count)
         assertEquals(command, c?.cmd)
 
+    }
+
+    @Test
+    fun testDelete() {
+        val command = UUID.randomUUID().toString()
+
+        h2.insertCommand(command)
+        h2.deleteCommand(Command(command, 0))
+        val c = h2.getCommand(command)
+        assertNull(c)
     }
 
     @Test
