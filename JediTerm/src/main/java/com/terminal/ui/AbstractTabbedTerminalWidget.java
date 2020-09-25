@@ -67,9 +67,8 @@ public abstract class AbstractTabbedTerminalWidget<T extends JediTermWidget> ext
 
 
     @Override
-    public void sendCommand(String command) {
+    public void grabFocus() {
         if (myTermWidget != null) {
-            myTermWidget.sendCommand(command);
             myTermWidget.grabFocus();
         }
     }

@@ -639,9 +639,4 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
         myListeners.remove(listener);
     }
 
-
-    @Override
-    public void sendCommand(String command) {
-        myTerminal.sendCommand(command);
-    }
 }

@@ -2,10 +2,11 @@ package com.terminal.ui;
 
 
 import com.terminal.RequestOrigin;
+import com.terminal.TabbedTerminalWidget;
 import com.terminal.TtyConnector;
-
 import com.terminal.debug.BufferPanel;
 import com.terminal.model.SelectionUtil;
+import com.terminal.ui.settings.DefaultTabbedSettingsProvider;
 import com.terminal.ui.settings.TabbedSettingsProvider;
 import com.terminal.util.Pair;
 import org.apache.log4j.Level;
@@ -13,12 +14,12 @@ import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 
 public abstract class AbstractTerminalFrame {
@@ -192,13 +193,12 @@ public abstract class AbstractTerminalFrame {
 
     @NotNull
     protected AbstractTabbedTerminalWidget createTabbedTerminalWidget() {
-        return null;
-//        return new TabbedTerminalWidget(new DefaultTabbedSettingsProvider(), this::openSession) {
-//            @Override
-//            public JediTermWidget createInnerTerminalWidget(CommandListener commandListener) {
-//                return createTerminalWidget(commandListener, getSettingsProvider());
-//            }
-//        };
+        return new TabbedTerminalWidget(new DefaultTabbedSettingsProvider(), this::openSession) {
+            @Override
+            public JediTermWidget createInnerTerminalWidget() {
+                return createTerminalWidget(getSettingsProvider());
+            }
+        };
     }
 
     protected JediTermWidget createTerminalWidget(@NotNull TabbedSettingsProvider settingsProvider) {
@@ -237,8 +237,15 @@ public abstract class AbstractTerminalFrame {
         });
     }
 
-    public void sendCommand(@NotNull String command) {
+    public void sendCommand(@NotNull String command)   {
 
-        myTerminal.sendCommand(command);
+        try {
+            myTerminal.getCurrentSession().getTtyConnector().write(command);
+            myTerminal.getCurrentSession().getTtyConnector().write("\n");
+            myTerminal.grabFocus();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // myTerminal.sendCommand(command);
     }
 }

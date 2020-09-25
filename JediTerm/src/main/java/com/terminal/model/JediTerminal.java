@@ -84,7 +84,7 @@ public class JediTerminal implements Terminal, TerminalMouseListener, TerminalCo
     }
 
     public void sendCommand(String command) {
-        writeUnwrappedString(command);
+        writeCharacters(command);
     }
 
     @Override
