@@ -1,13 +1,13 @@
 package com.app
 
+import com.app.ux.JediTabbedTerminalWidget
+import com.app.ux.JediTerminalWidget
 import com.google.common.collect.Lists
 import com.google.common.collect.Maps
 import com.intellij.execution.filters.UrlFilter
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.util.Pair
 import com.intellij.util.EncodingEnvironmentUtil
-import com.jediterm.app.JediTabbedTerminalWidget
-import com.jediterm.app.JediTerminalWidget
 import com.pty4j.PtyProcess
 import com.terminal.LoggingTtyConnector
 import com.terminal.TtyConnector
@@ -17,25 +17,14 @@ import com.terminal.ui.UIUtil
 import com.terminal.ui.settings.DefaultTabbedSettingsProvider
 import com.terminal.ui.settings.TabbedSettingsProvider
 import com.terminal.util.PtyProcessTtyConnector
-import org.apache.log4j.BasicConfigurator
-import org.apache.log4j.Level
-import org.apache.log4j.Logger
 import java.io.IOException
 import java.nio.charset.Charset
 import java.util.*
 import java.util.function.Function
-import javax.swing.JSplitPane
 
-object JediTermMain {
+class JediTermMain : AbstractTerminalFrame(), Disposable {
 
-    fun launch(splitPane: JSplitPane) : JediTerm {
-        BasicConfigurator.configure()
-        Logger.getRootLogger().level = Level.INFO
-        return JediTerm(splitPane)
-    }
-}
 
-class JediTerm(splitPane: JSplitPane) : AbstractTerminalFrame(splitPane), Disposable {
     override fun dispose() {
         // TODO
     }

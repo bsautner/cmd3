@@ -1,7 +1,6 @@
 package com.terminal.ui;
 
 
-import com.terminal.RequestOrigin;
 import com.terminal.TabbedTerminalWidget;
 import com.terminal.TtyConnector;
 import com.terminal.debug.BufferPanel;
@@ -29,6 +28,9 @@ public abstract class AbstractTerminalFrame {
 
     private final TerminalWidget myTerminal;
 
+    public TerminalWidget getMyTerminal() {
+        return myTerminal;
+    }
 
     private final AbstractAction myOpenAction = new AbstractAction("New Session") {
         public void actionPerformed(final ActionEvent e) {
@@ -138,56 +140,56 @@ public abstract class AbstractTerminalFrame {
 
     public abstract TtyConnector createTtyConnector();
 
-    protected AbstractTerminalFrame(JSplitPane splitPane ) {
+    protected AbstractTerminalFrame() {
         this.myTerminal = createTabbedTerminalWidget();
 
 
-        final JFrame frame = new JFrame("CMD3");
+//        final JFrame frame = new JFrame("CMD3");
+//
+//        frame.addWindowListener(new WindowAdapter() {
+//            @Override
+//            public void windowClosing(final WindowEvent e) {
+//                System.exit(0);
+//            }
+//        });
+//
+//        final JMenuBar mb = getJMenuBar();
+//        frame.setJMenuBar(mb);
+//        sizeFrameForTerm(frame);
+//
+//
+//        // frame.getContentPane().add("Center", myTerminal.getComponent());
+//
+//       // frame.getContentPane().add("Center", splitPane);
+//
+//        frame.setLocationRelativeTo(null);
+//        frame.pack();
+//        frame.setLocationByPlatform(false);
+//        frame.setVisible(true);
+//
+//        frame.setResizable(true);
 
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(final WindowEvent e) {
-                System.exit(0);
-            }
-        });
-
-        final JMenuBar mb = getJMenuBar();
-        frame.setJMenuBar(mb);
-        sizeFrameForTerm(frame);
-
-
-        // frame.getContentPane().add("Center", myTerminal.getComponent());
-
-        frame.getContentPane().add("Center", splitPane);
-
-        frame.setLocationRelativeTo(null);
-        frame.pack();
-        frame.setLocationByPlatform(false);
-        frame.setVisible(true);
-
-        frame.setResizable(true);
-
-        myTerminal.setTerminalPanelListener(new TerminalPanelListener() {
-            public void onPanelResize(final Dimension pixelDimension, final RequestOrigin origin) {
-                if (origin == RequestOrigin.Remote) {
-                    sizeFrameForTerm(frame);
-                }
-                frame.pack();
-            }
-
-            @Override
-            public void onSessionChanged(final TerminalSession currentSession) {
-                frame.setTitle(currentSession.getSessionName());
-            }
-
-            @Override
-            public void onTitleChanged(String title) {
-                frame.setTitle(myTerminal.getCurrentSession().getSessionName());
-            }
-        });
+//        myTerminal.setTerminalPanelListener(new TerminalPanelListener() {
+//            public void onPanelResize(final Dimension pixelDimension, final RequestOrigin origin) {
+//                if (origin == RequestOrigin.Remote) {
+//                    sizeFrameForTerm(frame);
+//                }
+//                frame.pack();
+//            }
+//
+//            @Override
+//            public void onSessionChanged(final TerminalSession currentSession) {
+//                frame.setTitle(currentSession.getSessionName());
+//            }
+//
+//            @Override
+//            public void onTitleChanged(String title) {
+//                frame.setTitle(myTerminal.getCurrentSession().getSessionName());
+//            }
+//        });
 
         openSession(myTerminal);
-        splitPane.setRightComponent(myTerminal.getComponent());
+       // splitPane.setRightComponent(myTerminal.getComponent());
 
     }
 
