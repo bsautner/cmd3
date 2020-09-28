@@ -30,13 +30,13 @@ import java.util.function.Function;
 /**
  * @author traff
  */
-public class JediTabbedTerminalWidget extends AbstractTabbedTerminalWidget<JediTerminalWidget> implements Disposable {
+public class TabbedTerminalWidget extends AbstractTabbedTerminalWidget<JediTerminalWidget> implements Disposable {
 
     private final TabbedSettingsProvider mySettingsProvider;
     private Disposable myParent;
 
-    public JediTabbedTerminalWidget(@NotNull TabbedSettingsProvider settingsProvider,
-                                    final @NotNull Function<Pair<TerminalWidget, String>, JediTerminalWidget> createNewSessionAction, @NotNull Disposable parent) {
+    public TabbedTerminalWidget(@NotNull TabbedSettingsProvider settingsProvider,
+                                final @NotNull Function<Pair<TerminalWidget, String>, JediTerminalWidget> createNewSessionAction, @NotNull Disposable parent) {
         super(settingsProvider, input -> createNewSessionAction.apply(Pair.create(input, null)));
 
         mySettingsProvider = settingsProvider;
@@ -247,7 +247,7 @@ public class JediTabbedTerminalWidget extends AbstractTabbedTerminalWidget<JediT
             protected JPopupMenu createPopup() {
                 JPopupMenu popupMenu = new JPopupMenu();
 
-                TerminalAction.addToMenu(popupMenu, JediTabbedTerminalWidget.this);
+                TerminalAction.addToMenu(popupMenu, TabbedTerminalWidget.this);
 
                 JMenuItem rename = new JMenuItem("Rename Tab");
 

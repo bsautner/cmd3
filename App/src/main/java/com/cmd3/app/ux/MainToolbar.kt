@@ -11,13 +11,18 @@ import javax.swing.JToggleButton
 import javax.swing.JToolBar
 
 
-class MainToolbar() : JToolBar(){
+class MainToolbar(selectionListener: SelectionListener) : JToolBar(){
 
         init {
             //preferredSize = Dimension(20, 100)
             // val clearButton = makeNavigationButton(ActionListener { selectionListener.clearConsole() }, "276-trash")
 
+            val clearButton = JButton("Clear Console")
+            clearButton.addActionListener(ActionListener {
+               selectionListener.clearConsole()
+            })
 
+            add(clearButton)
             add(makeToggle(ActionListener {
                 Prefs.autoCR = ! Prefs.autoCR
             }, "Send CR", Prefs.autoCR))

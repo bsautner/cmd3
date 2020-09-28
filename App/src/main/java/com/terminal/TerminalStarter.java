@@ -90,6 +90,9 @@ public class TerminalStarter implements TerminalOutputStream {
         execute(() -> {
             try {
                 myTtyConnector.write(bytes);
+
+                String s = (new String(bytes));
+                System.out.println(s);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

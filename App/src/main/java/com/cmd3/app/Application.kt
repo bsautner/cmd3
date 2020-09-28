@@ -9,6 +9,7 @@ import org.apache.log4j.BasicConfigurator
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import java.awt.BorderLayout
+import java.awt.Color
 import java.awt.EventQueue
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
@@ -51,19 +52,20 @@ object Application {
             mainFrame.layout = BorderLayout()
             mainFrame.title = "CommandCube"
 
-            mainFrame.add(MainToolbar(), BorderLayout.PAGE_START)
+            mainFrame.add(MainToolbar(this), BorderLayout.PAGE_START)
             listFrame = CommandListPane(this)
 
             term = TerminalMain()
-     
-
 
             jSplitPane.rightComponent = term.terminal.component
             jSplitPane.leftComponent = listFrame
-            jSplitPane.setDividerLocation(0.4)
 
-          //  mainFrame.add(jSplitPane)
-          //  mainFrame.pack()
+            jSplitPane.setDividerLocation(0.4)
+            jSplitPane.leftComponent.background = Color.BLUE
+            jSplitPane.rightComponent.background = Color.BLUE
+
+            mainFrame.add(jSplitPane)
+            mainFrame.pack()
             mainFrame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
             mainFrame.contentPane.add(jSplitPane)
             //mainFrame.contentPane.add(term.myTerminal.component)

@@ -1,7 +1,6 @@
 package com.cmd3.app.ux;
 
 import com.cmd3.app.TerminalPanel;
-import com.cmd3.app.TerminalPanel;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.ui.components.JBScrollBar;
@@ -11,7 +10,6 @@ import com.terminal.SubstringFinder;
 import com.terminal.TerminalStarter;
 import com.terminal.TtyBasedArrayDataStream;
 import com.terminal.TtyConnector;
-
 import com.terminal.model.JediTerminal;
 import com.terminal.model.StyleState;
 import com.terminal.model.TerminalTextBuffer;
@@ -50,21 +48,18 @@ public class JediTerminalWidget extends JediTermWidget implements Disposable {
     protected JScrollBar createScrollBar() {
         JBScrollBar bar = new JBScrollBar();
         bar.putClientProperty(JBScrollPane.Alignment.class, JBScrollPane.Alignment.RIGHT);
-        bar.putClientProperty(JBScrollBar.TRACK, new RegionPainter<Object>() {
-            @Override
-            public void paint(Graphics2D g, int x, int y, int width, int height, Object object) {
-                SubstringFinder.FindResult result = myTerminalPanel.getFindResult();
-                if (result != null) {
-                    int modelHeight = bar.getModel().getMaximum() - bar.getModel().getMinimum();
-                    int anchorHeight = Math.max(2, height / modelHeight);
+        bar.putClientProperty(JBScrollBar.TRACK, (RegionPainter<Object>) (g, x, y, width, height, object) -> {
+            SubstringFinder.FindResult result = myTerminalPanel.getFindResult();
+            if (result != null) {
+                int modelHeight = bar.getModel().getMaximum() - bar.getModel().getMinimum();
+                int anchorHeight = Math.max(2, height / modelHeight);
 
-                    Color color = mySettingsProvider.getTerminalColorPalette()
-                            .getColor(mySettingsProvider.getFoundPatternColor().getBackground());
-                    g.setColor(color);
-                    for (SubstringFinder.FindResult.FindItem r : result.getItems()) {
-                        int where = height * r.getStart().y / modelHeight;
-                        g.fillRect(x, y + where, width, anchorHeight);
-                    }
+                Color color = mySettingsProvider.getTerminalColorPalette()
+                        .getColor(mySettingsProvider.getFoundPatternColor().getBackground());
+                g.setColor(color);
+                for (SubstringFinder.FindResult.FindItem r : result.getItems()) {
+                    int where = height * r.getStart().y / modelHeight;
+                    g.fillRect(x, y + where, width, anchorHeight);
                 }
             }
         });

@@ -4,6 +4,7 @@ import com.cmd3.app.Prefs
 import com.cmd3.app.data.Command
 import com.cmd3.app.data.H2
 import com.terminal.command.CommandProcessor
+import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
@@ -31,12 +32,9 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
         list.selectedIndex = 0
         list.addListSelectionListener(this)
         val listScrollPane = JScrollPane(list)
+        listScrollPane.preferredSize = Dimension(400, 800)
 
-
-        listScrollPane.minimumSize = minimumSize
-        listScrollPane.preferredSize = Dimension(350, 600)
-
-        add(listScrollPane)
+        add(listScrollPane, BorderLayout.CENTER)
 
         list.addMouseListener(object : MouseAdapter() {
             override fun mousePressed(e: MouseEvent) {
@@ -98,7 +96,7 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
 
 
         for (i in selected) {
-            selectionListener.commandSelected(i as Command, true)
+            selectionListener.commandSelected(i, true)
         }
 
         list.model = defaultListModel()

@@ -1,7 +1,7 @@
 package com.cmd3.app
 
-import com.cmd3.app.ux.JediTabbedTerminalWidget
 import com.cmd3.app.ux.JediTerminalWidget
+import com.cmd3.app.ux.TabbedTerminalWidget
 import com.google.common.collect.Lists
 import com.google.common.collect.Maps
 import com.intellij.execution.filters.UrlFilter
@@ -28,8 +28,8 @@ class TerminalMain : AbstractTerminalFrame(), Disposable {
         // TODO
     }
 
-    override fun createTabbedTerminalWidget(): JediTabbedTerminalWidget {
-        return object : JediTabbedTerminalWidget(
+    override fun createTabbedTerminalWidget(): TabbedTerminalWidget {
+        return object : TabbedTerminalWidget(
             DefaultTabbedSettingsProvider(),
             Function<Pair<TerminalWidget, String>, JediTerminalWidget> { pair -> openSession(pair.first) as JediTerminalWidget },
             this
