@@ -1,7 +1,7 @@
 package com.jediterm.app.data
 
-import com.app.data.Command
-import com.app.data.H2
+import com.cmd3.app.data.Command
+import com.cmd3.app.data.H2
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

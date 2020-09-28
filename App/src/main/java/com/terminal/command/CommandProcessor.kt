@@ -1,7 +1,7 @@
 package com.terminal.command
 
-import com.app.data.H2
-import com.app.ux.SelectionListener
+import com.cmd3.app.data.H2
+import com.cmd3.app.ux.SelectionListener
 import java.awt.event.KeyEvent
 
 

@@ -20,9 +20,10 @@ apply plugin: 'java-library'
 
 
 repositories {
-    flatDir dirs: ['libs', '../pty/libs']
+    flatDir dirs: ['libs']
     mavenCentral()
     jcenter()
+    google()
 }
 
 sourceSets {
@@ -70,11 +71,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-mainClassName = "com.jediterm.app.JediTermMain"
+mainClassName = "com.cmd3.app.Application"
 
 
 macAppBundle {
-    mainClassName = "com.jediterm.app.JediTermMain"
+    mainClassName = "com.cmd3.app.Application"
     icon = "img/JediTerm.icns"
     bundleJRE = true
     javaProperties.put("apple.laf.useScreenMenuBar", "true")
@@ -82,7 +83,7 @@ macAppBundle {
 }
 
 launch4j {
-    mainClassName = "com.jediterm.app.JediTermMain"
+    mainClassName = "com.cmd3.app.Application"
     icon = "$projectDir/img/JediTerm.ico"
 }
 

@@ -1,7 +1,7 @@
 package com.terminal.ui;
 
 
-import com.app.data.Command;
+import com.cmd3.app.data.Command;
 import com.terminal.TabbedTerminalWidget;
 import com.terminal.TtyConnector;
 import com.terminal.ui.settings.DefaultTabbedSettingsProvider;
