@@ -1,5 +1,6 @@
 package com.app.ux
 
+import com.app.Prefs
 import com.app.data.Command
 import com.app.data.H2
 import com.terminal.command.CommandProcessor
@@ -15,7 +16,7 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
     private val list: JList<*>
 
     var dao : H2 = H2()
-
+    val selected : MutableList<Command> = ArrayList()
 
 
     init {
@@ -39,14 +40,18 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
 
         list.addMouseListener(object : MouseAdapter() {
             override fun mousePressed(e: MouseEvent) {
+                selected.clear()
+                selected.addAll(list.selectedValuesList)
+
+                println(list.selectedIndices.size)
                 if (e.isPopupTrigger) {
                     val menu = JPopupMenu()
                     val itemRemove = JMenuItem("Remove")
-                    itemRemove.addActionListener { deleteSelectedCommands()  }
+                    itemRemove.addActionListener { deleteSelectedCommands() }
                     val itemExecute = JMenuItem("Execute")
-                    itemRemove.addActionListener { executeSelectedCommands()  }
+                    itemRemove.addActionListener { executeSelectedCommands() }
                     val itemScript = JMenuItem("Script")
-                    itemRemove.addActionListener { scriptSelectedCommands()  }
+                    itemRemove.addActionListener { scriptSelectedCommands() }
                     menu.add(itemRemove)
                     menu.add(itemExecute)
                     menu.add(itemScript)
@@ -62,23 +67,25 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
         for ((index, value) in commands.withIndex()) {
             listModel.add(index, value)
         }
+
         return listModel
     }
 
     //Listens to the list
     override fun valueChanged(e: ListSelectionEvent) {
-        if (!e.valueIsAdjusting && list.selectedIndex > -1) { //This line prevents double events
-            CommandProcessor.instance.commandSelected((list.selectedValue as Command).cmd)
-            selectionListener.commandSelected((list.selectedValue as Command))
-            list.clearSelection()
+        if (!e.valueIsAdjusting && list.selectedIndex > -1 && Prefs.autoTerm) {
+                CommandProcessor.instance.commandSelected((list.selectedValue as Command).cmd)
+                selectionListener.commandSelected((list.selectedValue as Command))
+                list.clearSelection()
         }
     }
 
     fun deleteSelectedCommands() {
-        val selected =  list.selectedValuesList
+        println("deleteSelectedCommands ${selected.size}")
 
         for (i in selected) {
-            dao.deleteCommand(i as Command)
+            println("Deleting $i")
+            dao.deleteCommand(i)
         }
 
         list.model = defaultListModel()
@@ -88,7 +95,7 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
     }
 
     fun executeSelectedCommands() {
-        val selected =  list.selectedValuesList
+
 
         for (i in selected) {
             selectionListener.commandSelected(i as Command, true)

@@ -32,7 +32,7 @@ object Application {
 
     private class App : SelectionListener, ActionListener, KeyListener {
         private val dao = H2()
-        private lateinit var term : JediTermMain
+        private lateinit var term : TerminalMain
         private lateinit var mainFrame : JFrame
         private lateinit var listFrame : CommandListPane
         private lateinit var mainMenuBar : MainMenuBar
@@ -50,10 +50,10 @@ object Application {
             mainFrame.layout = BorderLayout()
             mainFrame.title = "CommandCube"
 
-            mainFrame.add(MainToolbar(this), BorderLayout.PAGE_START)
+            mainFrame.add(MainToolbar(), BorderLayout.PAGE_START)
             listFrame = CommandListPane(this)
 
-            term = JediTermMain()
+            term = TerminalMain()
      
 
 
@@ -83,8 +83,8 @@ object Application {
 //
         override fun commandSelected(command: Command, cr: Boolean) {
             println("Command Selected $command")
-            if (mainMenuBar.termEnabled) {
-                term.sendCommand(command, mainMenuBar.autoCr || cr)
+            if (Prefs.autoTerm) {
+                term.sendCommand(command, Prefs.autoCR || cr)
             }
 
         }
@@ -98,11 +98,13 @@ object Application {
         }
 
         override fun commandEntered() {
-            listFrame.commandEntered()
+            if (Prefs.recording) {
+                listFrame.commandEntered()
+            }
         }
 
         override fun clearConsole() {
-            term = JediTermMain()
+            term = TerminalMain()
             CommandProcessor.instance.clear()
             jSplitPane.rightComponent = term.terminal.component
         }
