@@ -1,8 +1,6 @@
 package com.terminal.emulator.mouse;
 
-/**
- * @author traff
- */
+
 public enum MouseMode {
     MOUSE_REPORTING_NONE,
     MOUSE_REPORTING_NORMAL,

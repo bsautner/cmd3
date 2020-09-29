@@ -23,9 +23,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
 
-/**
- * @author traff
- */
+
 public abstract class AbstractTabbedTerminalWidget<T extends JediTermWidget> extends JPanel implements TerminalWidget, TerminalActionProvider {
     private final Object myLock = new Object();
 

@@ -9,9 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author traff
- */
+
 public class SelectionUtil {
     private static final Logger LOG = Logger.getLogger(SelectionUtil.class);
 

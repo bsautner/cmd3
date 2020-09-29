@@ -8,9 +8,7 @@ import java.awt.event.KeyEvent;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-/**
- * @author traff
- */
+
 public class TerminalAction {
     private final String myName;
     private final KeyStroke[] myKeyStrokes;

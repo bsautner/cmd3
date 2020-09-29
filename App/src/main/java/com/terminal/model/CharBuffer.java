@@ -7,9 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Iterator;
 
-/**
- * @author traff
- */
+
 public class CharBuffer implements Iterable<Character>, CharSequence {
 
     public final static CharBuffer EMPTY = new CharBuffer(new char[0], 0, 0);

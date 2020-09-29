@@ -6,9 +6,7 @@ import com.terminal.model.CharBuffer;
 
 import java.util.Arrays;
 
-/**
- * @author traff
- */
+
 public class CharUtils {
     public static final int ESC = Ascii.ESC;
     public static final int DEL = Ascii.DEL;

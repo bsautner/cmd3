@@ -3,9 +3,7 @@ package com.terminal.debug;
 import com.terminal.LoggingTtyConnector;
 import com.terminal.ui.TerminalSession;
 
-/**
- * @author traff
- */
+
 public enum DebugBufferType {
     Back() {
         public String getValue(TerminalSession session) {

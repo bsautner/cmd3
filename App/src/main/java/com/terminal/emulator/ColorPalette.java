@@ -4,9 +4,7 @@ import com.terminal.TerminalColor;
 
 import java.awt.*;
 
-/**
- * @author traff
- */
+
 @SuppressWarnings("UseJBColor")
 public abstract class ColorPalette {
     public static final ColorPalette XTERM_PALETTE = new ColorPalette() {

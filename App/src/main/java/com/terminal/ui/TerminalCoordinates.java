@@ -1,8 +1,6 @@
 package com.terminal.ui;
 
-/**
- * @author traff
- */
+
 public interface TerminalCoordinates {
     int getX();
 

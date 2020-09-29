@@ -1,7 +1,7 @@
 package com.terminal;
 
 import com.terminal.emulator.Emulator;
-import com.terminal.emulator.JediEmulator;
+import com.terminal.emulator.Cmd3Emulator;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,8 +38,8 @@ public class TerminalStarter implements TerminalOutputStream {
         myEmulator = createEmulator(myDataStream, terminal);
     }
 
-    protected JediEmulator createEmulator(TerminalDataStream dataStream, Terminal terminal) {
-        return new JediEmulator(dataStream, terminal);
+    protected Cmd3Emulator createEmulator(TerminalDataStream dataStream, Terminal terminal) {
+        return new Cmd3Emulator(dataStream, terminal);
     }
 
     private void execute(Runnable runnable) {

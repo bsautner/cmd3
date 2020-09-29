@@ -4,9 +4,7 @@ import com.terminal.emulator.Emulator;
 
 import java.io.IOException;
 
-/**
- * @author traff
- */
+
 public abstract class DataStreamIteratingEmulator implements Emulator {
     protected final TerminalDataStream myDataStream;
     protected final Terminal myTerminal;

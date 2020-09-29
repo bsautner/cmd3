@@ -7,9 +7,7 @@ import com.terminal.ProcessTtyConnector;
 
 import java.nio.charset.Charset;
 
-/**
- * @author traff
- */
+
 public class PtyProcessTtyConnector extends ProcessTtyConnector {
     private PtyProcess myProcess;
 

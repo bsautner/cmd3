@@ -27,9 +27,7 @@ import java.awt.event.MouseEvent;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.function.Function;
 
-/**
- * @author traff
- */
+
 public class TabbedTerminalWidget extends AbstractTabbedTerminalWidget<JediTerminalWidget> implements Disposable {
 
     private final TabbedSettingsProvider mySettingsProvider;

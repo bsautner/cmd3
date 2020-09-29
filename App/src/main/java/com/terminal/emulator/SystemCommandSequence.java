@@ -7,9 +7,7 @@ import com.terminal.TerminalDataStream;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * @author traff
- */
+
 public class SystemCommandSequence {
     private final List<Object> myArgs = Lists.newArrayList();
 

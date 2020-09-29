@@ -1,8 +1,6 @@
 package com.terminal.ui;
 
-/**
- * @author traff
- */
+
 public abstract class TerminalActionProviderBase implements TerminalActionProvider {
     @Override
     public TerminalActionProvider getNextProvider() {

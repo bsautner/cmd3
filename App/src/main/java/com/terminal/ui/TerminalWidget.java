@@ -6,9 +6,7 @@ import com.terminal.TtyConnector;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * @author traff
- */
+
 public interface TerminalWidget {
     JediTermWidget createTerminalSession(TtyConnector ttyConnector);
 

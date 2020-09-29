@@ -6,9 +6,7 @@ import java.io.*;
 import java.nio.CharBuffer;
 import java.util.List;
 
-/**
- * @author traff
- */
+
 public class ControlSequenceVisualizer {
     private static final Logger LOG = Logger.getLogger(ControlSequenceVisualizer.class);
 

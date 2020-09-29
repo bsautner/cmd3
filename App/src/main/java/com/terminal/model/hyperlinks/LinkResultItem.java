@@ -2,9 +2,7 @@ package com.terminal.model.hyperlinks;
 
 import org.jetbrains.annotations.NotNull;
 
-/**
- * @author traff
- */
+
 public class LinkResultItem {
     private int myStartOffset;
     private int myEndOffset;

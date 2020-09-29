@@ -2,9 +2,7 @@ package com.terminal.emulator;
 
 import java.io.IOException;
 
-/**
- * @author traff
- */
+
 public interface Emulator {
     boolean hasNext();
 

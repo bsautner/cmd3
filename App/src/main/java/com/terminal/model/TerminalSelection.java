@@ -5,9 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 
-/**
- * @author traff
- */
+
 public class TerminalSelection {
     private final Point myStart;
 

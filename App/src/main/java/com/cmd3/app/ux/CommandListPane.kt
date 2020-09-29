@@ -3,7 +3,7 @@ package com.cmd3.app.ux
 import com.cmd3.app.Prefs
 import com.cmd3.app.data.Command
 import com.cmd3.app.data.H2
-import com.terminal.command.CommandProcessor
+import com.cmd3.app.command.CommandProcessor
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.event.MouseAdapter

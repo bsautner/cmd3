@@ -7,9 +7,7 @@ import java.awt.*;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
 
-/**
- * @author traff
- */
+
 public class TerminalTabsImpl implements AbstractTabs<JediTermWidget> {
     protected JTabbedPane myTabbedPane = new JTabbedPane();
 

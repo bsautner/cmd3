@@ -4,9 +4,7 @@ import com.terminal.model.hyperlinks.LinkInfo;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * @author traff
- */
+
 public class HyperlinkStyle extends TextStyle implements Runnable {
     @NotNull
     private final LinkInfo myLinkInfo;

@@ -1,8 +1,6 @@
 package com.terminal.emulator.mouse;
 
-/**
- * @author traff
- */
+
 public class MouseButtonModifierFlags {
     // keyboard modifier flag
     //  4 - shift

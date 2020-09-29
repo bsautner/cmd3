@@ -4,9 +4,7 @@ import com.terminal.TtyConnector;
 import com.terminal.ui.TerminalActionPresentation;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * @author traff
- */
+
 public interface TabbedSettingsProvider extends SettingsProvider {
     boolean shouldCloseTabOnLogout(TtyConnector ttyConnector);
 

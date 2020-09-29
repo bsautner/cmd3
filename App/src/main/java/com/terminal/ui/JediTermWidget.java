@@ -51,9 +51,6 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
         this(80, 24, settingsProvider);
     }
 
-    public JediTermWidget(Dimension dimension, SettingsProvider settingsProvider) {
-        this(dimension.width, dimension.height, settingsProvider);
-    }
 
     public JediTermWidget(int columns, int lines, SettingsProvider settingsProvider) {
         super(new BorderLayout());

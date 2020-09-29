@@ -4,9 +4,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 
-/**
- * @author traff
- */
+
 public class TerminalColor {
     public static final TerminalColor BLACK = index(0);
     public static final TerminalColor WHITE = index(15);

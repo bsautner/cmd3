@@ -12,9 +12,7 @@ import java.util.Objects;
 
 import static java.awt.event.KeyEvent.*;
 
-/**
- * @author traff
- */
+
 public class TerminalKeyEncoder {
     private static final int ESC = Ascii.ESC;
 

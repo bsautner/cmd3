@@ -6,9 +6,7 @@ import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-/**
- * @author traff
- */
+
 public class UIUtil {
     public static final String OS_NAME = System.getProperty("os.name");
     public static final String OS_VERSION = System.getProperty("os.version").toLowerCase();

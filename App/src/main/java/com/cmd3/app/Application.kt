@@ -4,7 +4,7 @@ package com.cmd3.app
 import com.cmd3.app.data.Command
 import com.cmd3.app.data.H2
 import com.cmd3.app.ux.*
-import com.terminal.command.CommandProcessor
+import com.cmd3.app.command.CommandProcessor
 import org.apache.log4j.BasicConfigurator
 import org.apache.log4j.Level
 import org.apache.log4j.Logger

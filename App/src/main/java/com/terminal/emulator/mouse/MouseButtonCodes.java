@@ -1,8 +1,6 @@
 package com.terminal.emulator.mouse;
 
-/**
- * @author traff
- */
+
 public class MouseButtonCodes {
     // X11 button number
     public static final int NONE = -1;       // no button

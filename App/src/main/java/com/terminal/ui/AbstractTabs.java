@@ -3,9 +3,7 @@ package com.terminal.ui;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * @author traff
- */
+
 public interface AbstractTabs<T extends Component> {
 
     int getTabCount();

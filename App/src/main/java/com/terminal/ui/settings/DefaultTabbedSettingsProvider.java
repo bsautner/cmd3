@@ -9,9 +9,7 @@ import javax.swing.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-/**
- * @author traff
- */
+
 public class DefaultTabbedSettingsProvider extends DefaultSettingsProvider implements TabbedSettingsProvider {
     @Override
     public boolean shouldCloseTabOnLogout(TtyConnector ttyConnector) {

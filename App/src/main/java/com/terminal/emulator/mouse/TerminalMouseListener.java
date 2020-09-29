@@ -3,9 +3,7 @@ package com.terminal.emulator.mouse;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
-/**
- * @author traff
- */
+
 public interface TerminalMouseListener {
     void mousePressed(int x, int y, MouseEvent event);
 

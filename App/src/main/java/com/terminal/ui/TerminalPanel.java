@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.terminal.*;
 import com.terminal.SubstringFinder.FindResult.FindItem;
-import com.terminal.command.CommandProcessor;
+import com.cmd3.app.command.CommandProcessor;
 import com.terminal.emulator.ColorPalette;
 import com.terminal.emulator.charset.CharacterSets;
 import com.terminal.emulator.mouse.MouseMode;
