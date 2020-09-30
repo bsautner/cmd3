@@ -18,9 +18,9 @@ class MainToolbar(selectionListener: SelectionListener) : JToolBar() {
         // val clearButton = makeNavigationButton(ActionListener { selectionListener.clearConsole() }, "276-trash")
 
         val clearButton = JButton("Clear Console")
-        clearButton.addActionListener(ActionListener {
+        clearButton.addActionListener {
             selectionListener.clearConsole()
-        })
+        }
 
         add(clearButton)
         add(makeToggle(ActionListener {

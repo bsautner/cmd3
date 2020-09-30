@@ -2,7 +2,6 @@ package com.cmd3.app
 
 import com.intellij.openapi.Disposable
 import com.intellij.util.JBHiDPIScaledImage
-import com.intellij.util.RetinaImage
 import com.intellij.util.ui.DrawUtil
 import com.terminal.model.StyleState
 import com.terminal.model.TerminalTextBuffer
@@ -84,8 +83,6 @@ class TerminalPanel(
                 newG.drawImage(img, 2 * dx1, 2 * dy1, 2 * dx2, 2 * dy2, sx1 * 2, sy1 * 2, sx2 * 2, sy2 * 2, observer)
                 newG.scale(1.0, 1.0)
                 newG.dispose()
-            } else if (RetinaImage.isAppleHiDPIScaledImage(image)) {
-                g.drawImage(image, dx1, dy1, dx2, dy2, sx1 * 2, sy1 * 2, sx2 * 2, sy2 * 2, observer)
             } else {
                 g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer)
             }

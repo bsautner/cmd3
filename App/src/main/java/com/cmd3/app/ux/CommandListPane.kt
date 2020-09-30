@@ -20,9 +20,6 @@ class CommandListPane(private val selectionListener: SelectionListener) : JList<
 
     init {
 
-        background = Color.GREEN
-
-
         this.model = defaultListModel()
 
         this.selectionMode = ListSelectionModel.MULTIPLE_INTERVAL_SELECTION
@@ -74,7 +71,7 @@ class CommandListPane(private val selectionListener: SelectionListener) : JList<
     //Listens to the list
     override fun valueChanged(e: ListSelectionEvent) {
         if (!e.valueIsAdjusting && selectedIndex > -1 && Prefs.autoTerm) {
-            CommandProcessor.instance.commandSelected((selectedValue as Command).cmd)
+
             selectionListener.commandSelected((selectedValue as Command))
             clearSelection()
 

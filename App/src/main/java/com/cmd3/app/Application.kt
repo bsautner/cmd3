@@ -2,36 +2,43 @@ package com.cmd3.app
 
 import com.cmd3.app.command.CommandProcessor
 import com.cmd3.app.data.Command
+import com.cmd3.app.data.H2
 import com.cmd3.app.ux.CommandListPane
 import com.cmd3.app.ux.MainMenuBar
 import com.cmd3.app.ux.MainToolbar
 import com.cmd3.app.ux.SelectionListener
 import java.awt.BorderLayout
-import java.awt.Color
 import java.awt.EventQueue
+import java.awt.event.KeyEvent
+import java.awt.event.KeyListener
 import javax.swing.JFrame
 import javax.swing.JScrollPane
 import javax.swing.JSplitPane
 
 
-class Application : JFrame(), SelectionListener{
+class Application : JFrame(), SelectionListener, KeyListener {
 
     private lateinit var mainMenuBar: MainMenuBar
     private lateinit var toolbar: MainToolbar
     private lateinit var terminalPanel : TerminalMain
     private lateinit var commandListPane : CommandListPane
     private lateinit var  splitPanel : JSplitPane
+    private val commandProcessor = CommandProcessor(this)
+    private val dao = H2()
+
     private fun go() {
-        CommandProcessor.instance.selectionListener = this
+
+        dao.connect()
 
         toolbar = MainToolbar(this)
         commandListPane = CommandListPane(this)
         terminalPanel = TerminalMain()
+        terminalPanel.addCustomKeyListener(this)
+
 
         val scrollPane = JScrollPane(commandListPane)
-        val splitPanel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, terminalPanel.terminal.component)
-        splitPanel.rightComponent.background= Color.BLUE
-        splitPanel.leftComponent.background= Color.ORANGE
+
+        splitPanel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, terminalPanel.terminal.component)
 
         this.layout = BorderLayout()
         this.title = "CommandCube"
@@ -82,7 +89,7 @@ class Application : JFrame(), SelectionListener{
 
     override fun clearConsole() {
 
-        CommandProcessor.instance.clear()
+        commandProcessor.clear()
 
         terminalPanel.clearConsole()
     }
@@ -97,5 +104,17 @@ class Application : JFrame(), SelectionListener{
             jSplitPaneDemo1.isVisible = true // Display frame
             jSplitPaneDemo1.go()
         }
+    }
+
+    override fun keyTyped(k: KeyEvent) {
+       commandProcessor.keyTyped(k)
+    }
+
+    override fun keyPressed(k: KeyEvent) {
+
+    }
+
+    override fun keyReleased(k: KeyEvent) {
+        TODO("Not yet implemented")
     }
 }

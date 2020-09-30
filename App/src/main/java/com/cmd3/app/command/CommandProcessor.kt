@@ -6,11 +6,11 @@ import com.cmd3.app.ux.SelectionListener
 import java.awt.event.KeyEvent
 
 
-class CommandProcessor : CommandListener {
+class CommandProcessor(val selectionListener: SelectionListener) : CommandListener {
 
     private val sb = StringBuilder()
     private val dao = H2()
-    lateinit var selectionListener: SelectionListener
+
 
 
     override fun keyTyped(e: KeyEvent) {
@@ -53,9 +53,7 @@ class CommandProcessor : CommandListener {
         sb.setLength(0)
     }
 
-    companion object {
-        val instance: CommandProcessor by lazy { CommandProcessor() }
-    }
+
 
 
 }

@@ -16,6 +16,7 @@ import com.terminal.ui.UIUtil
 import com.terminal.ui.settings.DefaultSettingsProvider
 import com.terminal.ui.settings.SettingsProvider
 import com.terminal.util.PtyProcessTtyConnector
+import java.awt.event.KeyListener
 import java.io.IOException
 import java.nio.charset.Charset
 
@@ -128,6 +129,10 @@ class TerminalMain {
 
     fun clearConsole() {
         sendCommand(Command("clear"), true)
+    }
+
+    fun addCustomKeyListener(k: KeyListener) {
+       terminal.addCustomKeyListener(k)
     }
 
 

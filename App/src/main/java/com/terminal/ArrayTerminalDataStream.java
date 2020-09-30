@@ -20,10 +20,6 @@ public class ArrayTerminalDataStream implements TerminalDataStream {
         myLength = length;
     }
 
-    public ArrayTerminalDataStream(char[] buf) {
-        this(buf, 0, buf.length);
-    }
-
     public char getChar() throws IOException {
         if (myLength == 0) {
             throw new EOF();

@@ -27,7 +27,6 @@ import com.intellij.ui.AntialiasingType;
 import com.intellij.util.Consumer;
 import com.intellij.util.JBHiDPIScaledImage;
 import com.intellij.util.ReflectionUtil;
-import com.intellij.util.RetinaImage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import sun.swing.SwingUtilities2;
@@ -390,19 +389,11 @@ public class DrawUtil {
 
     @NotNull
     public static BufferedImage createImage(int width, int height, int type) {
-        if (isRetina()) {
-            return RetinaImage.create(width, height, type);
-        }
-        //noinspection UndesirableClassUsage
         return new BufferedImage(width, height, type);
     }
 
     @NotNull
     public static BufferedImage createImageForGraphics(Graphics2D g, int width, int height, int type) {
-        if (isRetina(g)) {
-            return RetinaImage.create(width, height, type);
-        }
-        //noinspection UndesirableClassUsage
         return new BufferedImage(width, height, type);
     }
 

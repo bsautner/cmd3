@@ -23,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import sun.reflect.ConstructorAccessor;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -437,77 +436,6 @@ public class ReflectionUtil {
         }
     }
 
-    /**
-     * @deprecated private API, use {@link #newInstance(Class)} instead (to be removed in IDEA 17)
-     */
-    @SuppressWarnings("unused")
-    public static <T> T createInstanceViaConstructorAccessor(@NotNull ConstructorAccessor constructorAccessor) {
-        try {
-            @SuppressWarnings("unchecked") T t = (T) constructorAccessor.newInstance(new Object[0]);
-            return t;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Like {@link Class#newInstance()} but also handles private classes
-     */
-    @NotNull
-    public static <T> T newInstance(@NotNull Class<T> aClass) {
-        try {
-            Constructor<T> constructor = aClass.getDeclaredConstructor();
-            try {
-                constructor.setAccessible(true);
-            } catch (SecurityException e) {
-                return aClass.newInstance();
-            }
-            return constructor.newInstance();
-        } catch (Exception e) {
-            // support Kotlin data classes - pass null as default value
-            for (Annotation annotation : aClass.getAnnotations()) {
-                String name = annotation.annotationType().getName();
-                if (name.equals("kotlin.Metadata") || name.equals("kotlin.jvm.internal.KotlinClass")) {
-                    Constructor<?>[] constructors = aClass.getDeclaredConstructors();
-                    Exception exception = e;
-                    ctorLoop:
-                    for (Constructor<?> constructor1 : constructors) {
-                        try {
-                            try {
-                                constructor1.setAccessible(true);
-                            } catch (Throwable ignored) {
-                            }
-
-                            Class<?>[] parameterTypes = constructor1.getParameterTypes();
-                            for (Class<?> type : parameterTypes) {
-                                if (type.getName().equals("kotlin.jvm.internal.DefaultConstructorMarker")) {
-                                    continue ctorLoop;
-                                }
-                            }
-
-                            @SuppressWarnings("unchecked")
-                            T t = (T) constructor1.newInstance(new Object[parameterTypes.length]);
-                            return t;
-                        } catch (Exception e1) {
-                            exception = e1;
-                        }
-                    }
-                    throw new RuntimeException(exception);
-                }
-            }
-
-            throw new RuntimeException(e);
-        }
-    }
-
-    @NotNull
-    public static <T> T createInstance(@NotNull Constructor<T> constructor, @NotNull Object... args) {
-        try {
-            return constructor.newInstance(args);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Nullable
     public static Class getGrandCallerClass() {
@@ -521,34 +449,6 @@ public class ReflectionUtil {
         }
         return callerClass;
     }
-
-    public static void copyFieldValue(@NotNull Object from, @NotNull Object to, @NotNull Field field)
-            throws IllegalAccessException {
-        Class<?> fieldType = field.getType();
-        if (fieldType.isPrimitive() || fieldType.equals(String.class) || fieldType.isEnum()) {
-            field.set(to, field.get(from));
-        } else {
-            throw new RuntimeException("Field '" + field.getName() + "' not copied: unsupported type: " + field.getType());
-        }
-    }
-
-    private static boolean isPublic(final Field field) {
-        return (field.getModifiers() & Modifier.PUBLIC) != 0;
-    }
-
-    private static boolean isFinal(final Field field) {
-        return (field.getModifiers() & Modifier.FINAL) != 0;
-    }
-
-    @NotNull
-    public static Class forName(@NotNull String fqn) {
-        try {
-            return Class.forName(fqn);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
     private static class MySecurityManager extends SecurityManager {
         private static final MySecurityManager INSTANCE = new MySecurityManager();

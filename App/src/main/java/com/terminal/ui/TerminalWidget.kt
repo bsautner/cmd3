@@ -4,6 +4,7 @@ package com.terminal.ui
 import com.terminal.TerminalDisplay
 import com.terminal.TtyConnector
 import java.awt.Dimension
+import java.awt.event.KeyListener
 import javax.swing.JComponent
 
 interface TerminalWidget  {
@@ -18,4 +19,5 @@ interface TerminalWidget  {
     fun addListener(listener: TerminalWidgetListener)
     fun removeListener(listener: TerminalWidgetListener)
     fun grabFocus()
+    fun addCustomKeyListener(keyListener: KeyListener)
 }

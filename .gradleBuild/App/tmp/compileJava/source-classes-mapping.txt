@@ -1,0 +1,758 @@
+com/terminal/model/TerminalModelListener.java
+ com.terminal.model.TerminalModelListener
+com/intellij/openapi/util/Ref.java
+ com.intellij.openapi.util.Ref
+com/terminal/TtyBasedArrayDataStream.java
+ com.terminal.TtyBasedArrayDataStream
+com/terminal/emulator/SystemCommandSequence.java
+ com.terminal.emulator.SystemCommandSequence
+com/intellij/util/ui/RegionPainter.java
+ com.intellij.util.ui.RegionPainter
+ com.intellij.util.ui.RegionPainter$Alpha
+ com.intellij.util.ui.RegionPainter$Image
+com/intellij/ui/SimpleColoredText.java
+ com.intellij.ui.SimpleColoredText
+com/terminal/model/ChangeWidthOperation.java
+ com.terminal.model.ChangeWidthOperation
+com/intellij/util/NotNullProducer.java
+ com.intellij.util.NotNullProducer
+com/intellij/ui/mac/foundation/ID.java
+ com.intellij.ui.mac.foundation.ID
+com/intellij/openapi/util/Pair.java
+ com.intellij.openapi.util.Pair
+ com.intellij.openapi.util.Pair$1
+ com.intellij.openapi.util.Pair$NonNull
+com/intellij/ui/mac/foundation/Foundation.java
+ com.intellij.ui.mac.foundation.Foundation
+ com.intellij.ui.mac.foundation.Foundation$1
+ com.intellij.ui.mac.foundation.Foundation$CGFloat
+ com.intellij.ui.mac.foundation.Foundation$NSArray
+ com.intellij.ui.mac.foundation.Foundation$NSAutoreleasePool
+ com.intellij.ui.mac.foundation.Foundation$NSDictionary
+ com.intellij.ui.mac.foundation.Foundation$NSPoint
+ com.intellij.ui.mac.foundation.Foundation$NSRect
+ com.intellij.ui.mac.foundation.Foundation$NSSize
+ com.intellij.ui.mac.foundation.Foundation$RunnableInfo
+com/intellij/util/ui/ColorUtil.java
+ com.intellij.util.ui.ColorUtil
+com/intellij/ui/ClickListener.java
+ com.intellij.ui.ClickListener
+ com.intellij.ui.ClickListener$1
+com/terminal/ui/TerminalPanel.java
+ com.terminal.ui.TerminalPanel
+ com.terminal.ui.TerminalPanel$1
+ com.terminal.ui.TerminalPanel$10
+ com.terminal.ui.TerminalPanel$11
+ com.terminal.ui.TerminalPanel$12
+ com.terminal.ui.TerminalPanel$2
+ com.terminal.ui.TerminalPanel$3
+ com.terminal.ui.TerminalPanel$4
+ com.terminal.ui.TerminalPanel$5
+ com.terminal.ui.TerminalPanel$6
+ com.terminal.ui.TerminalPanel$7
+ com.terminal.ui.TerminalPanel$8
+ com.terminal.ui.TerminalPanel$9
+ com.terminal.ui.TerminalPanel$MyInputMethodRequests
+ com.terminal.ui.TerminalPanel$TerminalCursor
+ com.terminal.ui.TerminalPanel$TerminalCursorState
+ com.terminal.ui.TerminalPanel$TerminalKeyHandler
+ com.terminal.ui.TerminalPanel$WeakRedrawTimer
+com/terminal/TerminalCopyPasteHandler.java
+ com.terminal.TerminalCopyPasteHandler
+com/intellij/util/ui/DrawUtil.java
+ com.intellij.util.ui.DrawUtil
+ com.intellij.util.ui.DrawUtil$DetectRetinaKit
+com/intellij/openapi/util/SystemInfoRt.java
+ com.intellij.openapi.util.SystemInfoRt
+com/intellij/util/SystemProperties.java
+ com.intellij.util.SystemProperties
+com/intellij/openapi/util/text/StringUtil.java
+ com.intellij.openapi.util.text.StringUtil
+ com.intellij.openapi.util.text.StringUtil$1
+ com.intellij.openapi.util.text.StringUtil$2
+ com.intellij.openapi.util.text.StringUtil$3
+ com.intellij.openapi.util.text.StringUtil$4
+ com.intellij.openapi.util.text.StringUtil$5
+ com.intellij.openapi.util.text.StringUtil$6
+ com.intellij.openapi.util.text.StringUtil$6$1
+ com.intellij.openapi.util.text.StringUtil$BombedCharSequence
+ com.intellij.openapi.util.text.StringUtil$MyHtml2Text
+com/terminal/TtyConnector.java
+ com.terminal.TtyConnector
+com/intellij/ui/components/DefaultScrollBarUI.java
+ com.intellij.ui.components.DefaultScrollBarUI
+ com.intellij.ui.components.DefaultScrollBarUI$1
+ com.intellij.ui.components.DefaultScrollBarUI$2
+ com.intellij.ui.components.DefaultScrollBarUI$3
+ com.intellij.ui.components.DefaultScrollBarUI$Listener
+com/intellij/util/containers/LinkedHashSet.java
+ com.intellij.util.containers.LinkedHashSet
+com/intellij/ui/components/JBLabelDecorator.java
+ com.intellij.ui.components.JBLabelDecorator
+com/intellij/ui/AntialiasingType.java
+ com.intellij.ui.AntialiasingType
+com/intellij/ui/ColorUtil.java
+ com.intellij.ui.ColorUtil
+com/intellij/util/ui/WavePainter.java
+ com.intellij.util.ui.WavePainter
+com/intellij/util/containers/Stack.java
+ com.intellij.util.containers.Stack
+com/intellij/openapi/util/Couple.java
+ com.intellij.openapi.util.Couple
+com/terminal/ui/settings/SettingsProvider.java
+ com.terminal.ui.settings.SettingsProvider
+com/terminal/HyperlinkStyle.java
+ com.terminal.HyperlinkStyle
+ com.terminal.HyperlinkStyle$1
+ com.terminal.HyperlinkStyle$Builder
+ com.terminal.HyperlinkStyle$HighlightMode
+com/intellij/openapi/util/registry/Registry.java
+ com.intellij.openapi.util.registry.Registry
+com/terminal/CursorShape.java
+ com.terminal.CursorShape
+com/terminal/util/Util.java
+ com.terminal.util.Util
+com/intellij/openapi/ui/Divider.java
+ com.intellij.openapi.ui.Divider
+com/terminal/ui/TerminalActionProvider.java
+ com.terminal.ui.TerminalActionProvider
+com/intellij/ui/components/JBLoadingPanelListener.java
+ com.intellij.ui.components.JBLoadingPanelListener
+ com.intellij.ui.components.JBLoadingPanelListener$Adapter
+com/intellij/openapi/ui/NullableComponent.java
+ com.intellij.openapi.ui.NullableComponent
+ com.intellij.openapi.ui.NullableComponent$Check
+com/intellij/execution/filters/UrlFilter.java
+ com.intellij.execution.filters.UrlFilter
+ com.intellij.execution.filters.UrlFilter$1
+com/terminal/emulator/charset/GraphicSetState.java
+ com.terminal.emulator.charset.GraphicSetState
+com/intellij/ui/components/JBLabel.java
+ com.intellij.ui.components.JBLabel
+ com.intellij.ui.components.JBLabel$1
+ com.intellij.ui.components.JBLabel$2
+com/intellij/util/containers/ContainerUtil.java
+ com.intellij.util.containers.ContainerUtil
+ com.intellij.util.containers.ContainerUtil$1
+ com.intellij.util.containers.ContainerUtil$10
+ com.intellij.util.containers.ContainerUtil$11
+ com.intellij.util.containers.ContainerUtil$12
+ com.intellij.util.containers.ContainerUtil$13
+ com.intellij.util.containers.ContainerUtil$14
+ com.intellij.util.containers.ContainerUtil$2
+ com.intellij.util.containers.ContainerUtil$3
+ com.intellij.util.containers.ContainerUtil$4
+ com.intellij.util.containers.ContainerUtil$5
+ com.intellij.util.containers.ContainerUtil$6
+ com.intellij.util.containers.ContainerUtil$6$1
+ com.intellij.util.containers.ContainerUtil$7
+ com.intellij.util.containers.ContainerUtil$7$1
+ com.intellij.util.containers.ContainerUtil$8
+ com.intellij.util.containers.ContainerUtil$9
+ com.intellij.util.containers.ContainerUtil$ImmutableListBackedByArray
+ com.intellij.util.containers.ContainerUtil$ImmutableListBackedByList
+ com.intellij.util.containers.ContainerUtil$ImmutableMapBuilder
+com/intellij/openapi/util/Condition.java
+ com.intellij.openapi.util.Condition
+ com.intellij.openapi.util.Condition$1
+ com.intellij.openapi.util.Condition$2
+ com.intellij.openapi.util.Condition$3
+com/terminal/model/hyperlinks/LinkResult.java
+ com.terminal.model.hyperlinks.LinkResult
+com/intellij/ui/components/ZoomableViewport.java
+ com.intellij.ui.components.ZoomableViewport
+com/intellij/openapi/ui/Painter.java
+ com.intellij.openapi.ui.Painter
+ com.intellij.openapi.ui.Painter$Listener
+com/intellij/ui/components/TwoWayAnimator.java
+ com.intellij.ui.components.TwoWayAnimator
+ com.intellij.ui.components.TwoWayAnimator$1
+ com.intellij.ui.components.TwoWayAnimator$MyAnimator
+com/intellij/util/ui/GraphicsUtil.java
+ com.intellij.util.ui.GraphicsUtil
+com/intellij/ui/paint/RectanglePainter.java
+ com.intellij.ui.paint.RectanglePainter
+ com.intellij.ui.paint.RectanglePainter$1
+ com.intellij.ui.paint.RectanglePainter$2
+com/intellij/ui/AnchorableComponent.java
+ com.intellij.ui.AnchorableComponent
+com/terminal/ui/settings/UserSettingsProvider.java
+ com.terminal.ui.settings.UserSettingsProvider
+com/intellij/ui/components/MacScrollBarUI.java
+ com.intellij.ui.components.MacScrollBarUI
+ com.intellij.ui.components.MacScrollBarUI$1
+ com.intellij.ui.components.MacScrollBarUI$Behavior
+ com.intellij.ui.components.MacScrollBarUI$Behavior$1
+ com.intellij.ui.components.MacScrollBarUI$Native
+ com.intellij.ui.components.MacScrollBarUI$Style
+ com.intellij.ui.components.MacScrollBarUI$Style$1
+com/intellij/util/Processor.java
+ com.intellij.util.Processor
+ com.intellij.util.Processor$1
+ com.intellij.util.Processor$2
+com/terminal/model/StyleState.java
+ com.terminal.model.StyleState
+com/intellij/util/ui/update/ComparableObject.java
+ com.intellij.util.ui.update.ComparableObject
+ com.intellij.util.ui.update.ComparableObject$Impl
+com/terminal/model/LinesBuffer.java
+ com.terminal.model.LinesBuffer
+com/terminal/TerminalStarter.java
+ com.terminal.TerminalStarter
+com/intellij/util/ui/StatusText.java
+ com.intellij.util.ui.StatusText
+ com.intellij.util.ui.StatusText$1
+ com.intellij.util.ui.StatusText$2
+com/terminal/ui/settings/TabbedSettingsProvider.java
+ com.terminal.ui.settings.TabbedSettingsProvider
+com/intellij/ui/components/MultiColumnListModel.java
+ com.intellij.ui.components.MultiColumnListModel
+com/intellij/ui/mac/foundation/FoundationLibrary.java
+ com.intellij.ui.mac.foundation.FoundationLibrary
+com/terminal/emulator/mouse/MouseFormat.java
+ com.terminal.emulator.mouse.MouseFormat
+com/intellij/ui/IdeBorderFactory.java
+ com.intellij.ui.IdeBorderFactory
+com/intellij/ui/SimpleColoredComponent.java
+ com.intellij.ui.SimpleColoredComponent
+ com.intellij.ui.SimpleColoredComponent$1
+ com.intellij.ui.SimpleColoredComponent$AccessibleSimpleColoredComponent
+ com.intellij.ui.SimpleColoredComponent$BrowserLauncherTag
+ com.intellij.ui.SimpleColoredComponent$ColoredIterator
+ com.intellij.ui.SimpleColoredComponent$MyBorder
+ com.intellij.ui.SimpleColoredComponent$MyIterator
+com/intellij/util/PairConsumer.java
+ com.intellij.util.PairConsumer
+com/intellij/ui/components/FixedRowsModel.java
+ com.intellij.ui.components.FixedRowsModel
+com/intellij/ui/components/ScrollColorProducer.java
+ com.intellij.ui.components.ScrollColorProducer
+com/intellij/ui/components/panels/VerticalLayout.java
+ com.intellij.ui.components.panels.VerticalLayout
+com/terminal/emulator/charset/CharacterSet.java
+ com.terminal.emulator.charset.CharacterSet
+ com.terminal.emulator.charset.CharacterSet$1
+ com.terminal.emulator.charset.CharacterSet$10
+ com.terminal.emulator.charset.CharacterSet$11
+ com.terminal.emulator.charset.CharacterSet$12
+ com.terminal.emulator.charset.CharacterSet$13
+ com.terminal.emulator.charset.CharacterSet$14
+ com.terminal.emulator.charset.CharacterSet$2
+ com.terminal.emulator.charset.CharacterSet$3
+ com.terminal.emulator.charset.CharacterSet$4
+ com.terminal.emulator.charset.CharacterSet$5
+ com.terminal.emulator.charset.CharacterSet$6
+ com.terminal.emulator.charset.CharacterSet$7
+ com.terminal.emulator.charset.CharacterSet$8
+ com.terminal.emulator.charset.CharacterSet$9
+com/intellij/util/concurrency/AppExecutorUtil.java
+ com.intellij.util.concurrency.AppExecutorUtil
+com/intellij/util/EncodingEnvironmentUtil.java
+ com.intellij.util.EncodingEnvironmentUtil
+com/intellij/util/ArrayUtil.java
+ com.intellij.util.ArrayUtil
+ com.intellij.util.ArrayUtil$1
+ com.intellij.util.ArrayUtil$2
+com/terminal/TextStyle.java
+ com.terminal.TextStyle
+ com.terminal.TextStyle$Builder
+ com.terminal.TextStyle$Option
+com/intellij/openapi/util/SystemInfo.java
+ com.intellij.openapi.util.SystemInfo
+ com.intellij.openapi.util.SystemInfo$1
+ com.intellij.openapi.util.SystemInfo$2
+ com.intellij.openapi.util.SystemInfo$3
+com/intellij/ui/DarculaColors.java
+ com.intellij.ui.DarculaColors
+com/intellij/util/HiDPIScaledGraphics.java
+ com.intellij.util.HiDPIScaledGraphics
+com/intellij/openapi/util/ExecutionCallback.java
+ com.intellij.openapi.util.ExecutionCallback
+ com.intellij.openapi.util.ExecutionCallback$1
+ com.intellij.openapi.util.ExecutionCallback$CompositeRunnable
+com/intellij/ui/components/JBTabbedPane.java
+ com.intellij.ui.components.JBTabbedPane
+com/intellij/openapi/util/ActiveRunnable.java
+ com.intellij.openapi.util.ActiveRunnable
+com/intellij/util/ui/components/JBComponent.java
+ com.intellij.util.ui.components.JBComponent
+com/intellij/ui/components/ZoomingDelegate.java
+ com.intellij.ui.components.ZoomingDelegate
+com/terminal/model/StoredCursor.java
+ com.terminal.model.StoredCursor
+com/intellij/util/concurrency/AppDelayQueue.java
+ com.intellij.util.concurrency.AppDelayQueue
+ com.intellij.util.concurrency.AppDelayQueue$1
+com/intellij/ui/Gray.java
+ com.intellij.ui.Gray
+com/intellij/ui/components/FixedColumnsModel.java
+ com.intellij.ui.components.FixedColumnsModel
+com/intellij/openapi/util/Key.java
+ com.intellij.openapi.util.Key
+com/terminal/RequestOrigin.java
+ com.terminal.RequestOrigin
+com/intellij/util/ui/Gray.java
+ com.intellij.util.ui.Gray
+com/intellij/util/concurrency/BlockingSet.java
+ com.intellij.util.concurrency.BlockingSet
+com/terminal/emulator/ColorPalette.java
+ com.terminal.emulator.ColorPalette
+ com.terminal.emulator.ColorPalette$1
+ com.terminal.emulator.ColorPalette$2
+com/intellij/ui/components/MultiColumnList.java
+ com.intellij.ui.components.MultiColumnList
+ com.intellij.ui.components.MultiColumnList$1
+ com.intellij.ui.components.MultiColumnList$2
+com/intellij/util/containers/ContainerUtilRt.java
+ com.intellij.util.containers.ContainerUtilRt
+ com.intellij.util.containers.ContainerUtilRt$EmptyList
+com/intellij/util/ui/update/ComparableObjectCheck.java
+ com.intellij.util.ui.update.ComparableObjectCheck
+com/terminal/ui/CMD3TermWidget.java
+ com.terminal.ui.CMD3TermWidget
+ com.terminal.ui.CMD3TermWidget$1
+ com.terminal.ui.CMD3TermWidget$2
+ com.terminal.ui.CMD3TermWidget$3
+ com.terminal.ui.CMD3TermWidget$4
+ com.terminal.ui.CMD3TermWidget$EmulatorTask
+ com.terminal.ui.CMD3TermWidget$FindResultScrollBarUI
+ com.terminal.ui.CMD3TermWidget$SearchComponent
+ com.terminal.ui.CMD3TermWidget$SearchPanel
+ com.terminal.ui.CMD3TermWidget$TerminalLayout
+com/intellij/util/ui/NSScrollerHelper.java
+ com.intellij.util.ui.NSScrollerHelper
+ com.intellij.util.ui.NSScrollerHelper$1
+ com.intellij.util.ui.NSScrollerHelper$2
+ com.intellij.util.ui.NSScrollerHelper$ClickBehavior
+ com.intellij.util.ui.NSScrollerHelper$ScrollbarStyleListener
+ com.intellij.util.ui.NSScrollerHelper$Style
+com/intellij/ui/components/panels/NonOpaquePanel.java
+ com.intellij.ui.components.panels.NonOpaquePanel
+com/terminal/emulator/ControlSequence.java
+ com.terminal.emulator.ControlSequence
+com/terminal/util/CharUtils.java
+ com.terminal.util.CharUtils
+ com.terminal.util.CharUtils$CharacterType
+com/intellij/ui/JBSplitter.java
+ com.intellij.ui.JBSplitter
+com/terminal/ui/settings/SystemSettingsProvider.java
+ com.terminal.ui.settings.SystemSettingsProvider
+com/terminal/util/PtyProcessTtyConnector.java
+ com.terminal.util.PtyProcessTtyConnector
+com/intellij/ui/paint/EffectPainter.java
+ com.intellij.ui.paint.EffectPainter
+ com.intellij.ui.paint.EffectPainter$1
+ com.intellij.ui.paint.EffectPainter$2
+ com.intellij.ui.paint.EffectPainter$3
+ com.intellij.ui.paint.EffectPainter$4
+ com.intellij.ui.paint.EffectPainter$5
+ com.intellij.ui.paint.EffectPainter$Cached
+ com.intellij.ui.paint.EffectPainter$Cached$1
+ com.intellij.ui.paint.EffectPainter$Cached$2
+com/terminal/emulator/mouse/TerminalMouseListener.java
+ com.terminal.emulator.mouse.TerminalMouseListener
+com/intellij/ui/mac/foundation/NSWorkspace.java
+ com.intellij.ui.mac.foundation.NSWorkspace
+com/terminal/TerminalColor.java
+ com.terminal.TerminalColor
+com/terminal/ui/PreConnectHandler.java
+ com.terminal.ui.PreConnectHandler
+com/intellij/ui/LightColors.java
+ com.intellij.ui.LightColors
+com/intellij/util/ui/JBUI.java
+ com.intellij.util.ui.JBUI
+ com.intellij.util.ui.JBUI$Borders
+ com.intellij.util.ui.JBUI$Fonts
+com/terminal/model/TerminalSelection.java
+ com.terminal.model.TerminalSelection
+com/intellij/util/ObjectUtils.java
+ com.intellij.util.ObjectUtils
+com/terminal/TerminalKeyEncoder.java
+ com.terminal.TerminalKeyEncoder
+ com.terminal.TerminalKeyEncoder$KeyCodeAndModifier
+com/terminal/StyledTextConsumerAdapter.java
+ com.terminal.StyledTextConsumerAdapter
+com/intellij/util/ui/JBFont.java
+ com.intellij.util.ui.JBFont
+ com.intellij.util.ui.JBFont$1
+ com.intellij.util.ui.JBFont$JBFontUIResource
+com/intellij/util/ui/components/BorderLayoutPanel.java
+ com.intellij.util.ui.components.BorderLayoutPanel
+com/intellij/util/concurrency/Semaphore.java
+ com.intellij.util.concurrency.Semaphore
+ com.intellij.util.concurrency.Semaphore$1
+ com.intellij.util.concurrency.Semaphore$Sync
+com/intellij/openapi/Disposable.java
+ com.intellij.openapi.Disposable
+ com.intellij.openapi.Disposable$Parent
+com/terminal/ui/TerminalActionPresentation.java
+ com.terminal.ui.TerminalActionPresentation
+com/terminal/SubstringFinder.java
+ com.terminal.SubstringFinder
+ com.terminal.SubstringFinder$1
+ com.terminal.SubstringFinder$FindResult
+ com.terminal.SubstringFinder$FindResult$FindItem
+ com.terminal.SubstringFinder$TextToken
+com/intellij/util/ArrayUtilRt.java
+ com.intellij.util.ArrayUtilRt
+com/intellij/util/Producer.java
+ com.intellij.util.Producer
+com/intellij/openapi/wm/IdeGlassPane.java
+ com.intellij.openapi.wm.IdeGlassPane
+ com.intellij.openapi.wm.IdeGlassPane$TopComponent
+com/intellij/ui/components/JBPanel.java
+ com.intellij.ui.components.JBPanel
+com/intellij/util/ui/JBDimension.java
+ com.intellij.util.ui.JBDimension
+ com.intellij.util.ui.JBDimension$JBDimensionUIResource
+com/intellij/ui/components/JBLayeredPane.java
+ com.intellij.ui.components.JBLayeredPane
+com/terminal/model/hyperlinks/TextProcessing.java
+ com.terminal.model.hyperlinks.TextProcessing
+com/intellij/ui/components/JBScrollPane.java
+ com.intellij.ui.components.JBScrollPane
+ com.intellij.ui.components.JBScrollPane$1
+ com.intellij.ui.components.JBScrollPane$Alignment
+ com.intellij.ui.components.JBScrollPane$Corner
+ com.intellij.ui.components.JBScrollPane$Flip
+ com.intellij.ui.components.JBScrollPane$Layout
+ com.intellij.ui.components.JBScrollPane$MyScrollBar
+ com.intellij.ui.components.JBScrollPane$ViewportBorder
+com/intellij/util/ui/JBEmptyBorder.java
+ com.intellij.util.ui.JBEmptyBorder
+ com.intellij.util.ui.JBEmptyBorder$JBEmptyBorderUIResource
+com/terminal/emulator/charset/GraphicSet.java
+ com.terminal.emulator.charset.GraphicSet
+com/intellij/ui/components/JBMenu.java
+ com.intellij.ui.components.JBMenu
+ com.intellij.ui.components.JBMenu$AccessibleJBMenu
+com/terminal/model/hyperlinks/LinkInfo.java
+ com.terminal.model.hyperlinks.LinkInfo
+com/intellij/util/ui/ButtonlessScrollBarUI.java
+ com.intellij.util.ui.ButtonlessScrollBarUI
+ com.intellij.util.ui.ButtonlessScrollBarUI$1
+ com.intellij.util.ui.ButtonlessScrollBarUI$10
+ com.intellij.util.ui.ButtonlessScrollBarUI$11
+ com.intellij.util.ui.ButtonlessScrollBarUI$12
+ com.intellij.util.ui.ButtonlessScrollBarUI$13
+ com.intellij.util.ui.ButtonlessScrollBarUI$2
+ com.intellij.util.ui.ButtonlessScrollBarUI$3
+ com.intellij.util.ui.ButtonlessScrollBarUI$4
+ com.intellij.util.ui.ButtonlessScrollBarUI$5
+ com.intellij.util.ui.ButtonlessScrollBarUI$6
+ com.intellij.util.ui.ButtonlessScrollBarUI$7
+ com.intellij.util.ui.ButtonlessScrollBarUI$8
+ com.intellij.util.ui.ButtonlessScrollBarUI$9
+ com.intellij.util.ui.ButtonlessScrollBarUI$EmptyButton
+ com.intellij.util.ui.ButtonlessScrollBarUI$ScrollbarRepaintCallback
+ com.intellij.util.ui.ButtonlessScrollBarUI$ThumbPainter
+ com.intellij.util.ui.ButtonlessScrollBarUI$Transparent
+ com.intellij.util.ui.ButtonlessScrollBarUI$WeakLestener
+com/intellij/util/containers/LinkedHashMap.java
+ com.intellij.util.containers.LinkedHashMap
+com/terminal/TerminalOutputStream.java
+ com.terminal.TerminalOutputStream
+com/terminal/emulator/mouse/MouseButtonModifierFlags.java
+ com.terminal.emulator.mouse.MouseButtonModifierFlags
+com/terminal/TerminalDataStream.java
+ com.terminal.TerminalDataStream
+ com.terminal.TerminalDataStream$EOF
+com/intellij/ui/components/panels/Wrapper.java
+ com.intellij.ui.components.panels.Wrapper
+ com.intellij.ui.components.panels.Wrapper$North
+com/intellij/util/concurrency/BoundedTaskExecutor.java
+ com.intellij.util.concurrency.BoundedTaskExecutor
+com/intellij/util/ArrayFactory.java
+ com.intellij.util.ArrayFactory
+com/terminal/util/Pair.java
+ com.terminal.util.Pair
+com/terminal/LoggingTtyConnector.java
+ com.terminal.LoggingTtyConnector
+com/intellij/openapi/util/text/StringUtilRt.java
+ com.intellij.openapi.util.text.StringUtilRt
+com/terminal/emulator/charset/CharacterSets.java
+ com.terminal.emulator.charset.CharacterSets
+com/intellij/openapi/util/ActionCallback.java
+ com.intellij.openapi.util.ActionCallback
+ com.intellij.openapi.util.ActionCallback$1
+ com.intellij.openapi.util.ActionCallback$2
+ com.intellij.openapi.util.ActionCallback$3
+ com.intellij.openapi.util.ActionCallback$4
+ com.intellij.openapi.util.ActionCallback$5
+ com.intellij.openapi.util.ActionCallback$Chunk
+ com.intellij.openapi.util.ActionCallback$Done
+ com.intellij.openapi.util.ActionCallback$ExecutedExecutionCallback
+ com.intellij.openapi.util.ActionCallback$IgnoreExecutionCallback
+ com.intellij.openapi.util.ActionCallback$Rejected
+com/intellij/util/containers/EmptyListIterator.java
+ com.intellij.util.containers.EmptyListIterator
+com/intellij/util/Alarm.java
+ com.intellij.util.Alarm
+ com.intellij.util.Alarm$1
+ com.intellij.util.Alarm$Request
+ com.intellij.util.Alarm$Request$1
+ com.intellij.util.Alarm$ThreadToUse
+com/intellij/util/Function.java
+ com.intellij.util.Function
+ com.intellij.util.Function$1
+ com.intellij.util.Function$2
+ com.intellij.util.Function$First
+ com.intellij.util.Function$FirstInCollection
+ com.intellij.util.Function$InstanceOf
+ com.intellij.util.Function$Mono
+com/intellij/ui/components/panels/StatelessCardLayout.java
+ com.intellij.ui.components.panels.StatelessCardLayout
+com/intellij/openapi/ui/ClickListener.java
+ com.intellij.openapi.ui.ClickListener
+ com.intellij.openapi.ui.ClickListener$1
+com/intellij/util/concurrency/EdtExecutorService.java
+ com.intellij.util.concurrency.EdtExecutorService
+ com.intellij.util.concurrency.EdtExecutorService$1
+com/terminal/model/hyperlinks/LinkResultItem.java
+ com.terminal.model.hyperlinks.LinkResultItem
+com/terminal/TerminalMode.java
+ com.terminal.TerminalMode
+ com.terminal.TerminalMode$1
+ com.terminal.TerminalMode$10
+ com.terminal.TerminalMode$11
+ com.terminal.TerminalMode$2
+ com.terminal.TerminalMode$3
+ com.terminal.TerminalMode$4
+ com.terminal.TerminalMode$5
+ com.terminal.TerminalMode$6
+ com.terminal.TerminalMode$7
+ com.terminal.TerminalMode$8
+ com.terminal.TerminalMode$9
+com/intellij/util/ReflectionUtil.java
+ com.intellij.util.ReflectionUtil
+ com.intellij.util.ReflectionUtil$1
+ com.intellij.util.ReflectionUtil$2
+ com.intellij.util.ReflectionUtil$3
+ com.intellij.util.ReflectionUtil$MySecurityManager
+com/terminal/ProcessTtyConnector.java
+ com.terminal.ProcessTtyConnector
+com/intellij/util/ui/JBInsets.java
+ com.intellij.util.ui.JBInsets
+ com.intellij.util.ui.JBInsets$JBInsetsUIResource
+com/intellij/util/concurrency/AppScheduledExecutorService.java
+ com.intellij.util.concurrency.AppScheduledExecutorService
+ com.intellij.util.concurrency.AppScheduledExecutorService$1
+ com.intellij.util.concurrency.AppScheduledExecutorService$BackendThreadPoolExecutor
+ com.intellij.util.concurrency.AppScheduledExecutorService$Holder
+com/terminal/ui/TerminalWidgetListener.java
+ com.terminal.ui.TerminalWidgetListener
+com/intellij/util/ui/UIUtil.java
+ com.intellij.util.ui.UIUtil
+ com.intellij.util.ui.UIUtil$1
+ com.intellij.util.ui.UIUtil$10
+ com.intellij.util.ui.UIUtil$11
+ com.intellij.util.ui.UIUtil$12
+ com.intellij.util.ui.UIUtil$13
+ com.intellij.util.ui.UIUtil$14
+ com.intellij.util.ui.UIUtil$15
+ com.intellij.util.ui.UIUtil$16
+ com.intellij.util.ui.UIUtil$17
+ com.intellij.util.ui.UIUtil$2
+ com.intellij.util.ui.UIUtil$3
+ com.intellij.util.ui.UIUtil$4
+ com.intellij.util.ui.UIUtil$5
+ com.intellij.util.ui.UIUtil$6
+ com.intellij.util.ui.UIUtil$7
+ com.intellij.util.ui.UIUtil$8
+ com.intellij.util.ui.UIUtil$9
+ com.intellij.util.ui.UIUtil$ComponentStyle
+ com.intellij.util.ui.UIUtil$FontColor
+ com.intellij.util.ui.UIUtil$FontSize
+com/terminal/emulator/mouse/MouseButtonCodes.java
+ com.terminal.emulator.mouse.MouseButtonCodes
+com/intellij/util/concurrency/FutureResult.java
+ com.intellij.util.concurrency.FutureResult
+com/intellij/util/Consumer.java
+ com.intellij.util.Consumer
+ com.intellij.util.Consumer$1
+com/terminal/model/Tabulator.java
+ com.terminal.model.Tabulator
+com/terminal/ui/settings/DefaultSettingsProvider.java
+ com.terminal.ui.settings.DefaultSettingsProvider
+com/terminal/ui/TerminalPanelListener.java
+ com.terminal.ui.TerminalPanelListener
+com/terminal/ui/AbstractTabs.java
+ com.terminal.ui.AbstractTabs
+ com.terminal.ui.AbstractTabs$TabChangeListener
+com/intellij/openapi/util/RecursionGuard.java
+ com.intellij.openapi.util.RecursionGuard
+ com.intellij.openapi.util.RecursionGuard$StackStamp
+com/intellij/util/NullableFunction.java
+ com.intellij.util.NullableFunction
+ com.intellij.util.NullableFunction$1
+com/intellij/openapi/ui/Splitter.java
+ com.intellij.openapi.ui.Splitter
+ com.intellij.openapi.ui.Splitter$DividerImpl
+ com.intellij.openapi.ui.Splitter$DividerImpl$1
+ com.intellij.openapi.ui.Splitter$DividerImpl$2
+ com.intellij.openapi.ui.Splitter$DividerImpl$3
+com/intellij/ui/mac/foundation/MacUtil.java
+ com.intellij.ui.mac.foundation.MacUtil
+ com.intellij.ui.mac.foundation.MacUtil$1
+ com.intellij.ui.mac.foundation.MacUtil$2
+com/terminal/ArrayTerminalDataStream.java
+ com.terminal.ArrayTerminalDataStream
+com/intellij/ui/components/ScrollPainter.java
+ com.intellij.ui.components.ScrollPainter
+ com.intellij.ui.components.ScrollPainter$1
+ com.intellij.ui.components.ScrollPainter$EditorThumb
+ com.intellij.ui.components.ScrollPainter$EditorThumb$Mac
+ com.intellij.ui.components.ScrollPainter$EditorThumb$Mac$Overlay
+ com.intellij.ui.components.ScrollPainter$Protected
+ com.intellij.ui.components.ScrollPainter$Round
+ com.intellij.ui.components.ScrollPainter$SubtractColor
+ com.intellij.ui.components.ScrollPainter$SubtractComposite
+ com.intellij.ui.components.ScrollPainter$Thumb
+ com.intellij.ui.components.ScrollPainter$Thumb$Mac
+ com.intellij.ui.components.ScrollPainter$Thumb$Mac$Overlay
+ com.intellij.ui.components.ScrollPainter$Track
+com/terminal/emulator/Emulator.java
+ com.terminal.emulator.Emulator
+com/intellij/util/NotNullFunction.java
+ com.intellij.util.NotNullFunction
+com/intellij/openapi/util/Comparing.java
+ com.intellij.openapi.util.Comparing
+com/terminal/ui/TerminalSession.java
+ com.terminal.ui.TerminalSession
+com/terminal/DataStreamIteratingEmulator.java
+ com.terminal.DataStreamIteratingEmulator
+com/intellij/util/ui/AppleBoldDottedPainter.java
+ com.intellij.util.ui.AppleBoldDottedPainter
+com/intellij/openapi/ui/RoundedLineBorder.java
+ com.intellij.openapi.ui.RoundedLineBorder
+com/terminal/model/Cmd3Terminal.java
+ com.terminal.model.Cmd3Terminal
+ com.terminal.model.Cmd3Terminal$1
+ com.terminal.model.Cmd3Terminal$2
+ com.terminal.model.Cmd3Terminal$3
+ com.terminal.model.Cmd3Terminal$DefaultTabulator
+ com.terminal.model.Cmd3Terminal$ResizeHandler
+com/intellij/util/containers/HashMap.java
+ com.intellij.util.containers.HashMap
+com/terminal/TerminalDisplay.java
+ com.terminal.TerminalDisplay
+com/intellij/ui/JBColor.java
+ com.intellij.ui.JBColor
+ com.intellij.ui.JBColor$1
+ com.intellij.ui.JBColor$2
+ com.intellij.ui.JBColor$3
+ com.intellij.ui.JBColor$4
+ com.intellij.ui.JBColor$5
+ com.intellij.ui.JBColor$6
+com/intellij/util/SmartList.java
+ com.intellij.util.SmartList
+ com.intellij.util.SmartList$SingletonIterator
+com/terminal/DefaultTerminalCopyPasteHandler.java
+ com.terminal.DefaultTerminalCopyPasteHandler
+com/terminal/model/TerminalLine.java
+ com.terminal.model.TerminalLine
+ com.terminal.model.TerminalLine$1
+ com.terminal.model.TerminalLine$TextEntries
+ com.terminal.model.TerminalLine$TextEntry
+com/intellij/util/containers/HashSet.java
+ com.intellij.util.containers.HashSet
+com/intellij/util/ExceptionUtil.java
+ com.intellij.util.ExceptionUtil
+ com.intellij.util.ExceptionUtil$1
+com/intellij/openapi/diagnostic/Logger.java
+ com.intellij.openapi.diagnostic.Logger
+ com.intellij.openapi.diagnostic.Logger$1
+ com.intellij.openapi.diagnostic.Logger$DefaultFactory
+ com.intellij.openapi.diagnostic.Logger$Factory
+com/intellij/util/ui/Animator.java
+ com.intellij.util.ui.Animator
+ com.intellij.util.ui.Animator$1
+com/intellij/openapi/ui/SideBorder.java
+ com.intellij.openapi.ui.SideBorder
+ com.intellij.openapi.ui.SideBorder$SideMask
+com/terminal/model/SelectionUtil.java
+ com.terminal.model.SelectionUtil
+com/intellij/ui/SimpleTextAttributes.java
+ com.intellij.ui.SimpleTextAttributes
+ com.intellij.ui.SimpleTextAttributes$StyleAttributeConstant
+com/intellij/util/RetinaImage.java
+ com.intellij.util.RetinaImage
+com/intellij/ui/components/JBViewport.java
+ com.intellij.ui.components.JBViewport
+ com.intellij.ui.components.JBViewport$1
+ com.intellij.ui.components.JBViewport$2
+ com.intellij.ui.components.JBViewport$ResourceViewBorder
+ com.intellij.ui.components.JBViewport$ViewBorder
+com/intellij/util/io/URLUtil.java
+ com.intellij.util.io.URLUtil
+com/intellij/openapi/util/Weighted.java
+ com.intellij.openapi.util.Weighted
+com/intellij/util/concurrency/SchedulingWrapper.java
+ com.intellij.util.concurrency.SchedulingWrapper
+ com.intellij.util.concurrency.SchedulingWrapper$1
+ com.intellij.util.concurrency.SchedulingWrapper$MyScheduledFutureTask
+com/terminal/emulator/Cmd3Emulator.java
+ com.terminal.emulator.Cmd3Emulator
+com/intellij/util/ui/IsRetina.java
+ com.intellij.util.ui.IsRetina
+com/terminal/model/TerminalTextBuffer.java
+ com.terminal.model.TerminalTextBuffer
+ com.terminal.model.TerminalTextBuffer$1
+com/intellij/openapi/ui/Splittable.java
+ com.intellij.openapi.ui.Splittable
+com/intellij/ui/components/panels/HorizontalLayout.java
+ com.intellij.ui.components.panels.HorizontalLayout
+com/intellij/ui/components/JBScrollBar.java
+ com.intellij.ui.components.JBScrollBar
+com/intellij/ui/mac/foundation/Selector.java
+ com.intellij.ui.mac.foundation.Selector
+com/intellij/openapi/diagnostic/ControlFlowException.java
+ com.intellij.openapi.diagnostic.ControlFlowException
+com/intellij/util/ui/Centerizer.java
+ com.intellij.util.ui.Centerizer
+com/intellij/util/containers/ImmutableList.java
+ com.intellij.util.containers.ImmutableList
+ com.intellij.util.containers.ImmutableList$1
+ com.intellij.util.containers.ImmutableList$Itr
+ com.intellij.util.containers.ImmutableList$ListItr
+ com.intellij.util.containers.ImmutableList$SubList
+com/intellij/openapi/util/Computable.java
+ com.intellij.openapi.util.Computable
+ com.intellij.openapi.util.Computable$NotNullCachedComputable
+ com.intellij.openapi.util.Computable$NullableCachedComputable
+ com.intellij.openapi.util.Computable$PredefinedValueComputable
+com/intellij/util/concurrency/FixedFuture.java
+ com.intellij.util.concurrency.FixedFuture
+com/intellij/util/BitUtil.java
+ com.intellij.util.BitUtil
+com/terminal/emulator/mouse/MouseMode.java
+ com.terminal.emulator.mouse.MouseMode
+com/intellij/util/containers/SingletonIteratorBase.java
+ com.intellij.util.containers.SingletonIteratorBase
+com/intellij/ui/components/Magnificator.java
+ com.intellij.ui.components.Magnificator
+com/terminal/Terminal.java
+ com.terminal.Terminal
+com/intellij/openapi/diagnostic/DefaultLogger.java
+ com.intellij.openapi.diagnostic.DefaultLogger
+com/terminal/StyledTextConsumer.java
+ com.terminal.StyledTextConsumer
+com/intellij/ui/ColoredTextContainer.java
+ com.intellij.ui.ColoredTextContainer
+com/intellij/util/containers/EmptyIterator.java
+ com.intellij.util.containers.EmptyIterator
+com/terminal/ui/TerminalCoordinates.java
+ com.terminal.ui.TerminalCoordinates
+com/terminal/model/CharBuffer.java
+ com.terminal.model.CharBuffer
+ com.terminal.model.CharBuffer$1
+com/terminal/model/hyperlinks/HyperlinkFilter.java
+ com.terminal.model.hyperlinks.HyperlinkFilter
+com/terminal/ui/TerminalAction.java
+ com.terminal.ui.TerminalAction
+com/terminal/ui/UIUtil.java
+ com.terminal.ui.UIUtil
+com/intellij/openapi/ui/GraphicsConfig.java
+ com.intellij.openapi.ui.GraphicsConfig
+com/intellij/util/JBHiDPIScaledImage.java
+ com.intellij.util.JBHiDPIScaledImage

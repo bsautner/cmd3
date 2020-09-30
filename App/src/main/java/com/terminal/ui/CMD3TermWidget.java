@@ -3,7 +3,6 @@ package com.terminal.ui;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.terminal.*;
-import com.terminal.debug.DebugBufferType;
 import com.terminal.model.Cmd3Terminal;
 import com.terminal.model.StyleState;
 import com.terminal.model.TerminalTextBuffer;
@@ -93,6 +92,10 @@ public class CMD3TermWidget extends JPanel implements TerminalSession, TerminalW
         myTerminalPanel.setVisible(true);
     }
 
+    public void addCustomKeyListener(KeyListener keyListener) {
+        myTerminalPanel.addCustomKeyListener(keyListener);
+    }
+
     protected JScrollBar createScrollBar() {
         JScrollBar scrollBar = new JScrollBar();
         scrollBar.setUI(new FindResultScrollBarUI());
@@ -170,10 +173,7 @@ public class CMD3TermWidget extends JPanel implements TerminalSession, TerminalW
         return mySessionRunning.get();
     }
 
-    public String getBufferText(DebugBufferType type) {
-        System.out.println("Buffer Text: " + type.getValue(this));
-        return type.getValue(this);
-    }
+
 
     @Override
     public TerminalTextBuffer getTerminalTextBuffer() {

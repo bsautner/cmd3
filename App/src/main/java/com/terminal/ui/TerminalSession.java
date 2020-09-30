@@ -2,14 +2,11 @@ package com.terminal.ui;
 
 import com.terminal.Terminal;
 import com.terminal.TtyConnector;
-import com.terminal.debug.DebugBufferType;
 import com.terminal.model.TerminalTextBuffer;
 
 
 public interface TerminalSession {
     void start();
-
-    String getBufferText(DebugBufferType type);
 
     TerminalTextBuffer getTerminalTextBuffer();
 

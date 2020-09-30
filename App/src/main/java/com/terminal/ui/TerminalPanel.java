@@ -1,6 +1,5 @@
 package com.terminal.ui;
 
-import com.cmd3.app.command.CommandProcessor;
 import com.google.common.base.Ascii;
 import com.google.common.collect.Lists;
 import com.terminal.*;
@@ -871,9 +870,10 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
                 keyListener.keyPressed(e);
             }
         } else if (id == KeyEvent.KEY_TYPED) {
+
             for (KeyListener keyListener : myCustomKeyListeners) {
                 keyListener.keyTyped(e);
-                CommandProcessor.Companion.getInstance().keyTyped(e);
+
             }
         }
     }

@@ -13,7 +13,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-
+/**
+ * @author traff
+ */
 public class TextProcessing {
 
     private static final Logger LOG = Logger.getLogger(TextProcessing.class);

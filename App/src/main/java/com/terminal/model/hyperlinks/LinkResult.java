@@ -5,7 +5,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-
+/**
+ * @author traff
+ */
 public class LinkResult {
     private final LinkResultItem myItem;
     private List<LinkResultItem> myItemList;

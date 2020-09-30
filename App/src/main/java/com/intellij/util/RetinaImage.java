@@ -16,7 +16,6 @@
 package com.intellij.util;
 
 import com.intellij.openapi.util.SystemInfo;
-import com.intellij.util.ui.DrawUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -62,18 +61,16 @@ public class RetinaImage {
 
     @NotNull
     private static BufferedImage create(Image image, final int width, int height, int type) {
-        if (SystemInfo.isAppleJvm) {
-            return AppleHiDPIScaledImage.create(width, height, type);
-        } else {
+
             if (image == null) {
                 return new JBHiDPIScaledImage(width, height, type);
             } else {
                 return new JBHiDPIScaledImage(image, width, height, type);
             }
-        }
+
     }
 
     public static boolean isAppleHiDPIScaledImage(Image image) {
-        return DrawUtil.isAppleRetina() && AppleHiDPIScaledImage.is(image);
+        return false;
     }
 }
