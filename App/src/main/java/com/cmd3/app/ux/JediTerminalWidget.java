@@ -8,7 +8,7 @@ import com.terminal.SubstringFinder;
 import com.terminal.TerminalStarter;
 import com.terminal.TtyBasedArrayDataStream;
 import com.terminal.TtyConnector;
-import com.terminal.model.JediTerminal;
+import com.terminal.model.Cmd3Terminal;
 import com.terminal.model.StyleState;
 import com.terminal.model.TerminalTextBuffer;
 import com.terminal.ui.JediTermWidget;
@@ -36,7 +36,7 @@ public class JediTerminalWidget extends JediTermWidget {
 
 
     @Override
-    protected TerminalStarter createTerminalStarter(JediTerminal terminal, TtyConnector connector) {
+    protected TerminalStarter createTerminalStarter(Cmd3Terminal terminal, TtyConnector connector) {
         return new TerminalStarter(terminal, connector, new TtyBasedArrayDataStream(connector));
     }
 

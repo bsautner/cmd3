@@ -29,8 +29,8 @@ import java.util.*;
  *
  * @author traff
  */
-public class JediTerminal implements Terminal, TerminalMouseListener, TerminalCoordinates {
-    private static final Logger LOG = Logger.getLogger(JediTerminal.class.getName());
+public class Cmd3Terminal implements Terminal, TerminalMouseListener, TerminalCoordinates {
+    private static final Logger LOG = Logger.getLogger(Cmd3Terminal.class.getName());
 
     private static final int MIN_WIDTH = 5;
 
@@ -65,7 +65,7 @@ public class JediTerminal implements Terminal, TerminalMouseListener, TerminalCo
     private MouseMode myMouseMode = MouseMode.MOUSE_REPORTING_NONE;
     private Point myLastMotionReport = null;
 
-    public JediTerminal(final TerminalDisplay display, final TerminalTextBuffer buf, final StyleState initialStyleState) {
+    public Cmd3Terminal(final TerminalDisplay display, final TerminalTextBuffer buf, final StyleState initialStyleState) {
         myDisplay = display;
         myTerminalTextBuffer = buf;
         myStyleState = initialStyleState;

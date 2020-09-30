@@ -1,7 +1,7 @@
 package com.terminal;
 
 import com.terminal.emulator.mouse.MouseMode;
-import com.terminal.model.JediTerminal;
+import com.terminal.model.Cmd3Terminal;
 import com.terminal.model.TerminalSelection;
 
 import java.awt.*;
@@ -20,10 +20,10 @@ public interface TerminalDisplay {
 
     @SuppressWarnings("DeprecatedIsStillUsed")
     @Deprecated
-    Dimension requestResize(Dimension pendingResize, RequestOrigin origin, int cursorY, JediTerminal.ResizeHandler resizeHandler);
+    Dimension requestResize(Dimension pendingResize, RequestOrigin origin, int cursorY, Cmd3Terminal.ResizeHandler resizeHandler);
 
     default Dimension requestResize(Dimension pendingResize, RequestOrigin origin, int cursorX, int cursorY,
-                                    JediTerminal.ResizeHandler resizeHandler) {
+                                    Cmd3Terminal.ResizeHandler resizeHandler) {
         return requestResize(pendingResize, origin, cursorY, resizeHandler);
     }
 

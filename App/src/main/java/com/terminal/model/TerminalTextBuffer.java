@@ -89,7 +89,7 @@ public class TerminalTextBuffer {
     public Dimension resize(@NotNull final Dimension pendingResize,
                             @NotNull final RequestOrigin origin,
                             int cursorY,
-                            @NotNull JediTerminal.ResizeHandler resizeHandler,
+                            @NotNull Cmd3Terminal.ResizeHandler resizeHandler,
                             @Nullable TerminalSelection selection) {
         return resize(pendingResize, origin, 0, cursorY, resizeHandler, selection);
     }
@@ -98,7 +98,7 @@ public class TerminalTextBuffer {
                             @NotNull final RequestOrigin origin,
                             final int cursorX,
                             final int cursorY,
-                            @NotNull JediTerminal.ResizeHandler resizeHandler,
+                            @NotNull Cmd3Terminal.ResizeHandler resizeHandler,
                             @Nullable TerminalSelection mySelection) {
         final int newWidth = pendingResize.width;
         final int newHeight = pendingResize.height;

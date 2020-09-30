@@ -591,7 +591,7 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
     public Dimension requestResize(final Dimension newSize,
                                    final RequestOrigin origin,
                                    int cursorY,
-                                   JediTerminal.ResizeHandler resizeHandler) {
+                                   Cmd3Terminal.ResizeHandler resizeHandler) {
         return requestResize(newSize, origin, 0, cursorY, resizeHandler);
     }
 
@@ -599,7 +599,7 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
                                    final RequestOrigin origin,
                                    int cursorX,
                                    int cursorY,
-                                   JediTerminal.ResizeHandler resizeHandler) {
+                                   Cmd3Terminal.ResizeHandler resizeHandler) {
         if (!newSize.equals(myTermSize)) {
             myTerminalTextBuffer.lock();
             try {

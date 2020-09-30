@@ -4,7 +4,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.terminal.*;
 import com.terminal.debug.DebugBufferType;
-import com.terminal.model.JediTerminal;
+import com.terminal.model.Cmd3Terminal;
 import com.terminal.model.StyleState;
 import com.terminal.model.TerminalTextBuffer;
 import com.terminal.model.hyperlinks.HyperlinkFilter;
@@ -30,7 +30,7 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
 
     protected final TerminalPanel myTerminalPanel;
     protected final JScrollBar myScrollBar;
-    protected final JediTerminal myTerminal;
+    protected final Cmd3Terminal myTerminal;
     protected final AtomicBoolean mySessionRunning = new AtomicBoolean();
     private SearchComponent myFindComponent;
     private final PreConnectHandler myPreConnectHandler;
@@ -62,7 +62,7 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
         myTextProcessing.setTerminalTextBuffer(terminalTextBuffer);
 
         myTerminalPanel = createTerminalPanel(mySettingsProvider, styleState, terminalTextBuffer);
-        myTerminal = new JediTerminal(myTerminalPanel, terminalTextBuffer, styleState);
+        myTerminal = new Cmd3Terminal(myTerminalPanel, terminalTextBuffer, styleState);
 
         myTerminal.setModeEnabled(TerminalMode.AltSendsEscape, mySettingsProvider.altSendsEscape());
 
@@ -109,7 +109,7 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
         return new TerminalPanel(settingsProvider, terminalTextBuffer, styleState);
     }
 
-    protected PreConnectHandler createPreConnectHandler(JediTerminal terminal) {
+    protected PreConnectHandler createPreConnectHandler(Cmd3Terminal terminal) {
         return new PreConnectHandler(terminal);
     }
 
@@ -128,7 +128,7 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
         myTerminalPanel.setTerminalStarter(myTerminalStarter);
     }
 
-    protected TerminalStarter createTerminalStarter(JediTerminal terminal, TtyConnector connector) {
+    protected TerminalStarter createTerminalStarter(Cmd3Terminal terminal, TtyConnector connector) {
         return new TerminalStarter(terminal, connector, new TtyBasedArrayDataStream(connector));
     }
 
