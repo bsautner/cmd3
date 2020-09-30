@@ -25,10 +25,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * JediTerm terminal widget with UI implemented in Swing.
- * <p/>
- */
+
 public class JediTermWidget extends JPanel implements TerminalSession, TerminalWidget, TerminalActionProvider {
     private static final Logger LOG = Logger.getLogger(JediTermWidget.class);
 

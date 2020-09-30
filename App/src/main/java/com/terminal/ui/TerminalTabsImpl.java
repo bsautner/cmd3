@@ -1,8 +1,6 @@
 package com.terminal.ui;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
@@ -83,12 +81,7 @@ public class TerminalTabsImpl implements AbstractTabs<JediTermWidget> {
 
     @Override
     public void addChangeListener(final TabChangeListener listener) {
-        myTabbedPane.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                listener.selectionChanged();
-            }
-        });
+        myTabbedPane.addChangeListener(e -> listener.selectionChanged());
 
         myTabbedPane.addContainerListener(new ContainerListener() {
             @Override

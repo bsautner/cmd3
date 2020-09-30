@@ -15,7 +15,6 @@
  */
 package com.intellij.ui.tabs.impl;
 
-import com.intellij.openapi.Disposable;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.registry.Registry;
 import com.intellij.ui.tabs.JBTabsPosition;
@@ -38,9 +37,6 @@ public class JBEditorTabs extends JBTabsImpl {
     protected JBEditorTabsPainter myDefaultPainter = new DefaultEditorTabsPainter();
 
 
-    public JBEditorTabs(Disposable parent) {
-
-    }
 
     @Override
     protected SingleRowLayout createSingleRowLayout() {

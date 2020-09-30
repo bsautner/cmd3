@@ -18,7 +18,6 @@ package com.intellij.ui.mac.foundation;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
@@ -135,12 +134,7 @@ public class MacUtil {
                     ((KeyEvent) event).consume();
             }
         };
-        Disposer.register(disposable, new Disposable() {
-            @Override
-            public void dispose() {
-                Toolkit.getDefaultToolkit().removeAWTEventListener(listener);
-            }
-        });
+
         Toolkit.getDefaultToolkit().addAWTEventListener(listener, AWTEvent.KEY_EVENT_MASK);
     }
 

@@ -1,10 +1,10 @@
 package com.cmd3.app
 
 
+import com.cmd3.app.command.CommandProcessor
 import com.cmd3.app.data.Command
 import com.cmd3.app.data.H2
 import com.cmd3.app.ux.*
-import com.cmd3.app.command.CommandProcessor
 import org.apache.log4j.BasicConfigurator
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
@@ -38,6 +38,7 @@ object Application {
         private lateinit var mainFrame : JFrame
         private lateinit var listFrame : CommandListPane
         private lateinit var mainMenuBar : MainMenuBar
+        private lateinit var commandMain: CommandMain
         val jSplitPane : JSplitPane = MainSplitPane()
 
         fun launch() {
@@ -56,15 +57,17 @@ object Application {
             listFrame = CommandListPane(this)
 
             term = TerminalMain()
+            commandMain = CommandMain()
 
             jSplitPane.rightComponent = term.terminal.component
-            jSplitPane.leftComponent = listFrame
+            jSplitPane.leftComponent = listFrame //commandMain
 
             jSplitPane.setDividerLocation(0.4)
             jSplitPane.leftComponent.background = Color.BLUE
             jSplitPane.rightComponent.background = Color.BLUE
 
             mainFrame.add(jSplitPane)
+
             mainFrame.pack()
             mainFrame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
             mainFrame.contentPane.add(jSplitPane)

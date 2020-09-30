@@ -16,7 +16,6 @@
 package com.intellij.util.ui;
 
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.registry.Registry;
@@ -581,10 +580,6 @@ public class ButtonlessScrollBarUI extends BasicScrollBarUI {
         scrollbar.removeHierarchyListener(myHierarchyListener);
         updateGlobalListeners(true);
 
-        Disposer.dispose(myThumbFadeAnimator);
-        Disposer.dispose(myMouseOverScrollbarExpandAnimator);
-        Disposer.dispose(myMacScrollbarFadeTimer);
-        Disposer.dispose(myMacScrollbarFadeAnimator);
     }
 
     @Override

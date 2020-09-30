@@ -17,7 +17,6 @@ package com.intellij.util;
 
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.Pair;
 import com.intellij.util.concurrency.EdtExecutorService;
 import com.intellij.util.ui.UIUtil;
@@ -122,9 +121,7 @@ public class Alarm implements Disposable {
                 // "addRequests with the same delay are executed in order" will be broken
                 Executors.newSingleThreadScheduledExecutor();
 
-        if (parentDisposable != null) {
-            Disposer.register(parentDisposable, this);
-        }
+
     }
 
     public void addRequest(@NotNull final Runnable request, final int delay, boolean runWithActiveFrameOnly) {

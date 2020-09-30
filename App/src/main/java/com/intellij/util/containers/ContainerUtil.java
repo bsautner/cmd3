@@ -18,7 +18,6 @@ package com.intellij.util.containers;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.Couple;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.Pair;
 import com.intellij.util.Function;
 import com.intellij.util.NullableFunction;
@@ -1579,12 +1578,7 @@ public class ContainerUtil extends ContainerUtilRt {
 
     public static <T> void add(final T element, @NotNull final Collection<T> result, @NotNull final Disposable parentDisposable) {
         if (result.add(element)) {
-            Disposer.register(parentDisposable, new Disposable() {
-                @Override
-                public void dispose() {
-                    result.remove(element);
-                }
-            });
+
         }
     }
 

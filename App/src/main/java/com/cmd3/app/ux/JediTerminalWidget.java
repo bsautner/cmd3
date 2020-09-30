@@ -1,8 +1,6 @@
 package com.cmd3.app.ux;
 
 import com.cmd3.app.TerminalPanel;
-import com.intellij.openapi.Disposable;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.ui.components.JBScrollBar;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.util.ui.RegionPainter;
@@ -20,22 +18,20 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import java.awt.*;
 
-public class JediTerminalWidget extends JediTermWidget implements Disposable {
+public class JediTerminalWidget extends JediTermWidget {
 
-    public JediTerminalWidget(SettingsProvider settingsProvider, Disposable parent) {
+    public JediTerminalWidget(SettingsProvider settingsProvider) {
         super(settingsProvider);
         setName("com/terminal");
 
-        Disposer.register(parent, this);
     }
 
     @Override
     protected TerminalPanel createTerminalPanel(@NotNull SettingsProvider settingsProvider,
                                                 @NotNull StyleState styleState,
                                                 @NotNull TerminalTextBuffer textBuffer) {
-        TerminalPanel panel = new TerminalPanel(settingsProvider, styleState, textBuffer);
-        Disposer.register(this, panel);
-        return panel;
+
+        return new TerminalPanel(settingsProvider, styleState, textBuffer);
     }
 
 
@@ -66,7 +62,4 @@ public class JediTerminalWidget extends JediTermWidget implements Disposable {
         return bar;
     }
 
-    @Override
-    public void dispose() {
-    }
 }

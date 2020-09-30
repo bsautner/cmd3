@@ -1,17 +1,15 @@
 package com.cmd3.app
 
+import com.cmd3.app.data.Command
 import com.cmd3.app.ux.JediTerminalWidget
-import com.cmd3.app.ux.TabbedTerminalWidget
 import com.google.common.collect.Lists
 import com.google.common.collect.Maps
 import com.intellij.execution.filters.UrlFilter
-import com.intellij.openapi.Disposable
-import com.intellij.openapi.util.Pair
 import com.intellij.util.EncodingEnvironmentUtil
 import com.pty4j.PtyProcess
 import com.terminal.LoggingTtyConnector
 import com.terminal.TtyConnector
-import com.terminal.ui.AbstractTerminalFrame
+import com.terminal.ui.JediTermWidget
 import com.terminal.ui.TerminalWidget
 import com.terminal.ui.UIUtil
 import com.terminal.ui.settings.DefaultTabbedSettingsProvider
@@ -19,28 +17,25 @@ import com.terminal.ui.settings.TabbedSettingsProvider
 import com.terminal.util.PtyProcessTtyConnector
 import java.io.IOException
 import java.nio.charset.Charset
-import java.util.function.Function
 
-class TerminalMain : AbstractTerminalFrame(), Disposable {
+class TerminalMain {
 
 
-    override fun dispose() {
-        // TODO
+    var terminal: TerminalWidget = createTerminalWidget()
+
+
+    init {
+
+        openSession(terminal)
     }
 
-    override fun createTabbedTerminalWidget(): TabbedTerminalWidget {
-        return object : TabbedTerminalWidget(
-            DefaultTabbedSettingsProvider(),
-            Function<Pair<TerminalWidget, String>, JediTerminalWidget> { pair -> openSession(pair.first) as JediTerminalWidget },
-            this
-        ) {
-            override fun createInnerTerminalWidget(): JediTerminalWidget {
-                return createTerminalWidget(settingsProvider)
-            }
+
+    fun createTerminalWidget(): JediTerminalWidget {
+        return createTerminalWidget(DefaultTabbedSettingsProvider())
+
         }
-    }
 
-    override fun createTtyConnector(): TtyConnector {
+    fun createTtyConnector(): TtyConnector {
         try {
 
             val charset = Charset.forName("UTF-8")
@@ -68,10 +63,11 @@ class TerminalMain : AbstractTerminalFrame(), Disposable {
 
     }
 
-    override fun createTerminalWidget(settingsProvider: TabbedSettingsProvider): JediTerminalWidget {
-        val widget = JediTerminalWidget(settingsProvider, this)
+   fun createTerminalWidget(settingsProvider: TabbedSettingsProvider): JediTerminalWidget {
+        val widget = JediTerminalWidget(settingsProvider)
         widget.addHyperlinkFilter(UrlFilter())
         return widget
+
     }
 
     class LoggingPtyProcessTtyConnector(process: PtyProcess, charset: Charset) :
@@ -104,5 +100,30 @@ class TerminalMain : AbstractTerminalFrame(), Disposable {
             super.write(bytes)
         }
     }
+
+    private fun openSession(terminal: TerminalWidget): JediTermWidget? {
+        return if (terminal.canOpenSession()) {
+            val session = terminal.createTerminalSession(createTtyConnector())
+            session.start()
+            return session
+        } else null
+    }
+
+    fun sendCommand(command: Command, autoCr: Boolean) {
+        try {
+            terminal.currentSession.ttyConnector.write(command.cmd)
+            if (autoCr) {
+                terminal.currentSession.ttyConnector.write("\n")
+            }
+            terminal.grabFocus()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    fun clearConsole() {
+        terminal.currentSession.ttyConnector.clear()
+    }
+
 
 }

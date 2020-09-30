@@ -1,9 +1,9 @@
 package com.cmd3.app.ux
 
 import com.cmd3.app.Prefs
+import com.cmd3.app.command.CommandProcessor
 import com.cmd3.app.data.Command
 import com.cmd3.app.data.H2
-import com.cmd3.app.command.CommandProcessor
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.event.MouseAdapter
@@ -75,6 +75,7 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
                 CommandProcessor.instance.commandSelected((list.selectedValue as Command).cmd)
                 selectionListener.commandSelected((list.selectedValue as Command))
                 list.clearSelection()
+
         }
     }
 
