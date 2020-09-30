@@ -4,8 +4,7 @@ import com.cmd3.app.Prefs
 import com.cmd3.app.command.CommandProcessor
 import com.cmd3.app.data.Command
 import com.cmd3.app.data.H2
-import java.awt.BorderLayout
-import java.awt.Dimension
+import java.awt.Color
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import javax.swing.*
@@ -13,8 +12,7 @@ import javax.swing.event.ListSelectionEvent
 import javax.swing.event.ListSelectionListener
 
 
-class CommandListPane(private val selectionListener: SelectionListener) : JPanel(), ListSelectionListener {
-    private val list: JList<*>
+class CommandListPane(private val selectionListener: SelectionListener) : JList<Command>(), ListSelectionListener {
 
     var dao: H2 = H2()
     val selected: MutableList<Command> = ArrayList()
@@ -22,26 +20,26 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
 
     init {
 
+        background = Color.GREEN
 
-        list = JList<Command>()
 
+        this.model = defaultListModel()
 
-        list.model = defaultListModel()
+        this.selectionMode = ListSelectionModel.MULTIPLE_INTERVAL_SELECTION
+        this.selectedIndex = 0
+        this.addListSelectionListener(this)
+//        val listScrollPane = JScrollPane(list)
+       // this..layout = BorderLayout()
+      //  listScrollPane.preferredSize = Dimension(400, 800)
 
-        list.selectionMode = ListSelectionModel.MULTIPLE_INTERVAL_SELECTION
-        list.selectedIndex = 0
-        list.addListSelectionListener(this)
-        val listScrollPane = JScrollPane(list)
-        listScrollPane.preferredSize = Dimension(400, 800)
+        ///add(listScrollPane, BorderLayout.CENTER)
+        val instance = this
 
-        add(listScrollPane, BorderLayout.CENTER)
-
-        list.addMouseListener(object : MouseAdapter() {
+        this.addMouseListener(object : MouseAdapter() {
             override fun mousePressed(e: MouseEvent) {
                 selected.clear()
-                selected.addAll(list.selectedValuesList)
+                selected.addAll(selectedValuesList)
 
-                println(list.selectedIndices.size)
                 if (e.isPopupTrigger) {
                     val menu = JPopupMenu()
                     val itemRemove = JMenuItem("Remove")
@@ -53,7 +51,7 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
                     menu.add(itemRemove)
                     menu.add(itemExecute)
                     menu.add(itemScript)
-                    menu.show(list, e.point.x, e.point.y)
+                    menu.show(instance, e.point.x, e.point.y)
                 }
             }
         })
@@ -75,10 +73,10 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
 
     //Listens to the list
     override fun valueChanged(e: ListSelectionEvent) {
-        if (!e.valueIsAdjusting && list.selectedIndex > -1 && Prefs.autoTerm) {
-            CommandProcessor.instance.commandSelected((list.selectedValue as Command).cmd)
-            selectionListener.commandSelected((list.selectedValue as Command))
-            list.clearSelection()
+        if (!e.valueIsAdjusting && selectedIndex > -1 && Prefs.autoTerm) {
+            CommandProcessor.instance.commandSelected((selectedValue as Command).cmd)
+            selectionListener.commandSelected((selectedValue as Command))
+            clearSelection()
 
         }
     }
@@ -91,7 +89,7 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
             dao.deleteCommand(i)
         }
 
-        list.model = defaultListModel()
+        model = defaultListModel()
 
 
     }
@@ -103,19 +101,19 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
             selectionListener.commandSelected(i, true)
         }
 
-        list.model = defaultListModel()
-        list.clearSelection()
+        model = defaultListModel()
+        clearSelection()
 
     }
 
     fun scriptSelectedCommands() {
-        val selected = list.selectedValuesList
+        val selected = selectedValuesList
 
 
     }
 
     fun commandEntered() {
-        list.model = defaultListModel()
+         model = defaultListModel()
     }
 
 

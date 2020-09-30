@@ -7,7 +7,7 @@ import java.awt.Dimension
 import javax.swing.JComponent
 
 interface TerminalWidget  {
-    fun createTerminalSession(ttyConnector: TtyConnector?): JediTermWidget
+    fun createTerminalSession(ttyConnector: TtyConnector?): CMD3TermWidget
     val component: JComponent
 
     fun canOpenSession(): Boolean

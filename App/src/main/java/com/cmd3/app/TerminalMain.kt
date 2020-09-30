@@ -1,7 +1,7 @@
 package com.cmd3.app
 
 import com.cmd3.app.data.Command
-import com.cmd3.app.ux.JediTerminalWidget
+import com.cmd3.app.ux.CMD3TerminalWidget
 import com.google.common.collect.Lists
 import com.google.common.collect.Maps
 import com.intellij.execution.filters.UrlFilter
@@ -9,7 +9,7 @@ import com.intellij.util.EncodingEnvironmentUtil
 import com.pty4j.PtyProcess
 import com.terminal.LoggingTtyConnector
 import com.terminal.TtyConnector
-import com.terminal.ui.JediTermWidget
+import com.terminal.ui.CMD3TermWidget
 import com.terminal.ui.PreConnectHandler
 import com.terminal.ui.TerminalWidget
 import com.terminal.ui.UIUtil
@@ -25,7 +25,7 @@ class TerminalMain {
     var terminal: TerminalWidget = createTerminalWidget()
 
 
-    fun createTerminalWidget(): JediTerminalWidget {
+    fun createTerminalWidget(): CMD3TerminalWidget {
         return createTerminalWidget(DefaultSettingsProvider())
 
     }
@@ -63,8 +63,8 @@ class TerminalMain {
 
     }
 
-    fun createTerminalWidget(settingsProvider: SettingsProvider): JediTerminalWidget {
-        val widget = JediTerminalWidget(settingsProvider)
+    fun createTerminalWidget(settingsProvider: SettingsProvider): CMD3TerminalWidget {
+        val widget = CMD3TerminalWidget(settingsProvider)
         widget.addHyperlinkFilter(UrlFilter())
         return widget
 
@@ -106,7 +106,7 @@ class TerminalMain {
         }
     }
 
-    private fun openSession(terminal: TerminalWidget): JediTermWidget? {
+    private fun openSession(terminal: TerminalWidget): CMD3TermWidget? {
         return if (terminal.canOpenSession()) {
             val session = terminal.createTerminalSession(createTtyConnector())
             session.start()
@@ -127,7 +127,7 @@ class TerminalMain {
     }
 
     fun clearConsole() {
-        terminal.currentSession.ttyConnector.clear()
+        sendCommand(Command("clear"), true)
     }
 
 

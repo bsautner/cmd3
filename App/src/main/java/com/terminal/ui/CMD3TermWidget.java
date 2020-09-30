@@ -25,8 +25,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-public class JediTermWidget extends JPanel implements TerminalSession, TerminalWidget, TerminalActionProvider {
-    private static final Logger LOG = Logger.getLogger(JediTermWidget.class);
+public class CMD3TermWidget extends JPanel implements TerminalSession, TerminalWidget, TerminalActionProvider {
+    private static final Logger LOG = Logger.getLogger(CMD3TermWidget.class);
 
     protected final TerminalPanel myTerminalPanel;
     protected final JScrollBar myScrollBar;
@@ -43,12 +43,12 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
     private final TextProcessing myTextProcessing;
     private final List<TerminalWidgetListener> myListeners = new CopyOnWriteArrayList<>();
 
-    public JediTermWidget(@NotNull SettingsProvider settingsProvider) {
+    public CMD3TermWidget(@NotNull SettingsProvider settingsProvider) {
         this(80, 24, settingsProvider);
     }
 
 
-    public JediTermWidget(int columns, int lines, SettingsProvider settingsProvider) {
+    public CMD3TermWidget(int columns, int lines, SettingsProvider settingsProvider) {
         super(new BorderLayout());
 
         mySettingsProvider = settingsProvider;
@@ -206,7 +206,7 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
     }
 
     @Override
-    public JediTermWidget createTerminalSession(TtyConnector ttyConnector) {
+    public CMD3TermWidget createTerminalSession(TtyConnector ttyConnector) {
         setTtyConnector(ttyConnector);
         return this;
     }
@@ -362,7 +362,7 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
                 if (terminalPanelListener != null)
                     terminalPanelListener.onSessionChanged(getCurrentSession());
                 for (TerminalWidgetListener listener : myListeners) {
-                    listener.allSessionsClosed(JediTermWidget.this);
+                    listener.allSessionsClosed(CMD3TermWidget.this);
                 }
                 myTerminalPanel.addCustomKeyListener(myPreConnectHandler);
                 myTerminalPanel.removeCustomKeyListener(myTerminalPanel.getTerminalKeyListener());

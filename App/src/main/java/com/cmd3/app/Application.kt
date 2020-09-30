@@ -1,137 +1,101 @@
 package com.cmd3.app
 
-
 import com.cmd3.app.command.CommandProcessor
 import com.cmd3.app.data.Command
-import com.cmd3.app.data.H2
-import com.cmd3.app.ux.*
-import org.apache.log4j.BasicConfigurator
-import org.apache.log4j.Level
-import org.apache.log4j.Logger
+import com.cmd3.app.ux.CommandListPane
+import com.cmd3.app.ux.MainMenuBar
+import com.cmd3.app.ux.MainToolbar
+import com.cmd3.app.ux.SelectionListener
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.EventQueue
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
-import java.awt.event.KeyEvent
-import java.awt.event.KeyListener
 import javax.swing.JFrame
+import javax.swing.JScrollPane
 import javax.swing.JSplitPane
 
 
-object Application {
+class Application : JFrame(), SelectionListener{
+
+    private lateinit var mainMenuBar: MainMenuBar
+    private lateinit var toolbar: MainToolbar
+    private lateinit var terminalPanel : TerminalMain
+    private lateinit var commandListPane : CommandListPane
+    private lateinit var  splitPanel : JSplitPane
+    private fun go() {
+        CommandProcessor.instance.selectionListener = this
+
+        toolbar = MainToolbar(this)
+        commandListPane = CommandListPane(this)
+        terminalPanel = TerminalMain()
+
+        val scrollPane = JScrollPane(commandListPane)
+        val splitPanel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, terminalPanel.terminal.component)
+        splitPanel.rightComponent.background= Color.BLUE
+        splitPanel.leftComponent.background= Color.ORANGE
+
+        this.layout = BorderLayout()
+        this.title = "CommandCube"
+
+        this.defaultCloseOperation = EXIT_ON_CLOSE
+        this.setLocationRelativeTo(null)
+        mainMenuBar = MainMenuBar(this)
+
+        jMenuBar = mainMenuBar
 
 
-    @JvmStatic
-    fun main(arg: Array<String>) {
-        BasicConfigurator.configure()
-        Logger.getRootLogger().level = Level.INFO
+        add(toolbar, BorderLayout.PAGE_START)
+        add(splitPanel, BorderLayout.CENTER)
+        //add(splitPanel, B)
 
-        val app = App()
-        app.launch()
+        EventQueue.invokeLater {
+            this.isVisible = true
+            terminalPanel.openSession()
+        }
+    }
+
+
+
+
+
+
+    override fun commandSelected(command: Command, cr: Boolean) {
+        println("Command Selected $command")
+        if (Prefs.autoTerm) {
+            terminalPanel.sendCommand(command, Prefs.autoCR || cr)
+        }
 
     }
 
-    private class App : SelectionListener, ActionListener, KeyListener {
-        private val dao = H2()
-        private lateinit var term: TerminalMain
-        private lateinit var mainFrame: JFrame
+    override fun deleteSelectedCommands() {
+        commandListPane.deleteSelectedCommands()
+    }
 
-        private lateinit var mainMenuBar: MainMenuBar
-        private lateinit var commandMain: CommandMain
-        val jSplitPane: JSplitPane = MainSplitPane()
+    override fun enableMultiSelect(enabled: Boolean) {
+        TODO("Not yet implemented")
+    }
 
-        fun launch() {
-            CommandProcessor.instance.selectionListener = this
-            dao.connect()
-            mainFrame = JFrame()
-            mainMenuBar = MainMenuBar(this)
-
-            mainFrame.jMenuBar = mainMenuBar
-
-            mainFrame.setSize(1200, 800)
-            mainFrame.layout = BorderLayout()
-            mainFrame.title = "CommandCube"
-
-            mainFrame.add(MainToolbar(this), BorderLayout.PAGE_START)
-
-
-            term = TerminalMain()
-            commandMain = CommandMain(this)
-
-            jSplitPane.rightComponent = term.terminal.component
-            jSplitPane.leftComponent = commandMain.listFrame
-
-            jSplitPane.setDividerLocation(0.4)
-            jSplitPane.leftComponent.background = Color.BLUE
-            jSplitPane.rightComponent.background = Color.BLUE
-
-            mainFrame.add(jSplitPane)
-
-            mainFrame.pack()
-            mainFrame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-            mainFrame.contentPane.add(jSplitPane)
-            //mainFrame.contentPane.add(term.myTerminal.component)
-            //   mainFrame.pack()
-            mainFrame.setLocationRelativeTo(null)
-            EventQueue.invokeLater {
-                mainFrame.isVisible = true
-            }
-
-            term.openSession()
-
-            //
+    override fun commandEntered() {
+        if (Prefs.recording) {
+            commandListPane.commandEntered()
         }
+    }
 
-        //        override fun commandEntered(command: String) {
-//            println("Command Entered $command")
-//            dao.insertCommand(command)
-//        }
-//
-        override fun commandSelected(command: Command, cr: Boolean) {
-            println("Command Selected $command")
-            if (Prefs.autoTerm) {
-                term.sendCommand(command, Prefs.autoCR || cr)
-            }
+    override fun clearConsole() {
 
+        CommandProcessor.instance.clear()
+
+        terminalPanel.clearConsole()
+    }
+
+    companion object {
+        @JvmStatic
+        fun main(args: Array<String>) {
+            val jSplitPaneDemo1 = Application()
+
+            jSplitPaneDemo1.defaultCloseOperation = EXIT_ON_CLOSE // Set Program to shutdown when frame closses
+            jSplitPaneDemo1.setSize(1200, 600) // Set frame size
+            jSplitPaneDemo1.isVisible = true // Display frame
+            jSplitPaneDemo1.go()
         }
-
-        override fun deleteSelectedCommands() {
-            commandMain.listFrame.deleteSelectedCommands()
-        }
-
-        override fun enableMultiSelect(enabled: Boolean) {
-            TODO("Not yet implemented")
-        }
-
-        override fun commandEntered() {
-            if (Prefs.recording) {
-                commandMain.listFrame.commandEntered()
-            }
-        }
-
-        override fun clearConsole() {
-            term = TerminalMain()
-            CommandProcessor.instance.clear()
-            jSplitPane.rightComponent = term.terminal.component
-        }
-
-        override fun actionPerformed(p0: ActionEvent?) {
-
-
-        }
-
-        override fun keyTyped(p0: KeyEvent?) {
-            TODO("Not yet implemented")
-        }
-
-        override fun keyPressed(p0: KeyEvent?) {
-            TODO("Not yet implemented")
-        }
-
-        override fun keyReleased(p0: KeyEvent?) {
-            TODO("Not yet implemented")
-        }
-
     }
 }
