@@ -172,6 +172,7 @@ target/
 
 ### Gradle ###
 .gradle
+.gradleBuild
 build/
 
 # Ignore Gradle GUI config
