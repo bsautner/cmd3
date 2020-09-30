@@ -48,7 +48,7 @@ class CommandProcessor : CommandListener {
     }
 
     override fun commandSelected(command: String) {
-        sb.append(command)
+      //  sb.append(command)
     }
 
     fun clear() {
