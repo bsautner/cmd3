@@ -873,7 +873,6 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
         } else if (id == KeyEvent.KEY_TYPED) {
             for (KeyListener keyListener : myCustomKeyListeners) {
                 keyListener.keyTyped(e);
-                System.out.println(e.getKeyChar());
                 CommandProcessor.Companion.getInstance().keyTyped(e);
             }
         }
