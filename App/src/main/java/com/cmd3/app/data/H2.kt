@@ -4,12 +4,12 @@ import java.sql.Connection
 import java.sql.DriverManager
 
 class H2 {
-    val connection : Connection
-            get() {
-                val connection : Connection = DriverManager.getConnection("jdbc:h2:file:~/.cmd3/test4.db", "sa", "")
-                connection.autoCommit = true
-                return connection
-            }
+    val connection: Connection
+        get() {
+            val connection: Connection = DriverManager.getConnection("jdbc:h2:file:~/.cmd3/test4.db", "sa", "")
+            connection.autoCommit = true
+            return connection
+        }
 
 
     private val deleteCommandSql = "DELETE FROM COMMANDS WHERE (command = ?);"
@@ -23,7 +23,7 @@ class H2 {
     private val getCommandsSql = "select * from COMMANDS order by COUNT DESC;"
 
     private val createCommandsTable =
-       """
+        """
 create table IF NOT EXISTS COMMANDS
 (
     COMMAND VARCHAR       not null,
@@ -38,20 +38,19 @@ create unique index IF NOT EXISTS COMMANDS_UINDEX
     fun connect() {
 
 
-
         val c = connection.prepareStatement(createCommandsTable)
         c.executeUpdate()
 
     }
 
-    fun insertCommand(command : String) {
+    fun insertCommand(command: String) {
 
         val g = connection.prepareStatement(selectCommandSql)
         g.setString(1, command)
         val sample = g.executeQuery()
         if (sample.next()) {
             println("command $command exists")
-            var count = sample.getInt("COUNT") +1
+            var count = sample.getInt("COUNT") + 1
 
             val u = connection.prepareStatement(updateCountSql)
             u.setInt(1, count)
@@ -71,7 +70,7 @@ create unique index IF NOT EXISTS COMMANDS_UINDEX
     }
 
 
-    fun getCommand(command: String) : Command? {
+    fun getCommand(command: String): Command? {
 
         val g = connection.prepareStatement(selectCommandSql)
         g.setString(1, command)
@@ -89,18 +88,18 @@ create unique index IF NOT EXISTS COMMANDS_UINDEX
 
     }
 
-    fun deleteCommand(c : Command) {
+    fun deleteCommand(c: Command) {
 
         val s = connection.prepareStatement(deleteCommandSql)
         s.setString(1, c.cmd)
         s.execute()
     }
 
-    fun getCommands() : List<Command> {
+    fun getCommands(): List<Command> {
 
         val s = connection.prepareStatement(getCommandsSql)
         val res = s.executeQuery()
-        val list : MutableList<Command> = ArrayList()
+        val list: MutableList<Command> = ArrayList()
 
         while (res.next()) {
             val cmd = res.getString("COMMAND")
@@ -109,9 +108,6 @@ create unique index IF NOT EXISTS COMMANDS_UINDEX
         }
         return list
     }
-
-
-
 
 
 }

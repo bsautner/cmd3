@@ -24,10 +24,6 @@ public class TerminalAction {
         this(presentation.getName(), presentation.getKeyStrokes().toArray(new KeyStroke[0]), runnable);
     }
 
-    public TerminalAction(@NotNull TerminalActionPresentation presentation) {
-        this(presentation, keyEvent -> true);
-    }
-
     public TerminalAction(@NotNull String name, @NotNull KeyStroke[] keyStrokes, @NotNull Predicate<KeyEvent> runnable) {
         myName = name;
         myKeyStrokes = keyStrokes;

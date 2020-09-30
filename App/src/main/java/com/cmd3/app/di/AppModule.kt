@@ -6,7 +6,7 @@ import dagger.Module
 @Module
 class AppModule {
 
-    fun provideTerminalMain() : TerminalMain {
+    fun provideTerminalMain(): TerminalMain {
         return TerminalMain()
     }
 

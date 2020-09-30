@@ -22,7 +22,6 @@ class MainMenuBar(val selectionListener: SelectionListener) : JMenuBar() {
         add(menu)
 
 
-
     }
 
 }

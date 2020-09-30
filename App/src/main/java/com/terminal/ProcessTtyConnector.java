@@ -82,10 +82,6 @@ public abstract class ProcessTtyConnector implements TtyConnector {
         return myPendingPixelSize;
     }
 
-    @Override
-    public boolean init(Questioner q) {
-        return isConnected();
-    }
 
     @Override
     public void close() {

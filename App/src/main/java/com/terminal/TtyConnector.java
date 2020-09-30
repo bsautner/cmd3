@@ -1,5 +1,7 @@
 package com.terminal;
 
+import com.terminal.ui.PreConnectHandler;
+
 import java.awt.*;
 import java.io.IOException;
 
@@ -7,7 +9,7 @@ import java.io.IOException;
  * Interface to tty.
  */
 public interface TtyConnector {
-    boolean init(Questioner q);
+
 
     void close();
 
@@ -26,4 +28,6 @@ public interface TtyConnector {
     int waitFor() throws InterruptedException;
 
     void clear();
+
+    boolean init(PreConnectHandler myPreConnectHandler);
 }

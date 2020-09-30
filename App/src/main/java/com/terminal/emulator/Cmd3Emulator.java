@@ -1,13 +1,12 @@
 package com.terminal.emulator;
 
 import com.google.common.base.Ascii;
-
+import com.terminal.*;
 import com.terminal.emulator.mouse.MouseFormat;
 import com.terminal.emulator.mouse.MouseMode;
 import com.terminal.util.CharUtils;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
-import com.terminal.*;
 
 import java.awt.*;
 import java.io.IOException;

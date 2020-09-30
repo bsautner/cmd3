@@ -12,7 +12,7 @@ class MainSplitPane : JSplitPane(HORIZONTAL_SPLIT) {
 
         //Create a split pane with the two scroll panes in it.
 
-         isOneTouchExpandable = true
+        isOneTouchExpandable = true
 
 
         //Provide a preferred size for the split pane.

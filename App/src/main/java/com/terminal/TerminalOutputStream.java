@@ -3,7 +3,6 @@ package com.terminal;
 /**
  * Sends a response from the terminal emulator.
  *
- * @author traff
  */
 public interface TerminalOutputStream {
     void sendBytes(byte[] response);

@@ -1,4 +1,4 @@
-package com.jediterm.app.data
+package main.test
 
 import com.cmd3.app.data.Command
 import com.cmd3.app.data.H2
@@ -10,11 +10,11 @@ import java.util.*
 
 internal class H2Test {
     val h2 = H2()
+
     @Before
     fun setup() {
         h2.connect()
     }
-
 
 
     @Test

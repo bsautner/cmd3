@@ -4,6 +4,7 @@ package com.terminal.util;
 import com.pty4j.PtyProcess;
 import com.pty4j.WinSize;
 import com.terminal.ProcessTtyConnector;
+import com.terminal.ui.PreConnectHandler;
 
 import java.nio.charset.Charset;
 
@@ -28,6 +29,11 @@ public class PtyProcessTtyConnector extends ProcessTtyConnector {
     @Override
     public boolean isConnected() {
         return myProcess.isRunning();
+    }
+
+    @Override
+    public boolean init(PreConnectHandler myPreConnectHandler) {
+        return false;
     }
 
     @Override

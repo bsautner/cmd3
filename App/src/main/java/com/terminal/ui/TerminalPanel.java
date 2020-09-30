@@ -1,13 +1,10 @@
 package com.terminal.ui;
 
+import com.cmd3.app.command.CommandProcessor;
 import com.google.common.base.Ascii;
 import com.google.common.collect.Lists;
-import org.apache.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.terminal.*;
 import com.terminal.SubstringFinder.FindResult.FindItem;
-import com.cmd3.app.command.CommandProcessor;
 import com.terminal.emulator.ColorPalette;
 import com.terminal.emulator.charset.CharacterSets;
 import com.terminal.emulator.mouse.MouseMode;
@@ -17,6 +14,9 @@ import com.terminal.model.hyperlinks.LinkInfo;
 import com.terminal.ui.settings.SettingsProvider;
 import com.terminal.util.CharUtils;
 import com.terminal.util.Pair;
+import org.apache.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -99,7 +99,7 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
     private final TerminalKeyHandler myTerminalKeyHandler = new TerminalKeyHandler();
 
 
-    public TerminalPanel( @NotNull SettingsProvider settingsProvider, @NotNull TerminalTextBuffer terminalTextBuffer, @NotNull StyleState styleState) {
+    public TerminalPanel(@NotNull SettingsProvider settingsProvider, @NotNull TerminalTextBuffer terminalTextBuffer, @NotNull StyleState styleState) {
         mySettingsProvider = settingsProvider;
         myTerminalTextBuffer = terminalTextBuffer;
         myStyleState = styleState;

@@ -1,7 +1,7 @@
 package com.terminal;
 
-import com.terminal.emulator.Emulator;
 import com.terminal.emulator.Cmd3Emulator;
+import com.terminal.emulator.Emulator;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 

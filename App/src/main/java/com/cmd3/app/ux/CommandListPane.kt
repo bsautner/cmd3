@@ -16,8 +16,8 @@ import javax.swing.event.ListSelectionListener
 class CommandListPane(private val selectionListener: SelectionListener) : JPanel(), ListSelectionListener {
     private val list: JList<*>
 
-    var dao : H2 = H2()
-    val selected : MutableList<Command> = ArrayList()
+    var dao: H2 = H2()
+    val selected: MutableList<Command> = ArrayList()
 
 
     init {
@@ -72,9 +72,9 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
     //Listens to the list
     override fun valueChanged(e: ListSelectionEvent) {
         if (!e.valueIsAdjusting && list.selectedIndex > -1 && Prefs.autoTerm) {
-                CommandProcessor.instance.commandSelected((list.selectedValue as Command).cmd)
-                selectionListener.commandSelected((list.selectedValue as Command))
-                list.clearSelection()
+            CommandProcessor.instance.commandSelected((list.selectedValue as Command).cmd)
+            selectionListener.commandSelected((list.selectedValue as Command))
+            list.clearSelection()
 
         }
     }
@@ -88,7 +88,6 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
         }
 
         list.model = defaultListModel()
-
 
 
     }
@@ -106,7 +105,7 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
     }
 
     fun scriptSelectedCommands() {
-        val selected =  list.selectedValuesList
+        val selected = list.selectedValuesList
 
 
     }

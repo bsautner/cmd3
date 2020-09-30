@@ -10,10 +10,11 @@ import com.pty4j.PtyProcess
 import com.terminal.LoggingTtyConnector
 import com.terminal.TtyConnector
 import com.terminal.ui.JediTermWidget
+import com.terminal.ui.PreConnectHandler
 import com.terminal.ui.TerminalWidget
 import com.terminal.ui.UIUtil
-import com.terminal.ui.settings.DefaultTabbedSettingsProvider
-import com.terminal.ui.settings.TabbedSettingsProvider
+import com.terminal.ui.settings.DefaultSettingsProvider
+import com.terminal.ui.settings.SettingsProvider
 import com.terminal.util.PtyProcessTtyConnector
 import java.io.IOException
 import java.nio.charset.Charset
@@ -31,9 +32,9 @@ class TerminalMain {
 
 
     fun createTerminalWidget(): JediTerminalWidget {
-        return createTerminalWidget(DefaultTabbedSettingsProvider())
+        return createTerminalWidget(DefaultSettingsProvider())
 
-        }
+    }
 
     fun createTtyConnector(): TtyConnector {
         try {
@@ -63,7 +64,7 @@ class TerminalMain {
 
     }
 
-   fun createTerminalWidget(settingsProvider: TabbedSettingsProvider): JediTerminalWidget {
+    fun createTerminalWidget(settingsProvider: SettingsProvider): JediTerminalWidget {
         val widget = JediTerminalWidget(settingsProvider)
         widget.addHyperlinkFilter(UrlFilter())
         return widget
@@ -92,6 +93,11 @@ class TerminalMain {
         override fun write(string: String) {
 
             super.write(string)
+        }
+
+        override fun init(myPreConnectHandler: PreConnectHandler?): Boolean {
+            return true
+          //  TODO("Not yet implemented")
         }
 
         @Throws(IOException::class)

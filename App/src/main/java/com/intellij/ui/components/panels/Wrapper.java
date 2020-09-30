@@ -30,18 +30,6 @@ public class Wrapper extends JPanel implements NullableComponent {
         setOpaque(false);
     }
 
-    public Wrapper(JComponent wrapped) {
-        setLayout(new BorderLayout());
-        add(wrapped, BorderLayout.CENTER);
-        setOpaque(false);
-    }
-
-    public Wrapper(LayoutManager layout, JComponent wrapped) {
-        super(layout);
-        add(wrapped);
-        setOpaque(false);
-    }
-
     public Wrapper(boolean isDoubleBuffered) {
         super(isDoubleBuffered);
         setOpaque(false);

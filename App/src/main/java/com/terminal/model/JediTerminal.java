@@ -1,6 +1,7 @@
 package com.terminal.model;
 
 
+import com.terminal.*;
 import com.terminal.emulator.charset.CharacterSet;
 import com.terminal.emulator.charset.GraphicSet;
 import com.terminal.emulator.charset.GraphicSetState;
@@ -11,7 +12,6 @@ import com.terminal.util.CharUtils;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.terminal.*;
 
 import javax.swing.*;
 import java.awt.*;

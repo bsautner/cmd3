@@ -1,13 +1,14 @@
 package com.terminal.ui
 
-import com.cmd3.app.ComponentWidget
+
 import com.terminal.TerminalDisplay
 import com.terminal.TtyConnector
 import java.awt.Dimension
+import javax.swing.JComponent
 
-interface TerminalWidget : ComponentWidget {
+interface TerminalWidget  {
     fun createTerminalSession(ttyConnector: TtyConnector?): JediTermWidget
-
+    val component: JComponent
 
     fun canOpenSession(): Boolean
     fun setTerminalPanelListener(terminalPanelListener: TerminalPanelListener)

@@ -34,12 +34,12 @@ object Application {
 
     private class App : SelectionListener, ActionListener, KeyListener {
         private val dao = H2()
-        private lateinit var term : TerminalMain
-        private lateinit var mainFrame : JFrame
-        private lateinit var listFrame : CommandListPane
-        private lateinit var mainMenuBar : MainMenuBar
+        private lateinit var term: TerminalMain
+        private lateinit var mainFrame: JFrame
+        private lateinit var listFrame: CommandListPane
+        private lateinit var mainMenuBar: MainMenuBar
         private lateinit var commandMain: CommandMain
-        val jSplitPane : JSplitPane = MainSplitPane()
+        val jSplitPane: JSplitPane = MainSplitPane()
 
         fun launch() {
             CommandProcessor.instance.selectionListener = this
@@ -72,17 +72,17 @@ object Application {
             mainFrame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
             mainFrame.contentPane.add(jSplitPane)
             //mainFrame.contentPane.add(term.myTerminal.component)
-         //   mainFrame.pack()
+            //   mainFrame.pack()
             mainFrame.setLocationRelativeTo(null)
             EventQueue.invokeLater {
                 mainFrame.isVisible = true
             }
 
 
-          //
+            //
         }
 
-//        override fun commandEntered(command: String) {
+        //        override fun commandEntered(command: String) {
 //            println("Command Entered $command")
 //            dao.insertCommand(command)
 //        }
@@ -116,7 +116,6 @@ object Application {
         }
 
         override fun actionPerformed(p0: ActionEvent?) {
-
 
 
         }

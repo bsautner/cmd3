@@ -2,6 +2,7 @@ package com.terminal.ui;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
+import com.terminal.*;
 import com.terminal.debug.DebugBufferType;
 import com.terminal.model.JediTerminal;
 import com.terminal.model.StyleState;
@@ -11,8 +12,6 @@ import com.terminal.model.hyperlinks.TextProcessing;
 import com.terminal.ui.settings.SettingsProvider;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
-import com.terminal.*;
-
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -172,6 +171,7 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
     }
 
     public String getBufferText(DebugBufferType type) {
+        System.out.println("Buffer Text: " + type.getValue(this));
         return type.getValue(this);
     }
 
@@ -182,11 +182,7 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
 
     @Override
     public boolean requestFocusInWindow() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                myTerminalPanel.requestFocusInWindow();
-            }
-        });
+        SwingUtilities.invokeLater(() -> myTerminalPanel.requestFocusInWindow());
         return super.requestFocusInWindow();
     }
 
@@ -632,7 +628,6 @@ public class JediTermWidget extends JPanel implements TerminalSession, TerminalW
     public void removeListener(TerminalWidgetListener listener) {
         myListeners.remove(listener);
     }
-
 
 
 }

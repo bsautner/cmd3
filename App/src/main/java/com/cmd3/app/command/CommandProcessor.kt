@@ -13,8 +13,6 @@ class CommandProcessor : CommandListener {
     lateinit var selectionListener: SelectionListener
 
 
-
-
     override fun keyTyped(e: KeyEvent) {
 
         if (Prefs.recording) {
@@ -48,7 +46,7 @@ class CommandProcessor : CommandListener {
     }
 
     override fun commandSelected(command: String) {
-      //  sb.append(command)
+        //  sb.append(command)
     }
 
     fun clear() {
@@ -56,7 +54,7 @@ class CommandProcessor : CommandListener {
     }
 
     companion object {
-        val instance : CommandProcessor by lazy { CommandProcessor() }
+        val instance: CommandProcessor by lazy { CommandProcessor() }
     }
 
 
