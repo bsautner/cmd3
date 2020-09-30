@@ -25,15 +25,14 @@ class TerminalMain {
     var terminal: TerminalWidget = createTerminalWidget()
 
 
-    init {
-
-        openSession(terminal)
-    }
-
-
     fun createTerminalWidget(): JediTerminalWidget {
         return createTerminalWidget(DefaultSettingsProvider())
 
+    }
+
+
+    fun openSession() {
+        openSession(terminal)
     }
 
     fun createTtyConnector(): TtyConnector {

@@ -36,7 +36,7 @@ object Application {
         private val dao = H2()
         private lateinit var term: TerminalMain
         private lateinit var mainFrame: JFrame
-        private lateinit var listFrame: CommandListPane
+
         private lateinit var mainMenuBar: MainMenuBar
         private lateinit var commandMain: CommandMain
         val jSplitPane: JSplitPane = MainSplitPane()
@@ -54,13 +54,13 @@ object Application {
             mainFrame.title = "CommandCube"
 
             mainFrame.add(MainToolbar(this), BorderLayout.PAGE_START)
-            listFrame = CommandListPane(this)
+
 
             term = TerminalMain()
-            commandMain = CommandMain()
+            commandMain = CommandMain(this)
 
             jSplitPane.rightComponent = term.terminal.component
-            jSplitPane.leftComponent = listFrame //commandMain
+            jSplitPane.leftComponent = commandMain.listFrame
 
             jSplitPane.setDividerLocation(0.4)
             jSplitPane.leftComponent.background = Color.BLUE
@@ -78,6 +78,7 @@ object Application {
                 mainFrame.isVisible = true
             }
 
+            term.openSession()
 
             //
         }
@@ -96,7 +97,7 @@ object Application {
         }
 
         override fun deleteSelectedCommands() {
-            listFrame.deleteSelectedCommands()
+            commandMain.listFrame.deleteSelectedCommands()
         }
 
         override fun enableMultiSelect(enabled: Boolean) {
@@ -105,7 +106,7 @@ object Application {
 
         override fun commandEntered() {
             if (Prefs.recording) {
-                listFrame.commandEntered()
+                commandMain.listFrame.commandEntered()
             }
         }
 

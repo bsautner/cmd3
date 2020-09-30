@@ -59,6 +59,10 @@ class CommandListPane(private val selectionListener: SelectionListener) : JPanel
         })
     }
 
+    fun getComponent(): JComponent {
+        return this
+    }
+
     private fun defaultListModel(): DefaultListModel<Command> {
         val commands = dao.getCommands()
         val listModel = DefaultListModel<Command>()
