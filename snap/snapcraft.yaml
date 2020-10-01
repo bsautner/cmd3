@@ -20,7 +20,7 @@ parts:
     gradle-output-dir: build/libs
   part-os-release:
       plugin: dump
-      source: bin/cmd3
+      source: .
       organize:
         cmd3: bin/
 
