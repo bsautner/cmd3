@@ -21,7 +21,7 @@ import com.intellij.openapi.util.Condition;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import sun.reflect.ConstructorAccessor;
+
 
 import java.lang.reflect.*;
 import java.util.ArrayList;
@@ -375,41 +375,41 @@ public class ReflectionUtil {
             return false;
         }
     }
-
-    public static Type resolveVariableInHierarchy(@NotNull TypeVariable variable, @NotNull Class aClass) {
-        Type type;
-        Class current = aClass;
-        while ((type = resolveVariable(variable, current, false)) == null) {
-            current = current.getSuperclass();
-            if (current == null) {
-                return null;
-            }
-        }
-        if (type instanceof TypeVariable) {
-            return resolveVariableInHierarchy((TypeVariable) type, aClass);
-        }
-        return type;
-    }
-
-
-
-    private static final Method acquireConstructorAccessorMethod = getDeclaredMethod(Constructor.class, "acquireConstructorAccessor");
-    private static final Method getConstructorAccessorMethod = getDeclaredMethod(Constructor.class, "getConstructorAccessor");
+//
+//    public static Type resolveVariableInHierarchy(@NotNull TypeVariable variable, @NotNull Class aClass) {
+//        Type type;
+//        Class current = aClass;
+//        while ((type = resolveVariable(variable, current, false)) == null) {
+//            current = current.getSuperclass();
+//            if (current == null) {
+//                return null;
+//            }
+//        }
+//        if (type instanceof TypeVariable) {
+//            return resolveVariableInHierarchy((TypeVariable) type, aClass);
+//        }
+//        return type;
+//    }
 
 
-    public static ConstructorAccessor getConstructorAccessor(@NotNull Constructor constructor) {
-        if (acquireConstructorAccessorMethod == null || getConstructorAccessorMethod == null) {
-            throw new IllegalStateException();
-        }
+//
+//    private static final Method acquireConstructorAccessorMethod = getDeclaredMethod(Constructor.class, "acquireConstructorAccessor");
+//    private static final Method getConstructorAccessorMethod = getDeclaredMethod(Constructor.class, "getConstructorAccessor");
 
-        constructor.setAccessible(true);
-        try {
-            acquireConstructorAccessorMethod.invoke(constructor);
-            return (ConstructorAccessor) getConstructorAccessorMethod.invoke(constructor);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+//
+//    public static ConstructorAccessor getConstructorAccessor(@NotNull Constructor constructor) {
+//        if (acquireConstructorAccessorMethod == null || getConstructorAccessorMethod == null) {
+//            throw new IllegalStateException();
+//        }
+//
+//        constructor.setAccessible(true);
+//        try {
+//            acquireConstructorAccessorMethod.invoke(constructor);
+//            return (ConstructorAccessor) getConstructorAccessorMethod.invoke(constructor);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
 
 
