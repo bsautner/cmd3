@@ -18,7 +18,6 @@ package com.intellij.ui.components;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.registry.Registry;
 import com.intellij.ui.components.JBScrollPane.Alignment;
-import com.intellij.util.ui.StatusText;
 import com.intellij.util.ui.UIUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -82,7 +81,7 @@ public class JBViewport extends JViewport implements ZoomableViewport {
         }
     };
 
-    private StatusText myEmptyText;
+
     private boolean myPaintingNow;
 
     private ZoomingDelegate myZoomer;
@@ -161,9 +160,7 @@ public class JBViewport extends JViewport implements ZoomableViewport {
         } else {
             super.paint(g);
 
-            if (myEmptyText != null) {
-                myEmptyText.paint(this, g);
-            }
+
         }
         myPaintingNow = false;
     }

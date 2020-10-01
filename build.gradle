@@ -30,7 +30,7 @@ subprojects {
     }
 
     repositories {
-        flatDir dirs: ['../lib', 'libs']
+        flatDir dirs: ['../lib', 'lib']
     }
 }
 
