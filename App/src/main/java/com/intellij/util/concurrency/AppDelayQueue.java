@@ -16,7 +16,6 @@
 package com.intellij.util.concurrency;
 
 import com.intellij.openapi.diagnostic.Logger;
-import sun.awt.AWTAutoShutdown;
 
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -56,20 +55,20 @@ class AppDelayQueue extends DelayQueue<SchedulingWrapper.MyScheduledFutureTask> 
             }
         }, "Periodic tasks thread");
         scheduledToPooledTransferer.start();
-        AWTAutoShutdown.getInstance().notifyThreadBusy(scheduledToPooledTransferer); // needed for EDT not to exit suddenly
+//        AWTAutoShutdown.getInstance().notifyThreadBusy(scheduledToPooledTransferer); // needed for EDT not to exit suddenly
     }
 
-    void shutdown() {
-        if (shutdown.getAndSet(true)) {
-            throw new IllegalStateException("Already shutdown");
-        }
-        scheduledToPooledTransferer.interrupt();
-
-        try {
-            scheduledToPooledTransferer.join();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        AWTAutoShutdown.getInstance().notifyThreadFree(scheduledToPooledTransferer);
-    }
+//    void shutdown() {
+//        if (shutdown.getAndSet(true)) {
+//            throw new IllegalStateException("Already shutdown");
+//        }
+//        scheduledToPooledTransferer.interrupt();
+//
+//        try {
+//            scheduledToPooledTransferer.join();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//        AWTAutoShutdown.getInstance().notifyThreadFree(scheduledToPooledTransferer);
+//    }
 }

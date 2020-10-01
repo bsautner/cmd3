@@ -14,10 +14,13 @@ parts:
     plugin: gradle
     source: https://github.com/bsautner/cmd3.git
     source-type: git
-    gradle-options: [--debug]   # suppress running of tests and run the war task
+    gradle-options: []   # suppress running of tests and run the war task
     gradle-output-dir: build/libs
+    stage-packages:
+      - openjdk-8-jre
   libraries:
       plugin: dump
       source: ./lib
       organize:
         "*.jar": /lib
+

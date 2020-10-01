@@ -103,7 +103,7 @@ public class AppScheduledExecutorService extends SchedulingWrapper {
 
     public void shutdownAppScheduledExecutorService() {
         // LowMemoryWatcher starts background threads so stop it now to avoid RejectedExecutionException
-        delayQueue.shutdown(); // shutdown delay queue first to avoid rejected execution exceptions in Alarm
+       // delayQueue.shutdown(); // shutdown delay queue first to avoid rejected execution exceptions in Alarm
         doShutdown();
     }
 
@@ -113,17 +113,6 @@ public class AppScheduledExecutorService extends SchedulingWrapper {
         return myName + " threads created counter = " + counter;
     }
 
-    public int getBackendPoolExecutorSize() {
-        return ((BackendThreadPoolExecutor) backendExecutorService).getPoolSize();
-    }
-
-    void setBackendPoolCorePoolSize(int size) {
-        ((BackendThreadPoolExecutor) backendExecutorService).doSetCorePoolSize(size);
-    }
-
-    int getBackendPoolCorePoolSize() {
-        return ((BackendThreadPoolExecutor) backendExecutorService).getCorePoolSize();
-    }
 
     private static class BackendThreadPoolExecutor extends ThreadPoolExecutor {
         BackendThreadPoolExecutor() {

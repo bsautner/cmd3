@@ -15,9 +15,6 @@
  */
 package com.intellij.ui;
 
-import com.intellij.util.ui.UIUtil;
-import sun.swing.SwingUtilities2;
-
 import java.awt.*;
 
 public enum AntialiasingType {
@@ -26,7 +23,7 @@ public enum AntialiasingType {
     OFF("No antialiasing", RenderingHints.VALUE_TEXT_ANTIALIAS_OFF, false);
 
     public static Object getAAHintForSwingComponent() {
-        return GREYSCALE.getTextInfo();
+        return null;
     }
 
 
@@ -40,9 +37,7 @@ public enum AntialiasingType {
         isEnabled = enabled;
     }
 
-    public SwingUtilities2.AATextInfo getTextInfo() {
-        return !isEnabled ? null : new SwingUtilities2.AATextInfo(myHint, UIUtil.getLcdContrastValue());
-    }
+
 
     @Override
     public String toString() {
