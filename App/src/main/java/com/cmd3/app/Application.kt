@@ -11,6 +11,10 @@ import java.awt.BorderLayout
 import java.awt.EventQueue
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
+import java.io.File
+import java.net.URL
+import javax.imageio.ImageIO
+import javax.swing.ImageIcon
 import javax.swing.JFrame
 import javax.swing.JScrollPane
 import javax.swing.JSplitPane
@@ -27,34 +31,15 @@ class Application : JFrame(), SelectionListener, KeyListener {
     private val dao = H2()
 
     private fun go() {
+        initView()
 
         dao.connect()
 
-        toolbar = MainToolbar(this)
-        commandListPane = CommandListPane(this)
-        terminalPanel = TerminalMain()
-        terminalPanel.addCustomKeyListener(this)
 
-
-        val scrollPane = JScrollPane(commandListPane)
-
-        splitPanel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, terminalPanel.terminal.component)
-
-        this.layout = BorderLayout()
-        this.title = "CommandCube"
-
-        this.defaultCloseOperation = EXIT_ON_CLOSE
-        this.setLocationRelativeTo(null)
-        mainMenuBar = MainMenuBar(this)
-
-        jMenuBar = mainMenuBar
-
-
-        add(toolbar, BorderLayout.PAGE_START)
-        add(splitPanel, BorderLayout.CENTER)
         //add(splitPanel, B)
 
         EventQueue.invokeLater {
+
             this.isVisible = true
             terminalPanel.openSession()
         }
@@ -62,7 +47,46 @@ class Application : JFrame(), SelectionListener, KeyListener {
 
 
 
+    private fun initView() {
+        this.title = "CommandCube"
 
+        this.layout = BorderLayout()
+        this.setLocationRelativeTo(null)
+        this.defaultCloseOperation = EXIT_ON_CLOSE
+        this.setSize(1200, 600) // Set frame size
+        this.toolbar = MainToolbar(this)
+        this.commandListPane = CommandListPane(this)
+        this.terminalPanel = TerminalMain()
+        this.terminalPanel.addCustomKeyListener(this)
+
+        val scrollPane = JScrollPane(commandListPane)
+        this.splitPanel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, terminalPanel.terminal.component)
+        this.mainMenuBar = MainMenuBar(this)
+        this.jMenuBar = mainMenuBar
+        this.iconImage = getIcon("icon").image
+        this.
+
+
+
+        add(toolbar, BorderLayout.PAGE_START)
+        add(splitPanel, BorderLayout.CENTER)
+
+    }
+
+    private fun getIcon(icon: String): ImageIcon {
+        val resource: URL = javaClass.classLoader.getResource("images/$icon.png")!!
+
+
+        val file = File(resource.toURI())
+        if (!file.exists()) {
+            throw RuntimeException("$icon not found")
+        }
+        val image = ImageIO.read(file).getScaledInstance(MainToolbar.iconSize, MainToolbar.iconSize, 0)
+
+
+        return ImageIcon(image)
+
+    }
 
 
     override fun commandSelected(command: Command, cr: Boolean) {
@@ -97,12 +121,10 @@ class Application : JFrame(), SelectionListener, KeyListener {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            val jSplitPaneDemo1 = Application()
+            val app = Application()
 
-            jSplitPaneDemo1.defaultCloseOperation = EXIT_ON_CLOSE // Set Program to shutdown when frame closses
-            jSplitPaneDemo1.setSize(1200, 600) // Set frame size
-            jSplitPaneDemo1.isVisible = true // Display frame
-            jSplitPaneDemo1.go()
+
+            app.go()
         }
     }
 

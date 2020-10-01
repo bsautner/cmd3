@@ -1,10 +1,8 @@
 package com.cmd3.app.ux
 
 import com.cmd3.app.Prefs
-import com.cmd3.app.command.CommandProcessor
 import com.cmd3.app.data.Command
 import com.cmd3.app.data.H2
-import java.awt.Color
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import javax.swing.*
@@ -23,13 +21,8 @@ class CommandListPane(private val selectionListener: SelectionListener) : JList<
         this.model = defaultListModel()
 
         this.selectionMode = ListSelectionModel.MULTIPLE_INTERVAL_SELECTION
-        this.selectedIndex = 0
+        clearSelection()
         this.addListSelectionListener(this)
-//        val listScrollPane = JScrollPane(list)
-       // this..layout = BorderLayout()
-      //  listScrollPane.preferredSize = Dimension(400, 800)
-
-        ///add(listScrollPane, BorderLayout.CENTER)
         val instance = this
 
         this.addMouseListener(object : MouseAdapter() {

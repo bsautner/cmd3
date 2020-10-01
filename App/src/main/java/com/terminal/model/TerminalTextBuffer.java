@@ -294,32 +294,6 @@ public class TerminalTextBuffer {
         }
     }
 
-    public String getScreenLines() {
-        myLock.lock();
-        try {
-            final StringBuilder sb = new StringBuilder();
-            for (int row = 0; row < myHeight; row++) {
-                StringBuilder line = new StringBuilder(myScreenBuffer.getLine(row).getText());
-
-                for (int i = line.length(); i < myWidth; i++) {
-                    line.append(' ');
-                }
-                if (line.length() > myWidth) {
-                    line.setLength(myWidth);
-                }
-
-                sb.append(line);
-                sb.append('\n');
-            }
-            return sb.toString();
-        } finally {
-            myLock.unlock();
-        }
-    }
-
-    public void processScreenLines(final int yStart, final int yCount, @NotNull final StyledTextConsumer consumer) {
-        myScreenBuffer.processLines(yStart, yCount, consumer);
-    }
 
     public void lock() {
         myLock.lock();
@@ -327,10 +301,6 @@ public class TerminalTextBuffer {
 
     public void unlock() {
         myLock.unlock();
-    }
-
-    public boolean tryLock() {
-        return myLock.tryLock();
     }
 
     public int getWidth() {
@@ -345,10 +315,6 @@ public class TerminalTextBuffer {
         return myHistoryBuffer.getLineCount();
     }
 
-    public int getScreenLinesCount() {
-        return myScreenBuffer.getLineCount();
-    }
-
     public char getBuffersCharAt(int x, int y) {
         return getLine(y).charAt(x);
     }
@@ -360,7 +326,7 @@ public class TerminalTextBuffer {
     public Pair<Character, TextStyle> getStyledCharAt(int x, int y) {
         synchronized (myScreenBuffer) {
             TerminalLine line = getLine(y);
-            return new Pair<Character, TextStyle>(line.charAt(x), line.getStyleAt(x));
+            return new Pair<>(line.charAt(x), line.getStyleAt(x));
         }
     }
 

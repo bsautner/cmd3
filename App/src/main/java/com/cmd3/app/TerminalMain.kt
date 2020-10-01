@@ -4,7 +4,7 @@ import com.cmd3.app.data.Command
 import com.cmd3.app.ux.CMD3TerminalWidget
 import com.google.common.collect.Lists
 import com.google.common.collect.Maps
-import com.intellij.execution.filters.UrlFilter
+import com.cmd3.app.filters.UrlFilter
 import com.intellij.util.EncodingEnvironmentUtil
 import com.pty4j.PtyProcess
 import com.terminal.LoggingTtyConnector

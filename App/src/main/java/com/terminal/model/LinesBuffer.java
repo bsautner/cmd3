@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +21,7 @@ public class LinesBuffer {
     // negative number means no limit
     private int myBufferMaxLinesCount = DEFAULT_MAX_LINES_COUNT;
 
-    private ArrayList<TerminalLine> myLines = Lists.newArrayList();
+    private List<TerminalLine> myLines = Lists.newArrayList();
 
     @Nullable
     private final TextProcessing myTextProcessing;

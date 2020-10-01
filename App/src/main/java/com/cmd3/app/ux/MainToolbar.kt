@@ -23,15 +23,15 @@ class MainToolbar(selectionListener: SelectionListener) : JToolBar() {
         }
 
         add(clearButton)
-        add(makeToggle(ActionListener {
+        add(makeToggle({
             Prefs.autoCR = !Prefs.autoCR
         }, "Send CR", Prefs.autoCR))
 
-        add(makeToggle(ActionListener {
+        add(makeToggle({
             Prefs.recording = !Prefs.recording
         }, "Record Commands", Prefs.recording))
 
-        add(makeToggle(ActionListener {
+        add(makeToggle({
             Prefs.autoTerm = !Prefs.autoTerm
         }, "Send Commands", Prefs.autoTerm))
 

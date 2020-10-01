@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.io.UnsupportedEncodingException;
 
 /**
  * Executes terminal commands interpreted by {@link Emulator}, receives text
@@ -35,8 +34,6 @@ public interface Terminal {
     void designateCharacterSet(int tableNumber, char ch);
 
     void setAnsiConformanceLevel(int level);
-
-    void writeDoubleByte(char[] bytes) throws UnsupportedEncodingException;
 
     void writeCharacters(String string);
 

@@ -28,7 +28,10 @@ repositories {
 sourceSets {
     main {
         java {
-            srcDir 'src'
+            srcDir "src"
+        }
+        resources {
+            srcDir "src/main/resources"
         }
     }
     test {

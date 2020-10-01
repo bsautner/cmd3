@@ -7,7 +7,6 @@ import java.io.IOException;
  * It allows to {@link #getChar()} by one and {@link #pushChar(char)} back as well as requesting a chunk of plain ASCII
  * characters ({@link #readNonControlCharacters(int)} - for faster processing from buffer in the size <=<b>maxChars</b>).
  *
- * @author traff
  */
 public interface TerminalDataStream {
     char getChar() throws IOException;

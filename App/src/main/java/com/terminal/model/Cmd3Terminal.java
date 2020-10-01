@@ -18,7 +18,6 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.*;
@@ -142,12 +141,6 @@ public class Cmd3Terminal implements Terminal, TerminalMouseListener, TerminalCo
             myTerminalTextBuffer.unlock();
         }
     }
-
-    @Override
-    public void writeDoubleByte(final char[] bytesOfChar) throws UnsupportedEncodingException {
-        writeCharacters(new String(bytesOfChar, 0, 2));
-    }
-
 
     private char[] decodeUsingGraphicalState(String string) {
         StringBuilder result = new StringBuilder();

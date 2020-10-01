@@ -46,7 +46,7 @@ public class TerminalLine {
             }
         }
 
-      
+
         return sb.toString();
     }
 
