@@ -21,7 +21,7 @@ if (System.getenv('BINTRAY_USER') == null) {
 allprojects {
     version = projectVersion
 
-    buildDir = new File(rootProject.projectDir, ".gradleBuild/" + project.name)
+//    buildDir = new File(rootProject.projectDir, ".gradleBuild/" + project.name)
 }
 
 subprojects {

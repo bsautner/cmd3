@@ -21,6 +21,7 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+<<<<<<< HEAD
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,intellij,gradle,java-web,kotlin
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,intellij,gradle,java-web,kotlin
@@ -224,3 +225,5 @@ stage/
 # Source archive packed by `snapcraft cleanbuild` before pushing to the LXD container
 
 # End of https://www.toptal.com/developers/gitignore/api/snap,snapcraft
+=======
+>>>>>>> parent of 1718d4d... first commit
