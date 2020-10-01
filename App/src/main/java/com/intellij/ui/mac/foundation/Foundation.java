@@ -27,10 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author spleaner
- * @see http://developer.apple.com/documentation/Cocoa/Reference/ObjCRuntimeRef/Reference/reference.html
- */
+
 public class Foundation {
     private static final FoundationLibrary myFoundationLibrary;
 
