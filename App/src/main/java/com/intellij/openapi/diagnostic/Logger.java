@@ -167,6 +167,6 @@ public abstract class Logger {
     public abstract void setLevel(Level level);
 
     protected static Throwable checkException(@Nullable Throwable t) {
-        return t instanceof ControlFlowException ? new Throwable("Control-flow exceptions should never be logged", t) : t;
+        return t;
     }
 }
