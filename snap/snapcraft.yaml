@@ -1,6 +1,6 @@
 name: cmd3
 base: core18 # the base snap is the execution environment for this snap
-version: '0.0.5'
+version: '0.0.6'
 summary: "A terminal that automates commands by recording what you type to build scripts"
 description: |
   I do a lot on the command line, so I started working on a custom terminal emulator of my own that
@@ -20,9 +20,8 @@ parts:
     gradle-output-dir: build/libs
   part-os-release:
       plugin: dump
-      source: .
-      organize:
-        cmd3: bin/
+      source: scripts
+      source-type: local
 
 
 
