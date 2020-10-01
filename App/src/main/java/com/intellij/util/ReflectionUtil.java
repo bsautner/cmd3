@@ -22,9 +22,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-
 import java.lang.reflect.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -110,73 +108,14 @@ public class ReflectionUtil {
         return parameterizedType.getActualTypeArguments();
     }
 
-    @Nullable
-    public static Class<?> substituteGenericType(@NotNull Type genericType, @NotNull Type classType) {
-        if (genericType instanceof TypeVariable) {
-            final Class<?> aClass = getRawType(classType);
-            final Type type = resolveVariable((TypeVariable) genericType, aClass);
-            if (type instanceof Class) {
-                return (Class) type;
-            }
-            if (type instanceof ParameterizedType) {
-                return (Class<?>) ((ParameterizedType) type).getRawType();
-            }
-            if (type instanceof TypeVariable && classType instanceof ParameterizedType) {
-                final int index = ArrayUtilRt.find(aClass.getTypeParameters(), type);
-                if (index >= 0) {
-                    return getRawType(getActualTypeArguments((ParameterizedType) classType)[index]);
-                }
-            }
-        } else {
-            return getRawType(genericType);
-        }
-        return null;
-    }
-
-    @NotNull
-    public static List<Field> collectFields(@NotNull Class clazz) {
-        List<Field> result = new ArrayList<Field>();
-        collectFields(clazz, result);
-        return result;
-    }
-
-    @NotNull
-    public static Field findField(@NotNull Class clazz, @Nullable final Class type, @NotNull final String name) throws NoSuchFieldException {
-        Field result = processFields(clazz, new Condition<Field>() {
-            @Override
-            public boolean value(Field field) {
-                return name.equals(field.getName()) && (type == null || field.getType().equals(type));
-            }
-        });
-        if (result != null) return result;
-
-        throw new NoSuchFieldException("Class: " + clazz + " name: " + name + " type: " + type);
-    }
 
     @NotNull
     public static Field findAssignableField(@NotNull Class<?> clazz, @Nullable("null means any type") final Class<?> fieldType, @NotNull final String fieldName) throws NoSuchFieldException {
-        Field result = processFields(clazz, new Condition<Field>() {
-            @Override
-            public boolean value(Field field) {
-                return fieldName.equals(field.getName()) && (fieldType == null || fieldType.isAssignableFrom(field.getType()));
-            }
-        });
+        Field result = processFields(clazz, field -> fieldName.equals(field.getName()) && (fieldType == null || fieldType.isAssignableFrom(field.getType())));
         if (result != null) return result;
         throw new NoSuchFieldException("Class: " + clazz + " fieldName: " + fieldName + " fieldType: " + fieldType);
     }
 
-    private static void collectFields(@NotNull Class clazz, @NotNull List<Field> result) {
-        final List<Field> fields = getClassDeclaredFields(clazz);
-        result.addAll(fields);
-        final Class superClass = clazz.getSuperclass();
-        if (superClass != null) {
-            collectFields(superClass, result);
-        }
-        final Class[] interfaces = clazz.getInterfaces();
-        for (Class each : interfaces) {
-            collectFields(each, result);
-        }
-    }
 
     private static Field processFields(@NotNull Class clazz, @NotNull Condition<Field> checker) {
         for (Field field : clazz.getDeclaredFields()) {
@@ -196,56 +135,6 @@ public class ReflectionUtil {
             if (result != null) return result;
         }
         return null;
-    }
-
-    public static void resetField(@NotNull Class clazz, @Nullable("null means of any type") Class type, @NotNull String name) {
-        try {
-            resetField(null, findField(clazz, type, name));
-        } catch (NoSuchFieldException e) {
-            LOG.info(e);
-        }
-    }
-
-    public static void resetField(@NotNull Object object, @Nullable("null means any type") Class type, @NotNull String name) {
-        try {
-            resetField(object, findField(object.getClass(), type, name));
-        } catch (NoSuchFieldException e) {
-            LOG.info(e);
-        }
-    }
-
-    public static void resetField(@NotNull Object object, @NotNull String name) {
-        try {
-            resetField(object, findField(object.getClass(), null, name));
-        } catch (NoSuchFieldException e) {
-            LOG.info(e);
-        }
-    }
-
-    public static void resetField(@Nullable final Object object, @NotNull Field field) {
-        field.setAccessible(true);
-        Class<?> type = field.getType();
-        try {
-            if (type.isPrimitive()) {
-                if (boolean.class.equals(type)) {
-                    field.set(object, Boolean.FALSE);
-                } else if (int.class.equals(type)) {
-                    field.set(object, Integer.valueOf(0));
-                } else if (double.class.equals(type)) {
-                    field.set(object, Double.valueOf(0));
-                } else if (float.class.equals(type)) {
-                    field.set(object, Float.valueOf(0));
-                }
-            } else {
-                field.set(object, null);
-            }
-        } catch (IllegalAccessException e) {
-            LOG.info(e);
-        }
-    }
-
-    public static void resetStaticField(@NotNull Class aClass, @NotNull @NonNls String name) {
-        resetField(aClass, null, name);
     }
 
     @Nullable
@@ -269,20 +158,6 @@ public class ReflectionUtil {
         return findMethod(getClassDeclaredMethods(aClass, false), name, parameters);
     }
 
-    @Nullable
-    public static Field getDeclaredField(@NotNull Class aClass, @NonNls @NotNull final String name) {
-        return processFields(aClass, new Condition<Field>() {
-            @Override
-            public boolean value(Field field) {
-                return name.equals(field.getName());
-            }
-        });
-    }
-
-    @NotNull
-    public static List<Method> getClassPublicMethods(@NotNull Class aClass) {
-        return getClassPublicMethods(aClass, false);
-    }
 
     @NotNull
     public static List<Method> getClassPublicMethods(@NotNull Class aClass, boolean includeSynthetic) {
@@ -301,11 +176,6 @@ public class ReflectionUtil {
         return includeSynthetic ? Arrays.asList(methods) : filterRealMethods(methods);
     }
 
-    @NotNull
-    public static List<Field> getClassDeclaredFields(@NotNull Class aClass) {
-        Field[] fields = aClass.getDeclaredFields();
-        return Arrays.asList(fields);
-    }
 
     @NotNull
     private static List<Method> filterRealMethods(@NotNull Method[] methods) {
@@ -338,22 +208,7 @@ public class ReflectionUtil {
         }
     }
 
-    public static <T> T getStaticFieldValue(@NotNull Class objectClass, @Nullable("null means any type") Class<T> fieldType, @NotNull @NonNls String fieldName) {
-        try {
-            final Field field = findAssignableField(objectClass, fieldType, fieldName);
-            if (!Modifier.isStatic(field.getModifiers())) {
-                throw new IllegalArgumentException("Field " + objectClass + "." + fieldName + " is not static");
-            }
-            @SuppressWarnings("unchecked") T t = (T) field.get(null);
-            return t;
-        } catch (NoSuchFieldException e) {
-            LOG.debug(e);
-            return null;
-        } catch (IllegalAccessException e) {
-            LOG.debug(e);
-            return null;
-        }
-    }
+
 
     // returns true if value was set
     public static <T> boolean setField(@NotNull Class objectClass,
@@ -375,44 +230,6 @@ public class ReflectionUtil {
             return false;
         }
     }
-//
-//    public static Type resolveVariableInHierarchy(@NotNull TypeVariable variable, @NotNull Class aClass) {
-//        Type type;
-//        Class current = aClass;
-//        while ((type = resolveVariable(variable, current, false)) == null) {
-//            current = current.getSuperclass();
-//            if (current == null) {
-//                return null;
-//            }
-//        }
-//        if (type instanceof TypeVariable) {
-//            return resolveVariableInHierarchy((TypeVariable) type, aClass);
-//        }
-//        return type;
-//    }
-
-
-//
-//    private static final Method acquireConstructorAccessorMethod = getDeclaredMethod(Constructor.class, "acquireConstructorAccessor");
-//    private static final Method getConstructorAccessorMethod = getDeclaredMethod(Constructor.class, "getConstructorAccessor");
-
-//
-//    public static ConstructorAccessor getConstructorAccessor(@NotNull Constructor constructor) {
-//        if (acquireConstructorAccessorMethod == null || getConstructorAccessorMethod == null) {
-//            throw new IllegalStateException();
-//        }
-//
-//        constructor.setAccessible(true);
-//        try {
-//            acquireConstructorAccessorMethod.invoke(constructor);
-//            return (ConstructorAccessor) getConstructorAccessorMethod.invoke(constructor);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
-
-
 
 
     @Nullable
@@ -456,7 +273,4 @@ public class ReflectionUtil {
         }
     }
 
-    public static boolean isAssignable(@NotNull Class<?> ancestor, @NotNull Class<?> descendant) {
-        return ancestor == descendant || ancestor.isAssignableFrom(descendant);
-    }
 }
