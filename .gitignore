@@ -219,11 +219,3 @@ stage/
 /prime/
 /*.snap
 
-# Snapcraft global state tracking data(automatically generated)
-# https://forum.snapcraft.io/t/location-to-save-global-state/768
-
-# Source archive packed by `snapcraft cleanbuild` before pushing to the LXD container
-
-# End of https://www.toptal.com/developers/gitignore/api/snap,snapcraft
-=======
->>>>>>> parent of 1718d4d... first commit
