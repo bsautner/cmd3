@@ -15,12 +15,13 @@
  */
 package com.intellij.ui.mac.foundation;
 
-import com.intellij.util.containers.HashMap;
+
 import com.sun.jna.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Map;
 
 

@@ -17,7 +17,6 @@ package com.intellij.ui.components;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.Key;
-import com.intellij.util.ui.ButtonlessScrollBarUI;
 import com.intellij.util.ui.RegionPainter;
 import com.intellij.util.ui.UIUtil;
 import org.apache.log4j.Layout;
@@ -26,7 +25,6 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.ScrollBarUI;
 import javax.swing.plaf.ScrollPaneUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicScrollPaneUI;
@@ -266,10 +264,8 @@ public class JBScrollPane extends JScrollPane {
     }
 
     protected boolean isOverlaidScrollbar(@Nullable JScrollBar scrollbar) {
-        if (!ButtonlessScrollBarUI.isMacOverlayScrollbarSupported()) return false;
 
-        ScrollBarUI vsbUI = scrollbar == null ? null : scrollbar.getUI();
-        return vsbUI instanceof ButtonlessScrollBarUI && !((ButtonlessScrollBarUI) vsbUI).alwaysShowTrack();
+        return false;
     }
 
     private static void hideFromView(Component component) {

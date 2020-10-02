@@ -16,13 +16,11 @@
 package com.intellij.ui.components;
 
 import com.intellij.openapi.util.Key;
-import com.intellij.util.ui.ButtonlessScrollBarUI;
 import com.intellij.util.ui.RegionPainter;
 import com.intellij.util.ui.UIUtil;
 import org.intellij.lang.annotations.JdkConstants;
 
 import javax.swing.*;
-import javax.swing.plaf.ScrollBarUI;
 import java.awt.*;
 
 /**
@@ -53,15 +51,5 @@ public class JBScrollBar extends JScrollBar {
         putClientProperty("JScrollBar.fastWheelScrolling", Boolean.TRUE); // fast scrolling for JDK 6
     }
 
-    /**
-     * Returns a new instance of {@link ScrollBarUI}.
-     * Do not share it between different scroll bars.
-     *
-     * @param c a target component for this UI
-     * @return a new instance of {@link ScrollBarUI}
-     */
-    @SuppressWarnings("UnusedParameters")
-    public static ScrollBarUI createUI(JComponent c) {
-        return ButtonlessScrollBarUI.createNormal();
-    }
+
 }
