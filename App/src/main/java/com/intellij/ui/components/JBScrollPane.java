@@ -73,25 +73,6 @@ public class JBScrollPane extends JScrollPane {
     private boolean myHasOverlayScrollbars;
     private volatile boolean myBackgroundRequested; // avoid cyclic references
 
-    public JBScrollPane(int viewportWidth) {
-        init(false);
-        myViewportBorderWidth = viewportWidth;
-        updateViewportBorder();
-    }
-
-    public JBScrollPane() {
-        init();
-    }
-
-    public JBScrollPane(Component view) {
-        super(view);
-        init();
-    }
-
-    public JBScrollPane(int vsbPolicy, int hsbPolicy) {
-        super(vsbPolicy, hsbPolicy);
-        init();
-    }
 
     public JBScrollPane(Component view, int vsbPolicy, int hsbPolicy) {
         super(view, vsbPolicy, hsbPolicy);

@@ -117,15 +117,15 @@ final class MacScrollBarUI extends DefaultScrollBarUI {
         }
     }
 
-    @Override
-    public void installUI(JComponent c) {
-        super.installUI(c);
-        updateStyle(Style.CURRENT.get());
-        processReferences(this, null, null);
-        AWTEventListener listener = MOVEMENT_LISTENER.getAndSet(null); // add only one movement listener
-        if (listener != null)
-            Toolkit.getDefaultToolkit().addAWTEventListener(listener, AWTEvent.MOUSE_MOTION_EVENT_MASK);
-    }
+//    @Override
+//    public void installUI(JComponent c) {
+//        super.installUI(c);
+//        updateStyle(Style.CURRENT.get());
+//        processReferences(this, null, null);
+//        AWTEventListener listener = MOVEMENT_LISTENER.getAndSet(null); // add only one movement listener
+//        if (listener != null)
+//            Toolkit.getDefaultToolkit().addAWTEventListener(listener, AWTEvent.MOUSE_MOTION_EVENT_MASK);
+//    }
 
     @Override
     public void uninstallUI(JComponent c) {
