@@ -196,10 +196,6 @@ public class JBScrollPane extends JScrollPane {
         return new MyScrollBar(Adjustable.HORIZONTAL);
     }
 
-    @Override
-    protected JViewport createViewport() {
-        return new JBViewport();
-    }
 
     @SuppressWarnings("deprecation")
     @Override

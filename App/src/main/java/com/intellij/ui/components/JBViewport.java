@@ -27,8 +27,6 @@ import javax.swing.plaf.TreeUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicTreeUI;
 import java.awt.*;
-import java.awt.event.ContainerEvent;
-import java.awt.event.ContainerListener;
 
 public class JBViewport extends JViewport {
     private static final ViewportLayout ourLayoutManager = new ViewportLayout() {
@@ -83,32 +81,13 @@ public class JBViewport extends JViewport {
 
     private boolean myPaintingNow;
 
-    private ZoomingDelegate myZoomer;
 
     private Dimension myTempViewSize;
     private boolean mySaveTempViewSize;
     private volatile boolean myBackgroundRequested; // avoid cyclic references
 
     public JBViewport() {
-        addContainerListener(new ContainerListener() {
-            @Override
-            public void componentAdded(ContainerEvent e) {
-                Component child = e.getChild();
-//        if (child instanceof JBTable) {
-//          myEmptyText = ((ComponentWithEmptyText)child).getEmptyText();
-//          myEmptyText.attachTo(JBViewport.this, child);
-//        }
-            }
 
-            @Override
-            public void componentRemoved(ContainerEvent e) {
-                Component child = e.getChild();
-//        if (child instanceof JBTable) {
-//          ((ComponentWithEmptyText)child).getEmptyText().attachTo(child);
-//          myEmptyText = null;
-//        }
-            }
-        });
     }
 
     @Override
@@ -153,29 +132,12 @@ public class JBViewport extends JViewport {
 
     @Override
     public void paint(Graphics g) {
+        super.paint(g);
         myPaintingNow = true;
-        if (myZoomer != null && myZoomer.isActive()) {
-            myZoomer.paint(g);
-        } else {
-            super.paint(g);
 
-
-        }
         myPaintingNow = false;
     }
 
-
-
-    public void magnificationStarted(Point at) {
-        myZoomer = new ZoomingDelegate((JComponent) getView(), this);
-        myZoomer.magnificationStarted(at);
-    }
-
-
-    public void magnificationFinished(double magnification) {
-        myZoomer.magnificationFinished(magnification);
-        myZoomer = null;
-    }
 
 
     /**
@@ -197,21 +159,6 @@ public class JBViewport extends JViewport {
         return !SystemInfo.isMac && (view instanceof JList || view instanceof JTree || Registry.is("ide.scroll.align.component"));
     }
 
-    static void fixPreferredSize(Dimension size, JComponent view, JScrollBar vsb, JScrollBar hsb) {
-        if (!view.isPreferredSizeSet()) {
-            Border border = view.getBorder();
-            if (border instanceof ViewBorder) {
-                Alignment va = getAlignment(vsb);
-                if (va == Alignment.LEFT || va == Alignment.RIGHT && isAlignmentNeeded(view)) {
-                    size.width -= vsb.getWidth();
-                }
-                Alignment ha = getAlignment(hsb);
-                if (ha == Alignment.TOP || ha == Alignment.BOTTOM && isAlignmentNeeded(view)) {
-                    size.height -= hsb.getHeight();
-                }
-            }
-        }
-    }
 
     private static void doLayout(JScrollPane pane, JViewport viewport, Component view) {
         updateBorder(view);

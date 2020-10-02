@@ -25,7 +25,7 @@ parts:
     plugin: gradle
     source: https://github.com/bsautner/cmd3.git
     source-type: git
-    gradle-options: [ ]   # suppress running of tests and run the war task
+    gradle-options: [jar]   # suppress running of tests and run the war task
     gradle-output-dir: BIN
 
 

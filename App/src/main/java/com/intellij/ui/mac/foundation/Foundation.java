@@ -15,7 +15,6 @@
  */
 package com.intellij.ui.mac.foundation;
 
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.containers.HashMap;
 import com.sun.jna.*;
 import org.jetbrains.annotations.NotNull;
@@ -190,29 +189,12 @@ public class Foundation {
         return name;
     }
 
-    public static long getEncodingCode(@Nullable String encodingName) {
-        if (StringUtil.isEmptyOrSpaces(encodingName)) return -1;
 
-        ID converted = nsString(encodingName);
-        long cfEncoding = myFoundationLibrary.CFStringConvertIANACharSetNameToEncoding(converted);
-
-        ID restored = myFoundationLibrary.CFStringConvertEncodingToIANACharSetName(cfEncoding);
-        if (ID.NIL.equals(restored)) return -1;
-
-        return convertCFEncodingToNS(cfEncoding);
-    }
 
     private static long convertCFEncodingToNS(long cfEncoding) {
         return myFoundationLibrary.CFStringConvertEncodingToNSStringEncoding(cfEncoding) & 0xffffffffffL;  // trim to C-type limits
     }
 
-    public static void cfRetain(ID id) {
-        myFoundationLibrary.CFRetain(id);
-    }
-
-    public static ID cgWindowListCreateImage(Foundation.NSRect screenBounds, int windowOption, ID windowID, int imageOption) {
-        return myFoundationLibrary.CGWindowListCreateImage(screenBounds, windowOption, windowID, imageOption);
-    }
 
     public static void cfRelease(ID... ids) {
         for (ID id : ids) {

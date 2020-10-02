@@ -20,7 +20,6 @@ import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.registry.Registry;
 import com.intellij.ui.JBColor;
-import com.intellij.ui.LightColors;
 import com.intellij.ui.components.JBScrollBar;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.components.JBScrollPane.Alignment;
@@ -52,24 +51,17 @@ public class ButtonlessScrollBarUI extends BasicScrollBarUI {
 
     private static final Logger LOG = Logger.getInstance("#" + ButtonlessScrollBarUI.class.getName());
 
-    protected JBColor getGradientLightColor() {
-        return jbColor(com.intellij.ui.Gray._251, com.intellij.ui.Gray._95);
-    }
-
-    protected JBColor getGradientDarkColor() {
+     protected JBColor getGradientDarkColor() {
         return jbColor(com.intellij.ui.Gray._215, com.intellij.ui.Gray._80);
     }
 
     public static JBColor getTrackBackgroundDefault() {
-        return new JBColor(LightColors.SLIGHTLY_GRAY, UIUtil.getListBackground());
+        return new JBColor(new JBColor(new Color(0xf5f5f5), new Color(0xc0c0c0)), UIUtil.getListBackground());
     }
 
-    public static JBColor getTrackBorderColorDefault() {
-        return new JBColor(com.intellij.ui.Gray._230, UIUtil.getListBackground());
-    }
 
     private JBColor getTrackBackground() {
-        return jbColor(LightColors.SLIGHTLY_GRAY, UIUtil.getListBackground());
+        return jbColor(new JBColor(new Color(0xf5f5f5), new Color(0xc0c0c0)), UIUtil.getListBackground());
     }
 
     private JBColor getTrackBorderColor() {
