@@ -28,24 +28,14 @@ import java.awt.image.*;
  */
 class ScrollPainter extends RegionPainter.Alpha {
 
-    static final class Track {
-        static final RegionPainter<Float> DARCULA = new ScrollPainter(0, .0f, .1f, Gray.x80, null);
-        static final RegionPainter<Float> DEFAULT = DARCULA;
-    }
 
     static final class Thumb {
-        static final RegionPainter<Float> DARCULA = new ScrollPainter(0, .28f, .07f, Gray.xA6, Gray.x38);
-        static final RegionPainter<Float> DEFAULT = new Protected(new SubtractColor(0, .20f, .08f, Gray.x73, Gray.x91),
-                new ScrollPainter(0, .20f, .08f, Gray.x73, Gray.x59));
 
         static final class Mac {
-            static final RegionPainter<Float> DARCULA = new Round(1, .35f, .20f, Gray.x80, Gray.x26);
+
             static final RegionPainter<Float> DEFAULT = new Round(2, .20f, .30f, Gray.x00, null);
 
-            static final class Overlay {
-                static final RegionPainter<Float> DARCULA = new Round(1, 0f, .55f, Gray.x80, Gray.x26);
-                static final RegionPainter<Float> DEFAULT = new Round(2, 0f, .50f, Gray.x00, null);
-            }
+
         }
     }
 
@@ -58,10 +48,6 @@ class ScrollPainter extends RegionPainter.Alpha {
             static final RegionPainter<Float> DARCULA = new Round(1, .35f, .20f, Gray.xA6, Gray.x0D);
             static final RegionPainter<Float> DEFAULT = Thumb.Mac.DEFAULT;
 
-            static final class Overlay {
-                static final RegionPainter<Float> DARCULA = new Round(1, 0f, .55f, Gray.xA6, Gray.x0D);
-                static final RegionPainter<Float> DEFAULT = Thumb.Mac.Overlay.DEFAULT;
-            }
         }
     }
 

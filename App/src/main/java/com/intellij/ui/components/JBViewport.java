@@ -47,13 +47,8 @@ public class JBViewport extends JViewport {
                 return;
             }
             JBViewport viewport = (JBViewport) parent;
-            Component view = viewport.getView();
+
             JBScrollPane scrollPane = UIUtil.getParentOfType(JBScrollPane.class, parent);
-            // do not force viewport size on editor component, e.g. EditorTextField and LanguageConsole
-//      if (view == null || scrollPane == null || view instanceof TypingTarget) {
-//        super.layoutContainer(parent);
-//        return;
-//      }
 
             Dimension size = doSuperLayoutContainer(viewport);
 
@@ -77,9 +72,6 @@ public class JBViewport extends JViewport {
             return viewport.myTempViewSize;
         }
     };
-
-
-    private boolean myPaintingNow;
 
 
     private Dimension myTempViewSize;
@@ -133,9 +125,7 @@ public class JBViewport extends JViewport {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        myPaintingNow = true;
 
-        myPaintingNow = false;
     }
 
 

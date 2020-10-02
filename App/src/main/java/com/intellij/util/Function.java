@@ -15,10 +15,6 @@
  */
 package com.intellij.util;
 
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Collection;
-
 /**
  * @author max
  * @author Konstantin Bulenkov
@@ -28,47 +24,5 @@ import java.util.Collection;
 public interface Function<Param, Result> {
     Result fun(Param param);
 
-    Function ID = new Function.Mono() {
-        public Object fun(Object o) {
-            return o;
-        }
-    };
-
-    Function NULL = NullableFunction.NULL;
-
-    Function TO_STRING = new Function() {
-        public Object fun(Object o) {
-            return String.valueOf(o);
-        }
-    };
-
-    interface Mono<T> extends Function<T, T> {
-    }
-
-    final class InstanceOf<P, R extends P> implements NullableFunction<P, R> {
-
-        private final Class<R> myResultClass;
-
-        public InstanceOf(Class<R> resultClass) {
-            myResultClass = resultClass;
-        }
-
-        @Nullable
-        public R fun(P p) {
-            return p.getClass().isAssignableFrom(myResultClass) ? (R) p : null;
-        }
-    }
-
-    final class First<P, R extends P> implements Function<P[], R> {
-        public R fun(P[] ps) {
-            return (R) ps[0];
-        }
-    }
-
-    final class FirstInCollection<P, R extends P> implements Function<Collection<P>, R> {
-        public R fun(Collection<P> ps) {
-            return (R) ps.iterator().next();
-        }
-    }
 
 }
