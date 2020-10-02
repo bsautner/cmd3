@@ -18,6 +18,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.TextHitInfo;
@@ -45,6 +47,7 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
     private Font myBoldItalicFont;
     private int myDescent = 0;
     protected Dimension myCharSize = new Dimension();
+    private boolean myMonospaced;
     protected Dimension myTermSize = new Dimension(80, 24);
 
     private TerminalStarter myTerminalStarter = null;
@@ -57,7 +60,7 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
 
     private TerminalPanelListener myTerminalPanelListener;
 
-    private final SettingsProvider mySettingsProvider;
+    private SettingsProvider mySettingsProvider;
     final private TerminalTextBuffer myTerminalTextBuffer;
 
     final private StyleState myStyleState;
@@ -78,13 +81,14 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
     private String myInputMethodUncommittedChars;
 
     private Timer myRepaintTimer;
-    private final AtomicInteger scrollDy = new AtomicInteger(0);
-    private final AtomicBoolean needRepaint = new AtomicBoolean(true);
+    private AtomicInteger scrollDy = new AtomicInteger(0);
+    private AtomicBoolean needRepaint = new AtomicBoolean(true);
 
-    private final int myMaxFPS;
+    private int myMaxFPS = 50;
     private int myBlinkingPeriod = 500;
     private TerminalCoordinates myCoordsAccessor;
 
+    private String myCurrentPath; //TODO: handle current path if available
     private SubstringFinder.FindResult myFindResult;
 
     private LinkInfo myHoveredHyperlink = null;
@@ -108,7 +112,12 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
         enableEvents(AWTEvent.KEY_EVENT_MASK | AWTEvent.INPUT_METHOD_EVENT_MASK);
         enableInputMethods(true);
 
-        terminalTextBuffer.addModelListener(() -> repaint());
+        terminalTextBuffer.addModelListener(new TerminalModelListener() {
+            @Override
+            public void modelChanged() {
+                repaint();
+            }
+        });
     }
 
     @NotNull
@@ -292,10 +301,14 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
             }
         });
 
-        myBoundedRangeModel.addChangeListener(e -> {
-            myClientScrollOrigin = myBoundedRangeModel.getValue();
-            repaint();
-        });
+        myBoundedRangeModel.addChangeListener(new
+
+                                                      ChangeListener() {
+                                                          public void stateChanged(final ChangeEvent e) {
+                                                              myClientScrollOrigin = myBoundedRangeModel.getValue();
+                                                              repaint();
+                                                          }
+                                                      });
 
         createRepaintTimer();
     }
@@ -413,7 +426,7 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
         private WeakReference<TerminalPanel> ref;
 
         public WeakRedrawTimer(TerminalPanel terminalPanel) {
-            this.ref = new WeakReference<>(terminalPanel);
+            this.ref = new WeakReference<TerminalPanel>(terminalPanel);
         }
 
         @Override
@@ -481,6 +494,10 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
         return new Point(x, y);
     }
 
+    protected Point charToPanelCoords(final Point p) {
+        return new Point(p.x * myCharSize.width + getInsetX(), (p.y - myClientScrollOrigin) * myCharSize.height);
+    }
+
     private void copySelection(@Nullable Point selectionStart,
                                @Nullable Point selectionEnd,
                                boolean useSystemSelectionClipboardIfAvailable) {
@@ -491,6 +508,10 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
         if (selectionText.length() != 0) {
             myCopyPasteHandler.setContents(selectionText, useSystemSelectionClipboardIfAvailable);
         }
+    }
+
+    public void sendCommand(String command) {
+        myTerminalStarter.sendString(command);
     }
 
     private void pasteFromClipboard(boolean useSystemSelectionClipboardIfAvailable) {
@@ -620,7 +641,7 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
                     ", descent=" + oldDescent + "->" + myDescent);
         }
 
-        boolean myMonospaced = isMonospaced(fo);
+        myMonospaced = isMonospaced(fo);
         if (!myMonospaced) {
             LOG.info("WARNING: Font " + myNormalFont.getName() + " is non-monospaced");
         }
@@ -655,6 +676,16 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
         return Character.isLetterOrDigit(character);
     }
 
+    protected void setupAntialiasing(Graphics graphics) {
+        if (graphics instanceof Graphics2D) {
+            Graphics2D myGfx = (Graphics2D) graphics;
+            final Object mode = mySettingsProvider.useAntialiasing() ? RenderingHints.VALUE_TEXT_ANTIALIAS_ON
+                    : RenderingHints.VALUE_TEXT_ANTIALIAS_OFF;
+            final RenderingHints hints = new RenderingHints(
+                    RenderingHints.KEY_TEXT_ANTIALIASING, mode);
+            myGfx.setRenderingHints(hints);
+        }
+    }
 
     @Override
     public Color getBackground() {
@@ -666,11 +697,152 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
         return getPalette().getColor(myStyleState.getForeground());
     }
 
+    @Override
+    public void paintComponent(final Graphics g) {
+        final Graphics2D gfx = (Graphics2D) g;
 
+        setupAntialiasing(gfx);
 
+        gfx.setColor(getBackground());
+
+        gfx.fillRect(0, 0, getWidth(), getHeight());
+
+        try {
+            myTerminalTextBuffer.lock();
+            // update myClientScrollOrigin as scrollArea might have been invoked after last WeakRedrawTimer action
+            updateScrolling(false);
+            myTerminalTextBuffer.processHistoryAndScreenLines(myClientScrollOrigin, myTermSize.height, new StyledTextConsumer() {
+                final int columnCount = getColumnCount();
+
+                @Override
+                public void consume(int x, int y, @NotNull TextStyle style, @NotNull CharBuffer characters, int startRow) {
+                    int row = y - startRow;
+                    drawCharacters(x, row, style, characters, gfx);
+
+                    if (myFindResult != null) {
+                        List<Pair<Integer, Integer>> ranges = myFindResult.getRanges(characters);
+                        if (ranges != null) {
+                            for (Pair<Integer, Integer> range : ranges) {
+                                TextStyle foundPatternStyle = getFoundPattern(style);
+                                CharBuffer foundPatternChars = characters.subBuffer(range);
+
+                                drawCharacters(x + range.first, row, foundPatternStyle, foundPatternChars, gfx);
+                            }
+                        }
+                    }
+
+                    if (mySelection != null) {
+                        Pair<Integer, Integer> interval = mySelection.intersect(x, row + myClientScrollOrigin, characters.length());
+                        if (interval != null) {
+                            TextStyle selectionStyle = getSelectionStyle(style);
+                            CharBuffer selectionChars = characters.subBuffer(interval.first - x, interval.second);
+
+                            drawCharacters(interval.first, row, selectionStyle, selectionChars, gfx);
+                        }
+                    }
+                }
+
+                @Override
+                public void consumeNul(int x, int y, int nulIndex, TextStyle style, CharBuffer characters, int startRow) {
+                    int row = y - startRow;
+                    if (mySelection != null) {
+                        // compute intersection with all NUL areas, non-breaking
+                        Pair<Integer, Integer> interval = mySelection.intersect(nulIndex, row + myClientScrollOrigin, columnCount - nulIndex);
+                        if (interval != null) {
+                            TextStyle selectionStyle = getSelectionStyle(style);
+                            drawCharacters(x, row, selectionStyle, characters, gfx);
+                            return;
+                        }
+                    }
+                    drawCharacters(x, row, style, characters, gfx);
+                }
+
+                @Override
+                public void consumeQueue(int x, int y, int nulIndex, int startRow) {
+                    if (x < columnCount) {
+                        consumeNul(x, y, nulIndex, TextStyle.EMPTY, new CharBuffer(CharUtils.EMPTY_CHAR, columnCount - x), startRow);
+                    }
+                }
+            });
+
+            int cursorY = myCursor.getCoordY();
+            if ((myClientScrollOrigin + getRowCount() > cursorY) && !hasUncommittedChars()) {
+                int cursorX = myCursor.getCoordX();
+                Pair<Character, TextStyle> sc = myTerminalTextBuffer.getStyledCharAt(cursorX, cursorY);
+                String cursorChar = "" + sc.first;
+                if (Character.isHighSurrogate(sc.first)) {
+                    cursorChar += myTerminalTextBuffer.getStyledCharAt(cursorX + 1, cursorY).first;
+                }
+                TextStyle normalStyle = sc.second != null ? sc.second : myStyleState.getCurrent();
+                TextStyle selectionStyle = getSelectionStyle(normalStyle);
+                boolean inSelection = inSelection(cursorX, cursorY);
+                myCursor.drawCursor(cursorChar, gfx, inSelection ? selectionStyle : normalStyle);
+            }
+        } finally {
+            myTerminalTextBuffer.unlock();
+        }
+
+        drawInputMethodUncommitedChars(gfx);
+
+        drawMargins(gfx, getWidth(), getHeight());
+    }
+
+    @NotNull
+    private TextStyle getSelectionStyle(@NotNull TextStyle style) {
+        if (mySettingsProvider.useInverseSelectionColor()) {
+            return getInversedStyle(style);
+        }
+        TextStyle.Builder builder = style.toBuilder();
+        TextStyle mySelectionStyle = mySettingsProvider.getSelectionColor();
+        builder.setBackground(mySelectionStyle.getBackground());
+        builder.setForeground(mySelectionStyle.getForeground());
+        if (builder instanceof HyperlinkStyle.Builder) {
+            return ((HyperlinkStyle.Builder) builder).build(true);
+        }
+        return builder.build();
+    }
+
+    @NotNull
+    private TextStyle getFoundPattern(@NotNull TextStyle style) {
+        TextStyle.Builder builder = style.toBuilder();
+        TextStyle foundPattern = mySettingsProvider.getFoundPatternColor();
+        builder.setBackground(foundPattern.getBackground());
+        builder.setForeground(foundPattern.getForeground());
+        return builder.build();
+    }
+
+    private void drawInputMethodUncommitedChars(Graphics2D gfx) {
+        if (hasUncommittedChars()) {
+            int xCoord = (myCursor.getCoordX() + 1) * myCharSize.width + getInsetX();
+
+            int y = myCursor.getCoordY() + 1;
+
+            int yCoord = y * myCharSize.height - 3;
+
+            int len = (myInputMethodUncommittedChars.length()) * myCharSize.width;
+
+            gfx.setColor(getBackground());
+            gfx.fillRect(xCoord, (y - 1) * myCharSize.height - 3, len, myCharSize.height);
+
+            gfx.setColor(getForeground());
+            gfx.setFont(myNormalFont);
+
+            gfx.drawString(myInputMethodUncommittedChars, xCoord, yCoord);
+            Stroke saved = gfx.getStroke();
+            BasicStroke dotted = new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0, new float[]{0, 2, 0, 2}, 0);
+            gfx.setStroke(dotted);
+
+            gfx.drawLine(xCoord, yCoord, xCoord + len, yCoord);
+            gfx.setStroke(saved);
+        }
+    }
 
     private boolean hasUncommittedChars() {
         return myInputMethodUncommittedChars != null && myInputMethodUncommittedChars.length() > 0;
+    }
+
+    private boolean inSelection(int x, int y) {
+        return mySelection != null && mySelection.contains(new Point(x, y));
     }
 
     @Override
@@ -712,6 +884,10 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
 
     public int getRowCount() {
         return myTermSize.height;
+    }
+
+    public String getWindowTitle() {
+        return myWindowTitle;
     }
 
     protected int getInsetX() {
@@ -1176,6 +1352,10 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
         myCursor.setBlinking(enabled);
     }
 
+    public TerminalCursor getTerminalCursor() {
+        return myCursor;
+    }
+
     public TerminalOutputStream getTerminalOutputStream() {
         return myTerminalStarter;
     }
@@ -1190,7 +1370,7 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
 
     @Override
     public void setCurrentPath(String path) {
-        //TODO: handle current path if available
+        myCurrentPath = path;
     }
 
     @Override
