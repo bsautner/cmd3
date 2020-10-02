@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: com.jediterm.swing.standalone.Main
+Main-Class: com.cmd3.app.Application
 

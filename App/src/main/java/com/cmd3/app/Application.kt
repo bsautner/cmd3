@@ -30,7 +30,7 @@ class Application : JFrame(), SelectionListener, KeyListener {
     private val commandProcessor = CommandProcessor(this)
     private val dao = H2()
 
-    private fun go() {
+    public fun go() {
         initView()
 
         dao.connect()

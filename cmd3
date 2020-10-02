@@ -3,4 +3,4 @@
 # echo version for potential debug
 echo "cmd3-$SNAP_VERSION.jar"
 ${SNAP}/usr/lib/jvm/java-11-openjdk-${SNAP_ARCH}/bin/java -version
-${SNAP}/usr/lib/jvm/java-11-openjdk-${SNAP_ARCH}/bin/java -Djava.util.prefs.userRoot="$SNAP_USER_DATA" -jar $SNAP/../current/usr/jar/cmd3-$SNAP_VERSION.jar $*
+${SNAP}/usr/lib/jvm/java-11-openjdk-${SNAP_ARCH}/bin/java  -cp /snap/cmd3/current/usr/jar/cmd3-$SNAP_VERSION.jar com.cmd3.app.Launch
