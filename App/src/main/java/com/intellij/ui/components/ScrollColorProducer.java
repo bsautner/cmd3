@@ -15,9 +15,7 @@
  */
 package com.intellij.ui.components;
 
-import com.intellij.openapi.util.registry.Registry;
 import com.intellij.ui.ColorUtil;
-import com.intellij.ui.JBColor;
 import com.intellij.util.NotNullProducer;
 import com.intellij.util.ui.UIUtil;
 import org.jetbrains.annotations.NotNull;
@@ -51,7 +49,7 @@ final class ScrollColorProducer implements NotNullProducer<Color> {
     @Override
     public Color produce() {
         Container parent = myComponent.getParent();
-        if (isBackground && parent instanceof JScrollPane && Registry.is("ide.scroll.background.auto")) {
+        if (isBackground && parent instanceof JScrollPane) {
             Color background = JBScrollPane.getViewBackground((JScrollPane) parent);
             if (background != null) {
                 if (!background.equals(myOriginal)) {
@@ -65,11 +63,11 @@ final class ScrollColorProducer implements NotNullProducer<Color> {
     }
 
     static void setForeground(Component component) {
-        component.setForeground(new JBColor(new ScrollColorProducer(component, 0xE6E6E6, 0x3C3F41, false)));
+        component.setForeground(null);
     }
 
     static void setBackground(Component component) {
-        component.setBackground(new JBColor(new ScrollColorProducer(component, 0xF5F5F5, 0x3C3F41, true)));
+        component.setBackground(null);
     }
 
     static boolean isDark(Component c) {

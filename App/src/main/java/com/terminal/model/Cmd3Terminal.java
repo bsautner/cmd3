@@ -1227,16 +1227,6 @@ public class Cmd3Terminal implements Terminal, TerminalMouseListener, TerminalCo
         }
 
         @Override
-        public int getNextTabWidth(int position) {
-            return nextTab(position) - position;
-        }
-
-        @Override
-        public int getPreviousTabWidth(int position) {
-            return position - previousTab(position);
-        }
-
-        @Override
         public int nextTab(int position) {
             int tabStop = Integer.MAX_VALUE;
 

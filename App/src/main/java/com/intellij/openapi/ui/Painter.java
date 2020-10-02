@@ -16,9 +16,6 @@
 
 package com.intellij.openapi.ui;
 
-import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
 import java.awt.*;
 
 public interface Painter {
@@ -27,12 +24,6 @@ public interface Painter {
 
     void paint(Component component, final Graphics2D g);
 
-    void addListener(Listener listener);
 
-    void removeListener(Listener listener);
-
-    interface Listener {
-        void onNeedsRepaint(Painter painter, @Nullable JComponent dirtyComponent);
-    }
 
 }

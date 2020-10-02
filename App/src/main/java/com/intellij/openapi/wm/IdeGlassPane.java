@@ -22,27 +22,17 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 public interface IdeGlassPane {
     void addMousePreprocessor(MouseListener listener, Disposable parent);
-
-    void addMouseMotionPreprocessor(MouseMotionListener listener, Disposable parent);
-
-    void addPainter(final Component component, Painter painter, Disposable parent);
 
     void removePainter(final Painter painter);
 
 
     void removeMousePreprocessor(MouseListener listener);
 
-    void removeMouseMotionPreprocessor(MouseMotionListener listener);
-
     void setCursor(@Nullable Cursor cursor, @NotNull Object requestor);
 
-    interface TopComponent {
-        boolean canBePreprocessed(MouseEvent e);
-    }
+
 }

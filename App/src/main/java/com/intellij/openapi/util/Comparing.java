@@ -44,20 +44,6 @@ public class Comparing {
         return arg1.equals(arg2);
     }
 
-    public static <T> boolean equal(@Nullable T[] arr1, @Nullable T[] arr2) {
-        if (arr1 == null || arr2 == null) {
-            return arr1 == arr2;
-        }
-        return Arrays.equals(arr1, arr2);
-    }
-
-    public static boolean equal(CharSequence s1, CharSequence s2) {
-        return equal(s1, s2, true);
-    }
-
-    public static boolean equal(@Nullable String arg1, @Nullable String arg2) {
-        return arg1 == null ? arg2 == null : arg1.equals(arg2);
-    }
 
     public static boolean equal(@Nullable CharSequence s1, @Nullable CharSequence s2, boolean caseSensitive) {
         if (s1 == s2) return true;

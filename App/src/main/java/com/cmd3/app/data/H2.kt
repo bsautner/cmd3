@@ -75,15 +75,15 @@ create unique index IF NOT EXISTS COMMANDS_UINDEX
         val g = connection.prepareStatement(selectCommandSql)
         g.setString(1, command)
         val sample = g.executeQuery()
-        if (sample.next()) {
+        return if (sample.next()) {
             println("command $command exists")
-            var count = sample.getInt("COUNT")
-            val command = sample.getString("COMMAND")
+            val count = sample.getInt("COUNT")
+            val cmd = sample.getString("COMMAND")
 
-            return Command(command, count)
+            Command(cmd, count)
 
         } else {
-            return null
+            null
         }
 
     }

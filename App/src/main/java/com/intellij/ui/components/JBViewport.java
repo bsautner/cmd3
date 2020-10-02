@@ -33,7 +33,7 @@ public class JBViewport extends JViewport {
 
         @Override
         public void layoutContainer(Container parent) {
-            if (parent instanceof JViewport && Registry.is("ide.scroll.new.layout")) {
+            if (parent instanceof JViewport) {
                 JViewport viewport = (JViewport) parent;
                 Component view = viewport.getView();
                 if (view != null) {

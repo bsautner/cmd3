@@ -5,28 +5,8 @@ package com.terminal;
 
 import org.apache.log4j.Logger;
 
-import java.awt.*;
-
 public enum TerminalMode {
-    Null,
-    CursorKey {
-        @Override
-        public void setEnabled(Terminal terminal, boolean enabled) {
-            terminal.setApplicationArrowKeys(enabled);
-        }
-    },
-    ANSI,
-    WideColumn {
-        @Override
-        public void setEnabled(Terminal terminal, boolean enabled) {
-            int h = terminal.getTerminalHeight();
-            Dimension d = enabled ? new Dimension(132, h) : new Dimension(80, h);
 
-            terminal.resize(d, RequestOrigin.Remote);
-            terminal.clearScreen();
-            terminal.resetScrollRegions();
-        }
-    },
     CursorVisible {
         @Override
         public void setEnabled(Terminal terminal, boolean enabled) {

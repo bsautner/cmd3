@@ -17,21 +17,6 @@ public interface Tabulator {
      */
     void clearAllTabStops();
 
-    /**
-     * Returns the width of the tab stop that is at or after the given position.
-     *
-     * @param position the column position used to determine the next tab stop, >= 0.
-     * @return the next tab stop width, >= 0.
-     */
-    int getNextTabWidth(int position);
-
-    /**
-     * Returns the width of the tab stop that is before the given position.
-     *
-     * @param position the column position used to determine the previous tab stop, >= 0.
-     * @return the previous tab stop width, >= 0.
-     */
-    int getPreviousTabWidth(int position);
 
     /**
      * Returns the next tab stop that is at or after the given position.

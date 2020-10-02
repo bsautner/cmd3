@@ -10,7 +10,6 @@ import java.util.Iterator;
 
 public class CharBuffer implements Iterable<Character>, CharSequence {
 
-    public final static CharBuffer EMPTY = new CharBuffer(new char[0], 0, 0);
 
     private final char[] myBuf;
     private final int myStart;

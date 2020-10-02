@@ -17,10 +17,6 @@ package com.intellij.ui.components;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.Key;
-import com.intellij.openapi.util.SystemInfo;
-import com.intellij.openapi.util.registry.Registry;
-import com.intellij.openapi.wm.IdeGlassPane;
-import com.intellij.util.ReflectionUtil;
 import com.intellij.util.ui.ButtonlessScrollBarUI;
 import com.intellij.util.ui.RegionPainter;
 import com.intellij.util.ui.UIUtil;
@@ -33,11 +29,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.plaf.ScrollBarUI;
 import javax.swing.plaf.ScrollPaneUI;
 import javax.swing.plaf.UIResource;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.plaf.basic.BasicScrollPaneUI;
 import java.awt.*;
 import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.lang.reflect.Field;
@@ -72,15 +66,10 @@ public class JBScrollPane extends JScrollPane {
     private volatile boolean myBackgroundRequested; // avoid cyclic references
 
 
-    public JBScrollPane(Component view, int vsbPolicy, int hsbPolicy) {
-        super(view, vsbPolicy, hsbPolicy);
-        init();
-    }
-
     @Override
     public Color getBackground() {
         Color color = super.getBackground();
-        if (!myBackgroundRequested && EventQueue.isDispatchThread() && Registry.is("ide.scroll.background.auto")) {
+        if (!myBackgroundRequested && EventQueue.isDispatchThread() ) {
             if (!isBackgroundSet() || color instanceof UIResource) {
                 Component child = getViewport();
                 if (child != null) {
@@ -119,13 +108,8 @@ public class JBScrollPane extends JScrollPane {
         return (JScrollPane) c;
     }
 
-    private void init() {
-        init(true);
-    }
 
-    private void init(boolean setupCorners) {
 
-    }
 
 
     @Override
@@ -185,17 +169,6 @@ public class JBScrollPane extends JScrollPane {
         }
     }
 
-    @Override
-    public JScrollBar createVerticalScrollBar() {
-        return new MyScrollBar(Adjustable.VERTICAL);
-    }
-
-    @NotNull
-    @Override
-    public JScrollBar createHorizontalScrollBar() {
-        return new MyScrollBar(Adjustable.HORIZONTAL);
-    }
-
 
     @SuppressWarnings("deprecation")
     @Override
@@ -231,8 +204,8 @@ public class JBScrollPane extends JScrollPane {
 
         Rectangle viewportBounds = viewport.getBounds();
 
-        boolean extendViewportUnderVScrollbar = vsb != null && shouldExtendViewportUnderScrollbar(vsb);
-        boolean extendViewportUnderHScrollbar = hsb != null && shouldExtendViewportUnderScrollbar(hsb);
+        boolean extendViewportUnderVScrollbar = shouldExtendViewportUnderScrollbar(vsb);
+        boolean extendViewportUnderHScrollbar = shouldExtendViewportUnderScrollbar(hsb);
         boolean hasOverlayScrollbars = extendViewportUnderVScrollbar || extendViewportUnderHScrollbar;
 
         if (!hasOverlayScrollbars && !forceRelayout) return false;
@@ -304,83 +277,10 @@ public class JBScrollPane extends JScrollPane {
         component.setBounds(-10, -10, 1, 1);
     }
 
-    private class MyScrollBar extends ScrollBar implements IdeGlassPane.TopComponent {
-        public MyScrollBar(int orientation) {
-            super(orientation);
-        }
-
-        @Override
-        public void updateUI() {
-            ScrollBarUI ui = getUI();
-            if (ui instanceof DefaultScrollBarUI) return;
-            setUI(JBScrollBar.createUI(this));
-        }
-
-        @Override
-        public boolean canBePreprocessed(MouseEvent e) {
-            return JBScrollPane.canBePreprocessed(e, this);
-        }
-    }
 
 
-    public static boolean canBePreprocessed(MouseEvent e, JScrollBar bar) {
-        if (e.getID() == MouseEvent.MOUSE_MOVED || e.getID() == MouseEvent.MOUSE_PRESSED) {
-            ScrollBarUI ui = bar.getUI();
-            if (ui instanceof BasicScrollBarUI) {
-                BasicScrollBarUI bui = (BasicScrollBarUI) ui;
-                try {
-                    Rectangle rect = (Rectangle) ReflectionUtil.getDeclaredMethod(BasicScrollBarUI.class, "getThumbBounds", new Class[0]).invoke(bui);
-                    Point point = SwingUtilities.convertPoint(e.getComponent(), e.getX(), e.getY(), bar);
-                    return !rect.contains(point);
-                } catch (Exception e1) {
-                    return true;
-                }
-            } else if (ui instanceof DefaultScrollBarUI) {
-                DefaultScrollBarUI dui = (DefaultScrollBarUI) ui;
-                Point point = e.getLocationOnScreen();
-                SwingUtilities.convertPointFromScreen(point, bar);
-                return !dui.isThumbContains(point.x, point.y);
-            }
-        }
-        return true;
-    }
 
-    private static class Corner extends JPanel {
-        private final String myPos;
 
-        public Corner(String pos) {
-            myPos = pos;
-            ScrollColorProducer.setBackground(this);
-            ScrollColorProducer.setForeground(this);
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            g.setColor(getBackground());
-            g.fillRect(0, 0, getWidth(), getHeight());
-
-            if (SystemInfo.isMac || !Registry.is("ide.scroll.track.border.paint")) return;
-            g.setColor(getForeground());
-
-            int x2 = getWidth() - 1;
-            int y2 = getHeight() - 1;
-
-            if (myPos == UPPER_LEFT_CORNER || myPos == UPPER_RIGHT_CORNER) {
-                g.drawLine(0, y2, x2, y2);
-            }
-            if (myPos == LOWER_LEFT_CORNER || myPos == LOWER_RIGHT_CORNER) {
-                g.drawLine(0, 0, x2, 0);
-            }
-
-            if (myPos == UPPER_LEFT_CORNER || myPos == LOWER_LEFT_CORNER) {
-                g.drawLine(x2, 0, x2, y2);
-            }
-
-            if (myPos == UPPER_RIGHT_CORNER || myPos == LOWER_RIGHT_CORNER) {
-                g.drawLine(0, 0, 0, y2);
-            }
-        }
-    }
 
     private static class ViewportBorder extends LineBorder {
         public ViewportBorder(int thickness) {
@@ -397,16 +297,6 @@ public class JBScrollPane extends JScrollPane {
             if (!(c instanceof JScrollPane)) return;
             lineColor = getViewBackground((JScrollPane) c);
         }
-    }
-
-    /**
-     * These client properties modify a scroll pane layout.
-     * Use the class object as a property key.
-     *
-     * @see #putClientProperty(Object, Object)
-     */
-    public enum Flip {
-        NONE, VERTICAL, HORIZONTAL, BOTH
     }
 
     /**

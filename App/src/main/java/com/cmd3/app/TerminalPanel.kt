@@ -49,11 +49,6 @@ class TerminalPanel(
         drawImage(g, image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null)
     }
 
-    override fun isRetina(): Boolean {
-        return DrawUtil.isRetina()
-    }
-
-
     override fun createBufferedImage(width: Int, height: Int): BufferedImage {
         return DrawUtil.createImage(width, height, BufferedImage.TYPE_INT_ARGB)
     }

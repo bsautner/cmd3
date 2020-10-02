@@ -31,10 +31,7 @@ public class GraphicsConfig {
         myComposite = myG.getComposite();
     }
 
-    public GraphicsConfig setAntialiasing(boolean on) {
-        myG.setRenderingHint(RenderingHints.KEY_ANTIALIASING, on ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
-        return this;
-    }
+
 
     public GraphicsConfig setAlpha(float alpha) {
         myG.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));

@@ -15,14 +15,13 @@
  */
 package com.intellij.ui.components;
 
-import com.intellij.util.Alarm;
 import com.intellij.util.ui.Animator;
 
 /**
  * @author Sergey.Malenkov
  */
 abstract class TwoWayAnimator {
-    private final Alarm myAlarm = new Alarm();
+
     private final MyAnimator myForwardAnimator;
     private final MyAnimator myBackwardAnimator;
 
@@ -44,8 +43,6 @@ abstract class TwoWayAnimator {
         if (!forward ? myFrame > 0 : myFrame < myMaxFrame) {
             if (forward ? myFrame > 0 : myFrame < myMaxFrame) {
                 animator.run();
-            } else {
-                myAlarm.addRequest(animator, animator.myPause);
             }
         }
     }
@@ -60,7 +57,7 @@ abstract class TwoWayAnimator {
     }
 
     void stop() {
-        myAlarm.cancelAllRequests();
+
         myForwardAnimator.suspend();
         myBackwardAnimator.suspend();
     }

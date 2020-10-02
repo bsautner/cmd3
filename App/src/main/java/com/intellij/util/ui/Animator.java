@@ -17,13 +17,11 @@
 package com.intellij.util.ui;
 
 import com.intellij.openapi.Disposable;
-import com.intellij.util.concurrency.EdtExecutorService;
 import org.jetbrains.annotations.NonNls;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 public abstract class Animator implements Disposable {
     private final String myName;
@@ -133,19 +131,8 @@ public abstract class Animator implements Disposable {
             myCurrentFrame = myTotalFrames - 1;
             paint();
             animationDone();
-        } else if (myTicker == null) {
-            myTicker = EdtExecutorService.getScheduledExecutorInstance().scheduleWithFixedDelay(new Runnable() {
-                @Override
-                public void run() {
-                    onTick();
-                }
-
-                @Override
-                public String toString() {
-                    return "Scheduled " + Animator.this;
-                }
-            }, 0, myCycleDuration * 1000 / myTotalFrames, TimeUnit.MICROSECONDS);
         }
+
     }
 
     private static boolean skipAnimation() {

@@ -16,7 +16,6 @@
 package com.intellij.ui.components;
 
 import com.intellij.openapi.util.Key;
-import com.intellij.openapi.util.registry.Registry;
 import com.intellij.ui.components.JBScrollPane.Alignment;
 import com.intellij.util.ui.JBInsets;
 import com.intellij.util.ui.JBUI;
@@ -92,7 +91,7 @@ class DefaultScrollBarUI extends ScrollBarUI {
     }
 
     boolean isBorderNeeded(JComponent c) {
-        return c.isOpaque() && Registry.is("ide.scroll.track.border.paint");
+        return c.isOpaque();
     }
 
     boolean isTrackClickable() {
@@ -100,7 +99,7 @@ class DefaultScrollBarUI extends ScrollBarUI {
     }
 
     boolean isTrackExpandable() {
-        return Registry.is("ide.scroll.bar.expand.animation");
+        return true;
     }
 
     boolean isTrackContains(int x, int y) {
@@ -121,7 +120,7 @@ class DefaultScrollBarUI extends ScrollBarUI {
 
     void paintTrack(Graphics2D g, int x, int y, int width, int height, JComponent c) {
         RegionPainter<Float> p = ScrollColorProducer.isDark(c) ? ScrollPainter.Track.DARCULA : ScrollPainter.Track.DEFAULT;
-        if (!isTrackExpandable() && Registry.is("ide.scroll.background.wide")) {
+        if (!isTrackExpandable() ) {
             p.paint(g, x, y, width, height, myTrackAnimator.myValue);
             return; // temporary registry key for designer
         }
@@ -130,7 +129,7 @@ class DefaultScrollBarUI extends ScrollBarUI {
 
     void paintThumb(Graphics2D g, int x, int y, int width, int height, JComponent c) {
         RegionPainter<Float> p = ScrollColorProducer.isDark(c) ? ScrollPainter.Thumb.DARCULA : ScrollPainter.Thumb.DEFAULT;
-        paint(p, g, x, y, width, height, c, myThumbAnimator.myValue, Registry.is("ide.scroll.thumb.small.if.opaque"));
+        paint(p, g, x, y, width, height, c, myThumbAnimator.myValue, true);
     }
 
     void onThumbMove() {

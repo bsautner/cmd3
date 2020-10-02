@@ -96,10 +96,7 @@ public abstract class ProcessTtyConnector implements TtyConnector {
         }
     }
 
-    @Override
-    public int waitFor() throws InterruptedException {
-        return myProcess.waitFor();
-    }
+
 
     @Override
     public void clear() {

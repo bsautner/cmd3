@@ -24,8 +24,6 @@ import com.sun.jna.NativeLong;
  */
 public class ID extends NativeLong {
 
-    public ID() {
-    }
 
     public ID(long peer) {
         super(peer);

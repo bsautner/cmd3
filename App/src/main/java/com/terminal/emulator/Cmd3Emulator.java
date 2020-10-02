@@ -470,10 +470,10 @@ public class Cmd3Emulator extends DataStreamIteratingEmulator {
         if (args.startsWithQuestionMark()) { // DEC Private Mode
             switch (args.getArg(0, -1)) {
                 case 1: //Cursor Keys Mode (DECCKM)
-                    setModeEnabled(TerminalMode.CursorKey, enabled);
+
                     return true;
                 case 3: //132 Column Mode (DECCOLM)
-                    setModeEnabled(TerminalMode.WideColumn, enabled);
+
                     return true;
                 case 4: //Smooth (Slow) Scroll (DECSCLM)
                     setModeEnabled(TerminalMode.SmoothScroll, enabled);

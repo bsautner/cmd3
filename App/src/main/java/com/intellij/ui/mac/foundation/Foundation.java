@@ -20,10 +20,7 @@ import com.sun.jna.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 
@@ -39,10 +36,9 @@ public class Foundation {
         Map<String, Object> foundationOptions = new HashMap<String, Object>();
         //foundationOptions.put(Library.OPTION_TYPE_MAPPER, FoundationTypeMapper.INSTANCE);
 
-        myFoundationLibrary = (FoundationLibrary) Native.loadLibrary("Foundation", FoundationLibrary.class, foundationOptions);
+        myFoundationLibrary = Native.loadLibrary("Foundation", FoundationLibrary.class, foundationOptions);
     }
 
-    static Callback ourRunnableCallback;
 
 
     public static void init() { /* fake method to init foundation */ }
@@ -55,10 +51,6 @@ public class Foundation {
      */
     public static ID getObjcClass(String className) {
         return myFoundationLibrary.objc_getClass(className);
-    }
-
-    public static ID getProtocol(String name) {
-        return myFoundationLibrary.objc_getProtocol(name);
     }
 
     public static Pointer createSelector(String s) {
@@ -101,17 +93,6 @@ public class Foundation {
         return myFoundationLibrary.class_addMethod(cls, selectorName, impl, types);
     }
 
-    public static boolean addProtocol(ID aClass, ID protocol) {
-        return myFoundationLibrary.class_addProtocol(aClass, protocol);
-    }
-
-    public static boolean addMethodByID(ID cls, Pointer selectorName, ID impl, String types) {
-        return myFoundationLibrary.class_addMethod(cls, selectorName, impl, types);
-    }
-
-    public static boolean isMetaClass(ID cls) {
-        return myFoundationLibrary.class_isMetaClass(cls);
-    }
 
     @Nullable
     public static String stringFromSelector(Pointer selector) {
@@ -127,29 +108,6 @@ public class Foundation {
         return myFoundationLibrary.objc_getClass(clazz);
     }
 
-    public static String fullUserName() {
-        return toStringViaUTF8(myFoundationLibrary.NSFullUserName());
-    }
-
-    public static ID class_replaceMethod(ID cls, Pointer selector, Callback impl, String types) {
-        return myFoundationLibrary.class_replaceMethod(cls, selector, impl, types);
-    }
-
-    public static ID getMetaClass(String className) {
-        return myFoundationLibrary.objc_getMetaClass(className);
-    }
-
-    public static boolean isPackageAtPath(@NotNull final String path) {
-        final ID workspace = invoke("NSWorkspace", "sharedWorkspace");
-        final ID result = invoke(workspace, createSelector("isFilePackageAtPath:"), nsString(path));
-
-        return result.intValue() == 1;
-    }
-
-    public static boolean isPackageAtPath(@NotNull final File file) {
-        if (!file.isDirectory()) return false;
-        return isPackageAtPath(file.getPath());
-    }
 
     public static ID nsString(@NotNull String s) {
         // Use a byte[] rather than letting jna do the String -> char* marshalling itself.
@@ -208,114 +166,9 @@ public class Foundation {
         return invoke("NSThread", "isMainThread").intValue() > 0;
     }
 
-    private static final Map<String, RunnableInfo> ourMainThreadRunnables = new HashMap<String, RunnableInfo>();
+
     private static long ourCurrentRunnableCount = 0;
-    private static final Object RUNNABLE_LOCK = new Object();
 
-    static class RunnableInfo {
-        RunnableInfo(Runnable runnable, boolean useAutoreleasePool) {
-            myRunnable = runnable;
-            myUseAutoreleasePool = useAutoreleasePool;
-        }
-
-        Runnable myRunnable;
-        boolean myUseAutoreleasePool;
-    }
-
-    public static void executeOnMainThread(final Runnable runnable, final boolean withAutoreleasePool, final boolean waitUntilDone) {
-        initRunnableSupport();
-
-        synchronized (RUNNABLE_LOCK) {
-            ourCurrentRunnableCount++;
-            ourMainThreadRunnables.put(String.valueOf(ourCurrentRunnableCount), new RunnableInfo(runnable, withAutoreleasePool));
-        }
-
-        final ID ideaRunnable = getObjcClass("IdeaRunnable");
-        final ID runnableObject = invoke(invoke(ideaRunnable, "alloc"), "init");
-        invoke(runnableObject, "performSelectorOnMainThread:withObject:waitUntilDone:", createSelector("run:"),
-                nsString(String.valueOf(ourCurrentRunnableCount)), Boolean.valueOf(waitUntilDone));
-        invoke(runnableObject, "release");
-    }
-
-    private static void initRunnableSupport() {
-        if (ourRunnableCallback == null) {
-            final ID runnableClass = allocateObjcClassPair(getObjcClass("NSObject"), "IdeaRunnable");
-            registerObjcClassPair(runnableClass);
-
-            final Callback callback = new Callback() {
-                @SuppressWarnings("UnusedDeclaration")
-                public void callback(ID self, String selector, ID keyObject) {
-                    final String key = toStringViaUTF8(keyObject);
-
-                    RunnableInfo info;
-                    synchronized (RUNNABLE_LOCK) {
-                        info = ourMainThreadRunnables.remove(key);
-                    }
-
-                    if (info == null) {
-                        return;
-                    }
-
-                    ID pool = null;
-                    try {
-                        if (info.myUseAutoreleasePool) {
-                            pool = invoke("NSAutoreleasePool", "new");
-                        }
-
-                        info.myRunnable.run();
-                    } finally {
-                        if (pool != null) {
-                            invoke(pool, "release");
-                        }
-                    }
-                }
-            };
-            if (!addMethod(runnableClass, createSelector("run:"), callback, "v@:*")) {
-                throw new RuntimeException("Unable to add method to objective-c runnableClass class!");
-            }
-            ourRunnableCallback = callback;
-        }
-    }
-
-    public static class NSDictionary {
-        private final ID myDelegate;
-
-        public NSDictionary(ID delegate) {
-            myDelegate = delegate;
-        }
-
-        public ID get(ID key) {
-            return invoke(myDelegate, "objectForKey:", key);
-        }
-
-        public ID get(String key) {
-            return get(nsString(key));
-        }
-
-        public int count() {
-            return invoke(myDelegate, "count").intValue();
-        }
-
-        public NSArray keys() {
-            return new NSArray(invoke(myDelegate, "allKeys"));
-        }
-    }
-
-    public static class NSArray {
-        private final ID myDelegate;
-
-        public NSArray(ID delegate) {
-            myDelegate = delegate;
-        }
-
-        public int count() {
-            return invoke(myDelegate, "count").intValue();
-        }
-
-        public ID at(int index) {
-            return invoke(myDelegate, "objectAtIndex:", index);
-        }
-    }
 
     public static class NSAutoreleasePool {
         private final ID myDelegate;
@@ -329,66 +182,7 @@ public class Foundation {
         }
     }
 
-    public static class NSRect extends Structure implements Structure.ByValue {
-        private static final List __FIELDS = Arrays.asList("origin", "size");
 
-        public NSPoint origin;
-        public NSSize size;
-
-        public NSRect(double x, double y, double w, double h) {
-            origin = new NSPoint(x, y);
-            size = new NSSize(w, h);
-        }
-
-        @Override
-        protected List getFieldOrder() {
-            return __FIELDS;
-        }
-    }
-
-    public static class NSPoint extends Structure implements Structure.ByValue {
-        private static final List __FIELDS = Arrays.asList("x", "y");
-
-        public CGFloat x;
-        public CGFloat y;
-
-        @SuppressWarnings("UnusedDeclaration")
-        public NSPoint() {
-            this(0, 0);
-        }
-
-        public NSPoint(double x, double y) {
-            this.x = new CGFloat(x);
-            this.y = new CGFloat(y);
-        }
-
-        @Override
-        protected List getFieldOrder() {
-            return __FIELDS;
-        }
-    }
-
-    public static class NSSize extends Structure implements Structure.ByValue {
-        private static final List __FIELDS = Arrays.asList("width", "height");
-
-        public CGFloat width;
-        public CGFloat height;
-
-        @SuppressWarnings("UnusedDeclaration")
-        public NSSize() {
-            this(0, 0);
-        }
-
-        public NSSize(double width, double height) {
-            this.width = new CGFloat(width);
-            this.height = new CGFloat(height);
-        }
-
-        @Override
-        protected List getFieldOrder() {
-            return __FIELDS;
-        }
-    }
 
     public static class CGFloat implements NativeMapped {
         private final double value;
@@ -434,15 +228,6 @@ public class Foundation {
             }
             throw new IllegalStateException();
         }
-    }
-
-    public static ID fillArray(final Object[] a) {
-        final ID result = invoke("NSMutableArray", "array");
-        for (Object s : a) {
-            invoke(result, "addObject:", convertType(s));
-        }
-
-        return result;
     }
 
     public static ID createDict(@NotNull final String[] keys, @NotNull final Object[] values) {

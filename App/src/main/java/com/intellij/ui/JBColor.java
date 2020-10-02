@@ -15,7 +15,6 @@
  */
 package com.intellij.ui;
 
-import com.intellij.util.NotNullProducer;
 import com.intellij.util.ui.DrawUtil;
 import com.intellij.util.ui.UIUtil;
 
@@ -34,7 +33,7 @@ public class JBColor extends Color {
     private static volatile boolean DARK = DrawUtil.isUnderDarcula();
 
     private final Color darkColor;
-    private final NotNullProducer<Color> func;
+
 
 
     public JBColor(Color regular, Color dark) {
@@ -42,14 +41,9 @@ public class JBColor extends Color {
         darkColor = dark;
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         DARK = DrawUtil.isUnderDarcula(); //Double check. Sometimes DARK != isDarcula() after dialogs appear on splash screen
-        func = null;
+
     }
 
-    public JBColor(NotNullProducer<Color> function) {
-        super(0);
-        darkColor = null;
-        func = function;
-    }
     public static boolean isBright() {
         return !DARK;
     }
@@ -59,11 +53,8 @@ public class JBColor extends Color {
     }
 
     Color getColor() {
-        if (func != null) {
-            return func.produce();
-        } else {
-            return DARK ? getDarkVariant() : this;
-        }
+        return DARK ? getDarkVariant() : this;
+
     }
 
     @Override
@@ -96,21 +87,6 @@ public class JBColor extends Color {
         return c == this ? super.getRGB() : c.getRGB();
     }
 
-    @Override
-    public Color brighter() {
-        if (func != null) {
-            return new JBColor(() -> func.produce().brighter());
-        }
-        return new JBColor(super.brighter(), getDarkVariant().brighter());
-    }
-
-    @Override
-    public Color darker() {
-        if (func != null) {
-            return new JBColor(() -> func.produce().darker());
-        }
-        return new JBColor(super.darker(), getDarkVariant().darker());
-    }
 
     @Override
     public int hashCode() {
@@ -198,17 +174,11 @@ public class JBColor extends Color {
 
 
     public static Color foreground() {
-        return new JBColor(() -> UIUtil.getLabelForeground());
+        return null;
     }
 
     public static Color background() {
-        return new JBColor(() -> UIUtil.getListBackground());
+        return null;
     }
 
-    public static Color border() {
-        return new JBColor(() -> {
-            //noinspection deprecation
-            return UIUtil.getBorderColor();
-        });
-    }
 }

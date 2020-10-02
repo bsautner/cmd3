@@ -1,6 +1,6 @@
 name: cmd3
 base: core18 # the base snap is the execution environment for this snap
-version: '0.0.4'
+version: '0.0.5'
 summary: "A terminal that automates commands by recording what you type to build scripts"
 description: |
   I do a lot on the command line, so I started working on a custom terminal emulator of my own that
@@ -9,26 +9,20 @@ description: |
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 apps:
-  cmd3:
-    extensions:
-    - gnome-3-28
-    command: cmd3-$SNAPCRAFT_PROJECT_VERSION/cmd3.sh
-    environment:
-      JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-amd64
-      PATH: $JAVA_HOME/jre/bin:$PATH
-    plugs:
-      - home
-      - network
-      - cups-control
+  part-os-release:
+    command: bin/cmd3
 parts:
   cmd3:
     plugin: gradle
     source: https://github.com/bsautner/cmd3.git
     source-type: git
-    gradle-options: [jar]   # suppress running of tests and run the war task
-    gradle-output-dir: BIN
-
-
+    gradle-options: []   # suppress running of tests and run the war task
+    gradle-output-dir: build/libs
+  part-os-release:
+      plugin: dump
+      source: .
+      organize:
+        cmd3: bin/
 
 
 
