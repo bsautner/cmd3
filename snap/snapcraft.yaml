@@ -2,13 +2,18 @@ name: cmd3
 base: core18 # the base snap is the execution environment for this snap
 version: '0.0.6'
 summary: "A terminal that automates commands by recording what you type to build scripts"
+icon: gui/freeplane.png
 description: |
   I do a lot on the command line, so I started working on a custom terminal emulator of my own that
   automates things I do as much as possible.  This terminal was built by a programmer for programmers.
 
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
-
+apps:
+  htmldoc:
+    command: desktop-launch $SNAP/bin/cmd3
+#    desktop: share/applications/htmldoc.desktop
+    plugs: [home, network, x11]
 parts:
   cmd3:
     plugin: gradle
