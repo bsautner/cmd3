@@ -19,7 +19,6 @@ import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.registry.Registry;
 import com.intellij.ui.components.JBScrollPane.Alignment;
 import com.intellij.util.ui.UIUtil;
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
@@ -31,7 +30,7 @@ import java.awt.*;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
 
-public class JBViewport extends JViewport implements ZoomableViewport {
+public class JBViewport extends JViewport {
     private static final ViewportLayout ourLayoutManager = new ViewportLayout() {
 
         @Override
@@ -165,32 +164,19 @@ public class JBViewport extends JViewport implements ZoomableViewport {
         myPaintingNow = false;
     }
 
-    @Nullable
-    @Override
-    public Magnificator getMagnificator() {
-        return UIUtil.getClientProperty(getView(), Magnificator.CLIENT_PROPERTY_KEY);
-    }
 
-    @Override
+
     public void magnificationStarted(Point at) {
         myZoomer = new ZoomingDelegate((JComponent) getView(), this);
         myZoomer.magnificationStarted(at);
     }
 
-    @Override
+
     public void magnificationFinished(double magnification) {
         myZoomer.magnificationFinished(magnification);
         myZoomer = null;
     }
 
-    @Override
-    public void magnify(double magnification) {
-        myZoomer.magnify(magnification);
-    }
-
-    public boolean isPaintingNow() {
-        return myPaintingNow;
-    }
 
     /**
      * Returns the alignment of the specified scroll bar

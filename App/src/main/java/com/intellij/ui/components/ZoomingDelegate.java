@@ -64,20 +64,7 @@ public class ZoomingDelegate {
 
     public void magnificationFinished(double magnification) {
         if (myMagnification != 0) {
-            Magnificator magnificator = ((ZoomableViewport) myViewportComponent).getMagnificator();
 
-            if (magnificator != null) {
-                Point inContent = convertToContentCoordinates(myMagnificationPoint);
-
-                final Point inContentScaled = magnificator.magnify(magnificationToScale(magnification), inContent);
-
-                int voffset = inContentScaled.y - myMagnificationPoint.y;
-                int hoffset = inContentScaled.x - myMagnificationPoint.x;
-                myViewportComponent.repaint();
-                myViewportComponent.validate();
-
-                scrollTo(voffset, hoffset);
-            }
         }
 
         myMagnificationPoint = null;
@@ -85,13 +72,6 @@ public class ZoomingDelegate {
         myCachedImage = null;
     }
 
-    protected void scrollTo(int voffset, int hoffset) {
-        JScrollPane pane = JBScrollPane.findScrollPane(myViewportComponent);
-        JScrollBar vsb = pane.getVerticalScrollBar();
-        vsb.setValue(voffset);
-        JScrollBar hsb = pane.getHorizontalScrollBar();
-        hsb.setValue(hoffset);
-    }
 
     protected Point convertToContentCoordinates(Point point) {
         return SwingUtilities.convertPoint(myViewportComponent, point, myContentComponent);

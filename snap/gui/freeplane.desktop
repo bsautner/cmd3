@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Name=CMD3
+Exec=CMD3 %F
+Terminal=false
+Icon=${SNAP}/meta/gui/freeplane.png
+Type=Application
+MimeType=application/x-cmd3;
+Categories=Office;
+GenericName=CMD3
+Comment=A free tool to structure and organise your information with mind mapping
+Keywords=Mindmaps; Knowledge management; Organize information; Brainstorming;

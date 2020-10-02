@@ -9,19 +9,29 @@ description: |
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 apps:
-  release:
-    command: bin/cmd3
+  cmd3:
+    extensions:
+    - gnome-3-28
+    command: cmd3-$SNAPCRAFT_PROJECT_VERSION/cmd3.sh
+    environment:
+      JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-amd64
+      PATH: $JAVA_HOME/jre/bin:$PATH
     plugs:
       - home
       - network
-      - network-bind
+      - cups-control
 parts:
   cmd3:
     plugin: gradle
     source: https://github.com/bsautner/cmd3.git
     source-type: git
-    gradle-options: []   # suppress running of tests and run the war task
-    gradle-output-dir: build/libs
+    gradle-options: [ binZip]   # suppress running of tests and run the war task
+    gradle-output-dir: BIN
+    override-build: |
+      snapcraftctl build
+      unzip -o DIST/cmd3_bin-*.zip -d $SNAPCRAFT_PART_INSTALL/
+      build-packages:
+      - unzip
 
 
 
