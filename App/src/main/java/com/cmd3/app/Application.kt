@@ -122,8 +122,6 @@ class Application : JFrame(), SelectionListener, KeyListener {
         @JvmStatic
         fun main(args: Array<String>) {
             val app = Application()
-
-
             app.go()
         }
     }

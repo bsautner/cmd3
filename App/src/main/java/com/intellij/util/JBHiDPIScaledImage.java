@@ -27,10 +27,6 @@ public class JBHiDPIScaledImage extends BufferedImage {
     private int myWidth;  // == myImage.width / scale
     private int myHeight; // == myImage.height / scale
 
-    public JBHiDPIScaledImage(int width, int height, int type) {
-        this(null, 2 * width, 2 * height, type);
-    }
-
     public JBHiDPIScaledImage(Image image, int width, int height, int type) {
         // In case there's a delegate image, create a dummy wrapper image of 1x1 size
         super(image != null ? 1 : width, image != null ? 1 : height, type);

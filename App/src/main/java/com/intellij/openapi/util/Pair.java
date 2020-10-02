@@ -15,7 +15,6 @@
  */
 package com.intellij.openapi.util;
 
-import com.intellij.util.Function;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,14 +40,6 @@ public class Pair<A, B> {
         return new Pair<A, B>(first, second);
     }
 
-    @NotNull
-    public static <A, B> Function<A, Pair<A, B>> createFunction(final B value) {
-        return new Function<A, Pair<A, B>>() {
-            public Pair<A, B> fun(A a) {
-                return create(a, value);
-            }
-        };
-    }
 
     public static <T> T getFirst(@Nullable Pair<T, ?> pair) {
         return pair != null ? pair.first : null;

@@ -15,7 +15,6 @@
  */
 package com.intellij.openapi.diagnostic;
 
-import com.intellij.util.ExceptionUtil;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -45,8 +44,6 @@ public abstract class Logger {
                 return;
             }
 
-            //noinspection UseOfSystemOutOrSystemErr
-            System.out.println("Changing log factory\n" + ExceptionUtil.getThrowableText(new Throwable()));
         }
 
         try {
