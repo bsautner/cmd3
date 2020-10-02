@@ -33,7 +33,7 @@ parts:
       - openjdk-11-jdk
       - x11-utils
     organize:
-      ${SNAPCRAFT_PART_BUILD}/jg-snap: usr/bin/cmd3
+      ${SNAPCRAFT_PART_BUILD}/cmd3: usr/bin/cmd3
 
 
 
