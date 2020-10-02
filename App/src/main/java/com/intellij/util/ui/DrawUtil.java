@@ -20,7 +20,6 @@ import com.google.common.base.Suppliers;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.util.JBHiDPIScaledImage;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,12 +30,6 @@ import java.lang.reflect.Method;
 
 public class DrawUtil {
 
-
-
-    public static boolean isRetina() {
-            return false;
-
-    }
 
     public static void drawLinePickedOut(Graphics graphics, int x, int y, int x1, int y1) {
         if (x == x1) {
@@ -56,23 +49,6 @@ public class DrawUtil {
         g.drawLine(x1, y1, x2, y2);
     }
 
-    public static void drawLine(Graphics2D g, int x1, int y1, int x2, int y2, @Nullable Color bgColor, @Nullable Color fgColor) {
-        Color oldFg = g.getColor();
-        Color oldBg = g.getBackground();
-        if (fgColor != null) {
-            g.setColor(fgColor);
-        }
-        if (bgColor != null) {
-            g.setBackground(bgColor);
-        }
-        drawLine(g, x1, y1, x2, y2);
-        if (fgColor != null) {
-            g.setColor(oldFg);
-        }
-        if (bgColor != null) {
-            g.setBackground(oldBg);
-        }
-    }
 
 
     public static Color getPanelBackground() {
@@ -106,7 +82,7 @@ public class DrawUtil {
     }
 
     @NotNull
-    public static BufferedImage createImageForGraphics(Graphics2D g, int width, int height, int type) {
+    public static BufferedImage createImageForGraphics(int width, int height, int type) {
         return new BufferedImage(width, height, type);
     }
 
@@ -150,12 +126,6 @@ public class DrawUtil {
         } else {
             ((Graphics2D) g).drawImage(image, op, x, y);
         }
-    }
-
-
-    @NotNull
-    public static Paint getGradientPaint(float x1, float y1, @NotNull Color c1, float x2, float y2, @NotNull Color c2) {
-        return new GradientPaint(x1, y1, c1, x2, y2, c2);
     }
 
 

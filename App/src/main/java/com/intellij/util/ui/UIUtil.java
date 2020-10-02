@@ -1,25 +1,10 @@
-/*
- * Copyright 2000-2016 JetBrains s.r.o.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 package com.intellij.util.ui;
 
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.ui.JBColor;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -30,13 +15,8 @@ import javax.swing.text.JTextComponent;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
-import java.beans.PropertyChangeListener;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -57,14 +37,6 @@ public class UIUtil extends DrawUtil {
         kit.setStyleSheet(null);
     }
 
-
-    public static void invokeLaterIfNeeded(@NotNull Runnable runnable) {
-        if (SwingUtilities.isEventDispatchThread()) {
-            runnable.run();
-        } else {
-            SwingUtilities.invokeLater(runnable);
-        }
-    }
 
     public static void applyStyle(@NotNull ComponentStyle componentStyle, @NotNull Component comp) {
         if (!(comp instanceof JComponent)) return;
@@ -89,7 +61,7 @@ public class UIUtil extends DrawUtil {
 
     public enum FontSize {NORMAL, SMALL, MINI}
 
-    public enum ComponentStyle {LARGE, REGULAR, SMALL, MINI}
+    public enum ComponentStyle {SMALL, MINI}
 
 
 
@@ -97,8 +69,6 @@ public class UIUtil extends DrawUtil {
     @NonNls
     public static final String TABLE_FOCUS_CELL_BACKGROUND_PROPERTY = "Table.focusCellBackground";
 
-    private static final Color ACTIVE_HEADER_COLOR = new Color(160, 186, 213);
-    private static final Color INACTIVE_HEADER_COLOR = Gray._128;
     private static final Color BORDER_COLOR = Color.LIGHT_GRAY;
 
     private static volatile Pair<String, Integer> ourSystemFontData;
@@ -111,35 +81,6 @@ public class UIUtil extends DrawUtil {
     private UIUtil() {
     }
 
-    public static boolean hasLeakingAppleListeners() {
-        // in version 1.6.0_29 Apple introduced a memory leak in JViewport class - they add a PropertyChangeListeners to the CToolkit
-        // but never remove them:
-        // JViewport.java:
-        // public JViewport() {
-        //   ...
-        //   final Toolkit toolkit = Toolkit.getDefaultToolkit();
-        //   if(toolkit instanceof CToolkit)
-        //   {
-        //     final boolean isRunningInHiDPI = ((CToolkit)toolkit).runningInHiDPI();
-        //     if(isRunningInHiDPI) setScrollMode(0);
-        //     toolkit.addPropertyChangeListener("apple.awt.contentScaleFactor", new PropertyChangeListener() { ... });
-        //   }
-        // }
-
-        return SystemInfo.isMac && System.getProperty("java.runtime.version").startsWith("1.6.0_29");
-    }
-
-    public static void removeLeakingAppleListeners() {
-        if (!hasLeakingAppleListeners()) return;
-
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        String name = "apple.awt.contentScaleFactor";
-        for (PropertyChangeListener each : toolkit.getPropertyChangeListeners(name)) {
-            toolkit.removePropertyChangeListener(name, each);
-        }
-    }
-
-
     /**
      * @param component a Swing component that may hold a client property value
      * @param key       the client property key that specifies a return type
@@ -147,17 +88,6 @@ public class UIUtil extends DrawUtil {
      */
     public static Object getClientProperty(Object component, @NotNull Object key) {
         return component instanceof JComponent ? ((JComponent) component).getClientProperty(key) : null;
-    }
-
-
-    /**
-     * @param component a Swing component that may hold a client property value
-     * @param key       the client property key that specifies a return type
-     * @return the property value from the specified component or {@code null}
-     */
-    public static <T> T getClientProperty(Object component, @NotNull Key<T> key) {
-        //noinspection unchecked
-        return (T) getClientProperty(component, (Object) key);
     }
 
     public static <T> void putClientProperty(@NotNull JComponent component, @NotNull Key<T> key, T value) {
@@ -210,11 +140,6 @@ public class UIUtil extends DrawUtil {
         return UIManager.getFont("Label.font");
     }
 
-
-    public static Color getLabelForeground() {
-        return UIManager.getColor("Label.foreground");
-    }
-
     public static Color getLabelDisabledForeground() {
         final Color color = UIManager.getColor("Label.disabledForeground");
         if (color != null) return color;
@@ -252,10 +177,6 @@ public class UIUtil extends DrawUtil {
         return UIManager.getColor("textInactiveText");
     }
 
-    public static Color getSlightlyDarkerColor(Color c) {
-        float[] hsl = Color.RGBtoHSB(c.getRed(), c.getGreen(), c.getBlue(), new float[3]);
-        return new Color(Color.HSBtoRGB(hsl[0], hsl[1], hsl[2] - .08f > 0 ? hsl[2] - .08f : hsl[2]));
-    }
 
     /**
      * @deprecated use com.intellij.util.ui.UIUtil#getTextFieldBackground()
@@ -302,12 +223,6 @@ public class UIUtil extends DrawUtil {
     public static Color getButtonSelectColor() {
         return UIManager.getColor("Button.select");
     }
-
-
-    public static Color getMenuItemDisabledForeground() {
-        return UIManager.getColor("MenuItem.disabledForeground");
-    }
-
 
     public static Color getTableSelectionForeground() {
         if (isUnderNimbusLookAndFeel()) {
@@ -364,10 +279,6 @@ public class UIUtil extends DrawUtil {
 
     public static Color getControlColor() {
         return UIManager.getColor("control");
-    }
-
-    public static Font getOptionPaneMessageFont() {
-        return UIManager.getFont("OptionPane.messageFont");
     }
 
     public static Font getMenuFont() {
@@ -547,51 +458,12 @@ public class UIUtil extends DrawUtil {
                 isUnderGTKLookAndFeel();
     }
 
-
-
-    //todo maybe should do for all kind of listeners via the AWTEventMulticaster class
-
-    public static void dispose(final Component c) {
-        if (c == null) return;
-
-        final MouseListener[] mouseListeners = c.getMouseListeners();
-        for (MouseListener each : mouseListeners) {
-            c.removeMouseListener(each);
-        }
-
-        final MouseMotionListener[] motionListeners = c.getMouseMotionListeners();
-        for (MouseMotionListener each : motionListeners) {
-            c.removeMouseMotionListener(each);
-        }
-
-        final MouseWheelListener[] mouseWheelListeners = c.getMouseWheelListeners();
-        for (MouseWheelListener each : mouseWheelListeners) {
-            c.removeMouseWheelListener(each);
-        }
-
-        if (c instanceof AbstractButton) {
-            final ActionListener[] listeners = ((AbstractButton) c).getActionListeners();
-            for (ActionListener listener : listeners) {
-                ((AbstractButton) c).removeActionListener(listener);
-            }
-        }
-    }
-
-
-    public static Color getHeaderActiveColor() {
-        return ACTIVE_HEADER_COLOR;
-    }
-
-    public static Color getHeaderInactiveColor() {
-        return INACTIVE_HEADER_COLOR;
-    }
-
     /**
      * @use JBColor.border()
      * @deprecated
      */
     public static Color getBorderColor() {
-        return isUnderDarcula() ? Gray._50 : BORDER_COLOR;
+        return  BORDER_COLOR;
     }
 
     /**
@@ -615,11 +487,6 @@ public class UIUtil extends DrawUtil {
         return getBorderColor();
     }
 
-
-    public static HTMLEditorKit getHTMLEditorKit() {
-        return getHTMLEditorKit(true);
-    }
-
     public static HTMLEditorKit getHTMLEditorKit(boolean noGapsBetweenParagraphs) {
         Font font = getLabelFont();
         @NonNls String family = !SystemInfo.isWindows && font != null ? font.getFamily() : "Tahoma";
@@ -640,11 +507,6 @@ public class UIUtil extends DrawUtil {
                 return style;
             }
         };
-    }
-
-
-    public static Point getCenterPoint(Dimension container, Dimension child) {
-        return getCenterPoint(new Rectangle(container), child);
     }
 
     public static Point getCenterPoint(Rectangle container, Dimension child) {
@@ -760,18 +622,6 @@ public class UIUtil extends DrawUtil {
         return null;
     }
 
-
-    @NotNull
-    public static Timer createNamedTimer(@NonNls @NotNull final String name, int delay, @NotNull ActionListener listener) {
-        return new Timer(delay, listener) {
-            @Override
-            public String toString() {
-                return name;
-            }
-        };
-    }
-
-
     public static Color getColorAt(final Icon icon, final int x, final int y) {
         if (0 <= x && x < icon.getIconWidth() && 0 <= y && y < icon.getIconHeight()) {
             final BufferedImage image = createImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_RGB);
@@ -787,13 +637,6 @@ public class UIUtil extends DrawUtil {
         }
 
         return null;
-    }
-
-
-    private static final Color DECORATED_ROW_BG_COLOR = new JBColor(new Color(242, 245, 249), new Color(65, 69, 71));
-
-    public static Color getDecoratedRowColor() {
-        return DECORATED_ROW_BG_COLOR;
     }
 
 
@@ -833,38 +676,5 @@ public class UIUtil extends DrawUtil {
         }
     }
 
-    /**
-     * Places the specified window at the top of the stacking order and shows it in front of any other windows.
-     * If the window is iconified it will be shown anyway.
-     *
-     * @param window the window to activate
-     */
-    public static void toFront(Window window) {
-        if (window instanceof Frame) {
-            Frame frame = (Frame) window;
-            frame.setState(Frame.NORMAL);
-        }
-        if (window != null) {
-            window.toFront();
-        }
-    }
-
-
-    /**
-     * Calculates a component style from the corresponding client property.
-     * The key "JComponent.sizeVariant" is used by Apple's L&F to scale components.
-     *
-     * @param component a component to process
-     * @return a component style of the specified component
-     */
-    public static ComponentStyle getComponentStyle(Component component) {
-        if (component instanceof JComponent) {
-            Object property = ((JComponent) component).getClientProperty("JComponent.sizeVariant");
-            if ("large".equals(property)) return ComponentStyle.LARGE;
-            if ("small".equals(property)) return ComponentStyle.SMALL;
-            if ("mini".equals(property)) return ComponentStyle.MINI;
-        }
-        return ComponentStyle.REGULAR;
-    }
 
 }

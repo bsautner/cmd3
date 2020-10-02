@@ -16,7 +16,6 @@
 package com.intellij.util.ui;
 
 import com.intellij.openapi.ui.GraphicsConfig;
-import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -36,27 +35,6 @@ public class GraphicsUtil {
 
     public static void setupFractionalMetrics(Graphics g) {
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-    }
-
-    public static void setupAntialiasing(@NotNull Graphics g2) {
-        setupAntialiasing(g2, true, false);
-    }
-
-    public static int stringWidth(@NotNull String text, Font font) {
-        setupAntialiasing(ourGraphics, true, true);
-        return ourGraphics.getFontMetrics(font).stringWidth(text);
-    }
-
-    public static int charsWidth(char[] data, int off, int len, Font font) {
-        return ourGraphics.getFontMetrics(font).charsWidth(data, off, len);
-    }
-
-    public static int charWidth(char ch, Font font) {
-        return ourGraphics.getFontMetrics(font).charWidth(ch);
-    }
-
-    public static int charWidth(int ch, Font font) {
-        return ourGraphics.getFontMetrics(font).charWidth(ch);
     }
 
     public static void setupAntialiasing(Graphics g2, boolean enableAA, boolean ignoreSystemSettings) {
@@ -83,20 +61,4 @@ public class GraphicsUtil {
         return config;
     }
 
-    public static GraphicsConfig disableAAPainting(Graphics g) {
-        final GraphicsConfig config = new GraphicsConfig(g);
-        final Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_DEFAULT);
-        return config;
-    }
-
-    public static GraphicsConfig paintWithAlpha(Graphics g, float alpha) {
-        assert 0.0f <= alpha && alpha <= 1.0f : "alpha should be in range 0.0f .. 1.0f";
-        final GraphicsConfig config = new GraphicsConfig(g);
-        final Graphics2D g2 = (Graphics2D) g;
-
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-        return config;
-    }
 }
