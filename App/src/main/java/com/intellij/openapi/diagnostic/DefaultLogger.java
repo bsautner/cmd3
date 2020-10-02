@@ -15,8 +15,6 @@
  */
 package com.intellij.openapi.diagnostic;
 
-import com.intellij.util.ExceptionUtil;
-import org.apache.log4j.Level;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,14 +31,6 @@ public class DefaultLogger extends Logger {
 
     @Override
     public void debug(String message) {
-    }
-
-    @Override
-    public void debug(Throwable t) {
-    }
-
-    @Override
-    public void debug(@NonNls String message, Throwable t) {
     }
 
     @Override
@@ -78,13 +68,9 @@ public class DefaultLogger extends Logger {
         throw error;
     }
 
-    @Override
-    public void setLevel(Level level) {
-    }
 
     public static String attachmentsToString(@Nullable Throwable t) {
-        //noinspection ThrowableResultOfMethodCallIgnored
-        Throwable rootCause = t == null ? null : ExceptionUtil.getRootCause(t);
+
         return "";
     }
 }

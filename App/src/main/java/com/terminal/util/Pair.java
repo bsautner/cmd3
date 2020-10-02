@@ -30,10 +30,6 @@ public class Pair<A, B> {
         return pair != null ? pair.first : null;
     }
 
-    public static <T> T getSecond(Pair<?, T> pair) {
-        return pair != null ? pair.second : null;
-    }
-
     @SuppressWarnings("unchecked")
     private static final Pair EMPTY = create(null, null);
 

@@ -32,12 +32,6 @@ public class GraphicsConfig {
     }
 
 
-
-    public GraphicsConfig setAlpha(float alpha) {
-        myG.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-        return this;
-    }
-
     public Graphics2D getG() {
         return myG;
     }

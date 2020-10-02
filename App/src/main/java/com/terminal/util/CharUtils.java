@@ -84,16 +84,6 @@ public class CharUtils {
         }
     }
 
-    public static void appendBuf(final StringBuilder sb, final char[] bs, final int begin, final int length) {
-        CharacterType last = CharacterType.NONPRINTING;
-        final int end = begin + length;
-        for (int i = begin; i < end; i++) {
-            final char c = (char) bs[i];
-            last = appendChar(sb, last, c);
-        }
-    }
-
-
     public static byte[] makeCode(final int... bytesAsInt) {
         final byte[] bytes = new byte[bytesAsInt.length];
         int i = 0;

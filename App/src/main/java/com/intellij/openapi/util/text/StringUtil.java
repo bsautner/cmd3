@@ -132,33 +132,6 @@ public class StringUtil extends StringUtilRt {
         return str == null ? null : str.toLowerCase();
     }
 
-    @NotNull
-    @Contract(pure = true)
-    public static String getPackageName(@NotNull String fqName) {
-        return getPackageName(fqName, '.');
-    }
-
-    /**
-     * Given a fqName returns the package name for the type or the containing type.
-     * <p/>
-     * <ul>
-     * <li><code>java.lang.String</code> -> <code>java.lang</code></li>
-     * <li><code>java.util.Map.Entry</code> -> <code>java.util.Map</code></li>
-     * </ul>
-     *
-     * @param fqName    a fully qualified type name. Not supposed to contain any type arguments
-     * @param separator the separator to use. Typically '.'
-     * @return the package name of the type or the declarator of the type. The empty string if the given fqName is unqualified
-     */
-    @NotNull
-    @Contract(pure = true)
-    public static String getPackageName(@NotNull String fqName, char separator) {
-        int lastPointIdx = fqName.lastIndexOf(separator);
-        if (lastPointIdx >= 0) {
-            return fqName.substring(0, lastPointIdx);
-        }
-        return "";
-    }
 
     @Contract(pure = true)
     public static int getLineBreakCount(@NotNull CharSequence text) {
@@ -635,13 +608,6 @@ public class StringUtil extends StringUtilRt {
         return -1;
     }
 
-    @Contract(pure = true)
-    public static int indexOfSubstringEnd(@NotNull String text, @NotNull String subString) {
-        int i = text.indexOf(subString);
-        if (i == -1) return -1;
-        return i + subString.length();
-    }
-
 
     @NotNull
     @Contract(pure = true)
@@ -659,14 +625,6 @@ public class StringUtil extends StringUtilRt {
     @Contract(pure = true)
     public static CharSequence last(@NotNull CharSequence text, final int length, boolean prependEllipsis) {
         return text.length() > length ? (prependEllipsis ? "..." : "") + text.subSequence(text.length() - length, text.length()) : text;
-    }
-
-    @NotNull
-    @Contract(pure = true)
-    public static String firstLast(@NotNull String text, int length) {
-        return text.length() > length
-                ? text.subSequence(0, length / 2) + "\u2026" + text.subSequence(text.length() - length / 2 - 1, text.length())
-                : text;
     }
 
     @NotNull
@@ -794,24 +752,6 @@ public class StringUtil extends StringUtilRt {
             }
             return 0;
         }
-    }
-
-    @NotNull
-    @Contract(pure = true)
-    public static String sanitizeJavaIdentifier(@NotNull String name) {
-        final StringBuilder result = new StringBuilder(name.length());
-
-        for (int i = 0; i < name.length(); i++) {
-            final char ch = name.charAt(i);
-            if (Character.isJavaIdentifierPart(ch)) {
-                if (result.length() == 0 && !Character.isJavaIdentifierStart(ch)) {
-                    result.append("_");
-                }
-                result.append(ch);
-            }
-        }
-
-        return result.toString();
     }
 
     @Contract(pure = true)

@@ -16,9 +16,7 @@
 package com.intellij.ui.components;
 
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Key;
 import com.intellij.util.ui.RegionPainter;
-import com.intellij.util.ui.UIUtil;
 import org.apache.log4j.Layout;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -35,15 +33,6 @@ import java.awt.event.MouseWheelListener;
 import java.lang.reflect.Field;
 
 public class JBScrollPane extends JScrollPane {
-    /**
-     * This key is used to specify which colors should use the scroll bars on the pane.
-     * If a client property is set to {@code true} the bar's brightness
-     * will be modified according to the view's background.
-     *
-     * @see UIUtil#putClientProperty
-     * @see UIUtil#isUnderDarcula
-     */
-    public static final Key<Boolean> BRIGHTNESS_FROM_VIEW = Key.create("JB_SCROLL_PANE_BRIGHTNESS_FROM_VIEW");
 
     @Deprecated
     public static final RegionPainter<Float> THUMB_PAINTER = ScrollPainter.EditorThumb.DEFAULT;
@@ -59,7 +48,6 @@ public class JBScrollPane extends JScrollPane {
 
     private static final Logger LOG = Logger.getInstance(JBScrollPane.class);
 
-    private int myViewportBorderWidth = -1;
     private boolean myHasOverlayScrollbars;
     private volatile boolean myBackgroundRequested; // avoid cyclic references
 
@@ -90,20 +78,6 @@ public class JBScrollPane extends JScrollPane {
         Component view = viewport.getView();
         if (view == null) return null;
         return view.getBackground();
-    }
-
-    public static JScrollPane findScrollPane(Component c) {
-        if (c == null) return null;
-
-        if (!(c instanceof JViewport)) {
-            Container vp = c.getParent();
-            if (vp instanceof JViewport) c = vp;
-        }
-
-        c = c.getParent();
-        if (!(c instanceof JScrollPane)) return null;
-
-        return (JScrollPane) c;
     }
 
 
@@ -163,7 +137,8 @@ public class JBScrollPane extends JScrollPane {
 
     private void updateViewportBorder() {
         if (getViewportBorder() instanceof ViewportBorder) {
-            setViewportBorder(new ViewportBorder(myViewportBorderWidth >= 0 ? myViewportBorderWidth : 1));
+
+            setViewportBorder(new ViewportBorder(1));
         }
     }
 
@@ -260,10 +235,10 @@ public class JBScrollPane extends JScrollPane {
 
     private boolean shouldExtendViewportUnderScrollbar(@Nullable JScrollBar scrollbar) {
         if (scrollbar == null || !scrollbar.isVisible()) return false;
-        return isOverlaidScrollbar(scrollbar);
+        return isOverlaidScrollbar();
     }
 
-    protected boolean isOverlaidScrollbar(@Nullable JScrollBar scrollbar) {
+    protected boolean isOverlaidScrollbar() {
 
         return false;
     }

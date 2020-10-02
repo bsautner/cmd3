@@ -16,7 +16,6 @@
 package com.intellij.openapi.diagnostic;
 
 import com.intellij.util.ExceptionUtil;
-import org.apache.log4j.Level;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -79,29 +78,6 @@ public abstract class Logger {
 
     public abstract void debug(@NonNls String message);
 
-    public abstract void debug(@Nullable Throwable t);
-
-    public abstract void debug(@NonNls String message, @Nullable Throwable t);
-
-    public void debug(@NotNull String message, @NotNull Object... details) {
-        if (isDebugEnabled()) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(message);
-            for (Object detail : details) {
-                sb.append(detail);
-            }
-            debug(sb.toString());
-        }
-    }
-
-    public boolean isTraceEnabled() {
-        return isDebugEnabled();
-    }
-
-    /**
-     * Log a message with 'trace' level which finer-grained than 'debug' level. Use this method instead of {@link #debug(String)} for internal
-     * events of a subsystem to avoid overwhelming the log if 'debug' level is enabled.
-     */
     public void trace(String message) {
         debug(message);
     }
@@ -163,8 +139,6 @@ public abstract class Logger {
     public boolean assertTrue(boolean value) {
         return value || assertTrue(false, null);
     }
-
-    public abstract void setLevel(Level level);
 
     protected static Throwable checkException(@Nullable Throwable t) {
         return t;
