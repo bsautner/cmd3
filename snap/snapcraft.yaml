@@ -1,16 +1,16 @@
 name: cmd3
 version: "0.0.8"
-summary: A Java Galaxian clone
+summary: terminal
 description: |
-  JGalaxian is a Java-based Galaxian clone.
+  a terminal
 confinement: devmode
 grade: devel
 base: core18
 
 apps:
-  jgalaxian:
+  cmd3:
     command: usr/bin/jg-snap
-    environment:
+#    environment:
 
       # Needed for fontconfig
 #      XDG_DATA_HOME: ${SNAP}/usr/share
@@ -23,7 +23,7 @@ apps:
 parts:
 
 
-  jgalaxian:
+  cmd3:
     plugin: gradle
     source-type: local
     source: .
