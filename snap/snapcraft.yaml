@@ -18,11 +18,7 @@ parts:
     source-type: git
     gradle-options: []   # suppress running of tests and run the war task
     gradle-output-dir: build/libs
-  release:
-      plugin: dump
-      source: .
-      organize:
-        cmd3: bin/
+
 
 
 
