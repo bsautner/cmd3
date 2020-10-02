@@ -1,5 +1,5 @@
 name: cmd3
-version: "0.0.8"
+version: "0.0.9"
 summary: terminal
 description: |
   a terminal
@@ -9,14 +9,14 @@ base: core18
 
 apps:
   cmd3:
-    command: usr/bin/jg-snap
+    command: usr/bin/cmd3
 #    environment:
 
       # Needed for fontconfig
 #      XDG_DATA_HOME: ${SNAP}/usr/share
 #      FONTCONFIG_PATH: ${SNAP}/etc/fonts/config.d
 #      FONTCONFIG_FILE: ${SNAP}/etc/fonts/fonts.conf
-    plugs: [x11,pulseaudio,audio-playback]
+    plugs: [x11]
     #extensions: [ gnome-3-28 ]
 
 
@@ -33,7 +33,7 @@ parts:
       - openjdk-11-jdk
       - x11-utils
     organize:
-      ${SNAPCRAFT_PART_BUILD}/jg-snap: usr/bin/jg-snap
+      ${SNAPCRAFT_PART_BUILD}/jg-snap: usr/bin/cmd3
 
 
 

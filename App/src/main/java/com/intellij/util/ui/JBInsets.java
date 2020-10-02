@@ -17,7 +17,6 @@ package com.intellij.util.ui;
 
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.plaf.UIResource;
 import java.awt.*;
 
 import static com.intellij.util.ui.JBUI.scale;
@@ -59,54 +58,8 @@ public class JBInsets extends Insets {
         return new JBInsets(insets.top, insets.left, insets.bottom, insets.right);
     }
 
-    public JBInsetsUIResource asUIResource() {
-        return new JBInsetsUIResource(this);
-    }
 
-    public static class JBInsetsUIResource extends JBInsets implements UIResource {
-        public JBInsetsUIResource(JBInsets insets) {
-            super(0, 0, 0, 0);
-            top = insets.top;
-            left = insets.left;
-            bottom = insets.bottom;
-            right = insets.right;
-        }
-    }
 
-    /**
-     * @param dimension the size to increase
-     * @param insets    the insets to add
-     */
-    public static void addTo(@NotNull Dimension dimension, Insets insets) {
-        if (insets != null) {
-            dimension.width += insets.left + insets.right;
-            dimension.height += insets.top + insets.bottom;
-        }
-    }
-
-    /**
-     * @param dimension the size to decrease
-     * @param insets    the insets to remove
-     */
-    public static void removeFrom(@NotNull Dimension dimension, Insets insets) {
-        if (insets != null) {
-            dimension.width -= insets.left + insets.right;
-            dimension.height -= insets.top + insets.bottom;
-        }
-    }
-
-    /**
-     * @param rectangle the size to increase and the location to move
-     * @param insets    the insets to add
-     */
-    public static void addTo(@NotNull Rectangle rectangle, Insets insets) {
-        if (insets != null) {
-            rectangle.x -= insets.left;
-            rectangle.y -= insets.top;
-            rectangle.width += insets.left + insets.right;
-            rectangle.height += insets.top + insets.bottom;
-        }
-    }
 
     /**
      * @param rectangle the size to decrease and the location to move

@@ -1,7 +1,6 @@
 
 package com.intellij.util.ui;
 
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.text.StringUtil;
@@ -81,18 +80,6 @@ public class UIUtil extends DrawUtil {
     private UIUtil() {
     }
 
-    /**
-     * @param component a Swing component that may hold a client property value
-     * @param key       the client property key that specifies a return type
-     * @return the property value from the specified component or {@code null}
-     */
-    public static Object getClientProperty(Object component, @NotNull Object key) {
-        return component instanceof JComponent ? ((JComponent) component).getClientProperty(key) : null;
-    }
-
-    public static <T> void putClientProperty(@NotNull JComponent component, @NotNull Key<T> key, T value) {
-        component.putClientProperty(key, value);
-    }
 
 
     public static void setActionNameAndMnemonic(@NotNull String text, @NotNull Action action) {
@@ -231,16 +218,6 @@ public class UIUtil extends DrawUtil {
         return UIManager.getColor("Table.selectionForeground");
     }
 
-
-    public static Color getListBackground() {
-        if (isUnderNimbusLookAndFeel()) {
-            final Color color = UIManager.getColor("List.background");
-            //noinspection UseJBColor
-            return new Color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-        }
-        // Under GTK+ L&F "Table.background" often has main panel color, which looks ugly
-        return isUnderGTKLookAndFeel() ? getTreeTextBackground() : UIManager.getColor("List.background");
-    }
 
     public static Color getEditorPaneBackground() {
         return UIManager.getColor("EditorPane.background");

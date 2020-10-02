@@ -19,12 +19,8 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.util.SystemProperties;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
 import javax.swing.plaf.UIResource;
 import java.awt.*;
 
@@ -93,11 +89,6 @@ public class JBUI {
         return Math.round(scaleFactor * i);
     }
 
-    public static int scaleFontSize(int fontSize) {
-        if (scaleFactor == 1.25f) return (int) (fontSize * 1.34f);
-        if (scaleFactor == 1.75f) return (int) (fontSize * 1.67f);
-        return scale(fontSize);
-    }
 
     public static JBDimension size(int width, int height) {
         return new JBDimension(width, height);
@@ -131,29 +122,6 @@ public class JBUI {
         return insets(topBottom, leftRight, topBottom, leftRight);
     }
 
-    public static JBInsets emptyInsets() {
-        return new JBInsets(0, 0, 0, 0);
-    }
-
-    public static JBInsets insetsTop(int t) {
-        return insets(t, 0, 0, 0);
-    }
-
-    public static JBInsets insetsLeft(int l) {
-        return insets(0, l, 0, 0);
-    }
-
-    public static JBInsets insetsBottom(int b) {
-        return insets(0, 0, b, 0);
-    }
-
-    public static JBInsets insetsRight(int r) {
-        return insets(0, 0, 0, r);
-    }
-
-    public static JBDimension emptySize() {
-        return new JBDimension(0, 0);
-    }
 
     public static float scale(float f) {
         return f * scaleFactor;
@@ -172,61 +140,11 @@ public class JBUI {
             return JBFont.create(UIManager.getFont("Label.font"), false);
         }
 
-        public static JBFont label(float size) {
-            return label().deriveFont(scale(size));
-        }
-
-        public static JBFont smallFont() {
-            return label().deriveFont(UIUtil.getFontSize(UIUtil.FontSize.SMALL));
-        }
-
-        public static JBFont miniFont() {
-            return label().deriveFont(UIUtil.getFontSize(UIUtil.FontSize.MINI));
-        }
-
         public static JBFont create(String fontFamily, int size) {
             return JBFont.create(new Font(fontFamily, Font.PLAIN, size));
         }
     }
 
-    public static class Borders {
-        public static JBEmptyBorder empty(int top, int left, int bottom, int right) {
-            return new JBEmptyBorder(top, left, bottom, right);
-        }
 
-        public static JBEmptyBorder empty(int topAndBottom, int leftAndRight) {
-            return empty(topAndBottom, leftAndRight, topAndBottom, leftAndRight);
-        }
-
-        public static JBEmptyBorder emptyTop(int offset) {
-            return empty(offset, 0, 0, 0);
-        }
-
-        public static JBEmptyBorder emptyLeft(int offset) {
-            return empty(0, offset, 0, 0);
-        }
-
-        public static JBEmptyBorder emptyBottom(int offset) {
-            return empty(0, 0, offset, 0);
-        }
-
-        public static JBEmptyBorder emptyRight(int offset) {
-            return empty(0, 0, 0, offset);
-        }
-
-        public static JBEmptyBorder empty() {
-            return empty(0, 0, 0, 0);
-        }
-
-        public static Border empty(int offsets) {
-            return empty(offsets, offsets, offsets, offsets);
-        }
-
-
-        public static Border merge(@Nullable Border source, @NotNull Border extra, boolean extraIsOutside) {
-            if (source == null) return extra;
-            return new CompoundBorder(extraIsOutside ? extra : source, extraIsOutside ? source : extra);
-        }
-    }
 
 }

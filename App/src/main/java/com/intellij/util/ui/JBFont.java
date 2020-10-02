@@ -50,13 +50,6 @@ public class JBFont extends Font {
         return deriveFont(BOLD, getSize());
     }
 
-    public JBFont asItalic() {
-        return deriveFont(ITALIC, getSize());
-    }
-
-    public JBFont asPlain() {
-        return deriveFont(PLAIN, getSize());
-    }
 
     @Override
     public JBFont deriveFont(int style, float size) {
@@ -66,14 +59,6 @@ public class JBFont extends Font {
     @Override
     public JBFont deriveFont(float size) {
         return create(super.deriveFont(size), false);
-    }
-
-    public JBFont biggerOn(float size) {
-        return deriveFont(getSize() + JBUI.scale(size));
-    }
-
-    public JBFont lessOn(float size) {
-        return deriveFont(getSize() - JBUI.scale(size));
     }
 
     private static class JBFontUIResource extends JBFont implements UIResource {
