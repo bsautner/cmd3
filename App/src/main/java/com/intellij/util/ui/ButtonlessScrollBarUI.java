@@ -398,10 +398,6 @@ public class ButtonlessScrollBarUI extends BasicScrollBarUI {
         return new ButtonlessScrollBarUI();
     }
 
-    public static BasicScrollBarUI createTransparent() {
-        return new Transparent();
-    }
-
     @Override
     protected void installDefaults() {
         final int incGap = UIManager.getInt("ScrollBar.incrementButtonGap");

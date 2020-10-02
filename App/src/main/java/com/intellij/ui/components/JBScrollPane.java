@@ -185,10 +185,6 @@ public class JBScrollPane extends JScrollPane {
         }
     }
 
-    public static ViewportBorder createIndentBorder() {
-        return new ViewportBorder(2);
-    }
-
     @Override
     public JScrollBar createVerticalScrollBar() {
         return new MyScrollBar(Adjustable.VERTICAL);

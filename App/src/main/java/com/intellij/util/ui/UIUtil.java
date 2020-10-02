@@ -20,7 +20,6 @@ import com.intellij.openapi.util.registry.Registry;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.JBColor;
 import com.intellij.util.Function;
-import com.intellij.util.NotNullProducer;
 import com.intellij.util.ReflectionUtil;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NonNls;
@@ -40,7 +39,6 @@ import javax.swing.text.JTextComponent;
 import javax.swing.text.NumberFormatter;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
-import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.FontRenderContext;
@@ -60,13 +58,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.regex.Pattern;
 
-/**
- * @author max
- */
-@SuppressWarnings("StaticMethodOnlyUsedInOneClass")
+
 public class UIUtil extends DrawUtil {
 
-    public static final String BORDER_LINE = "<hr size=1 noshade>";
 
     private static final StyleSheet DEFAULT_HTML_KIT_CSS;
 
@@ -129,121 +123,34 @@ public class UIUtil extends DrawUtil {
     }
 
 
-    private static final GrayFilter DEFAULT_GRAY_FILTER = new GrayFilter(true, 50);
-    private static final GrayFilter DARCULA_GRAY_FILTER = new GrayFilter(true, 30);
-
-    public static GrayFilter getGrayFilter() {
-        return isUnderDarcula() ? DARCULA_GRAY_FILTER : DEFAULT_GRAY_FILTER;
-    }
-
     public enum FontSize {NORMAL, SMALL, MINI}
 
     public enum ComponentStyle {LARGE, REGULAR, SMALL, MINI}
 
     public enum FontColor {NORMAL, BRIGHTER}
 
-    @NonNls
-    public static final String HTML_MIME = "text/html";
-    @NonNls
-    public static final String JSLIDER_ISFILLED = "JSlider.isFilled";
-    @NonNls
-    public static final String ARIAL_FONT_NAME = "Arial";
+
     @NonNls
     public static final String TABLE_FOCUS_CELL_BACKGROUND_PROPERTY = "Table.focusCellBackground";
-    @NonNls
-    public static final String CENTER_TOOLTIP_DEFAULT = "ToCenterTooltip";
-    @NonNls
-    public static final String CENTER_TOOLTIP_STRICT = "ToCenterTooltip.default";
+
 
     public static final Pattern CLOSE_TAG_PATTERN = Pattern.compile("<\\s*([^<>/ ]+)([^<>]*)/\\s*>", Pattern.CASE_INSENSITIVE);
 
     @NonNls
     public static final String FOCUS_PROXY_KEY = "isFocusProxy";
 
-    public static Key<Integer> KEEP_BORDER_SIDES = Key.create("keepBorderSides");
-    private static Key<UndoManager> UNDO_MANAGER = Key.create("undoManager");
-    private static final AbstractAction REDO_ACTION = new AbstractAction() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            UndoManager manager = getClientProperty(e.getSource(), UNDO_MANAGER);
-            if (manager != null && manager.canRedo()) {
-                manager.redo();
-            }
-        }
-    };
-    private static final AbstractAction UNDO_ACTION = new AbstractAction() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            UndoManager manager = getClientProperty(e.getSource(), UNDO_MANAGER);
-            if (manager != null && manager.canUndo()) {
-                manager.undo();
-            }
-        }
-    };
 
     private static final Color UNFOCUSED_SELECTION_COLOR = Gray._212;
     private static final Color ACTIVE_HEADER_COLOR = new Color(160, 186, 213);
     private static final Color INACTIVE_HEADER_COLOR = Gray._128;
     private static final Color BORDER_COLOR = Color.LIGHT_GRAY;
 
-    public static final Color CONTRAST_BORDER_COLOR = new JBColor(new NotNullProducer<Color>() {
-        final Color color = new JBColor(0x9b9b9b, 0x282828);
-
-        @NotNull
-        @Override
-        public Color produce() {
-            if (SystemInfo.isMac && isUnderIntelliJLaF()) {
-                return Gray.xC9;
-            }
-            return color;
-        }
-    });
-
-    public static final Color SIDE_PANEL_BACKGROUND = new JBColor(new NotNullProducer<Color>() {
-        final JBColor myDefaultValue = new JBColor(new Color(0xE6EBF0), new Color(0x3E434C));
-
-        @NotNull
-        @Override
-        public Color produce() {
-            Color color = UIManager.getColor("SidePanel.background");
-            return color == null ? myDefaultValue : color;
-        }
-    });
-
-    public static final Color AQUA_SEPARATOR_FOREGROUND_COLOR = new JBColor(Gray._190, Gray.x51);
-    public static final Color AQUA_SEPARATOR_BACKGROUND_COLOR = new JBColor(Gray._240, Gray.x51);
-    public static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
-
-    public static final int DEFAULT_HGAP = 10;
-    public static final int DEFAULT_VGAP = 4;
-    public static final int LARGE_VGAP = 12;
-
-    public static final Insets PANEL_REGULAR_INSETS = new Insets(8, 12, 8, 12);
-    public static final Insets PANEL_SMALL_INSETS = new Insets(5, 8, 5, 8);
 
 
-    public static final Border DEBUG_MARKER_BORDER = new Border() {
-        @Override
-        public Insets getBorderInsets(Component c) {
-            return new Insets(0, 0, 0, 0);
-        }
 
-        @Override
-        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-            Graphics g2 = g.create();
-            try {
-                g2.setColor(JBColor.RED);
-                drawDottedRectangle(g2, x, y, x + width - 1, y + height - 1);
-            } finally {
-                g2.dispose();
-            }
-        }
 
-        @Override
-        public boolean isBorderOpaque() {
-            return true;
-        }
-    };
+
+
 
     private static volatile Pair<String, Integer> ourSystemFontData;
 

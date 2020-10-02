@@ -17,10 +17,7 @@ package com.intellij.ui;
 
 import java.awt.*;
 
-/**
- * @author Konstantin Bulenkov
- */
-@SuppressWarnings({"InspectionUsingGrayColors", "UnusedDeclaration"})
+
 public class Gray extends Color {
     private Gray(int num) {
         super(num, num, num);

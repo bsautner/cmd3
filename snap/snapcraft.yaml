@@ -25,13 +25,9 @@ parts:
     plugin: gradle
     source: https://github.com/bsautner/cmd3.git
     source-type: git
-    gradle-options: [ binZip]   # suppress running of tests and run the war task
+    gradle-options: [ ]   # suppress running of tests and run the war task
     gradle-output-dir: BIN
-    override-build: |
-      snapcraftctl build
-      unzip -o DIST/cmd3_bin-*.zip -d $SNAPCRAFT_PART_INSTALL/
-      build-packages:
-      - unzip
+
 
 
 

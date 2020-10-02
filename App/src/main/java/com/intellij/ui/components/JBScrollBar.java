@@ -16,8 +16,6 @@
 package com.intellij.ui.components;
 
 import com.intellij.openapi.util.Key;
-import com.intellij.openapi.util.SystemInfo;
-import com.intellij.openapi.util.registry.Registry;
 import com.intellij.util.ui.ButtonlessScrollBarUI;
 import com.intellij.util.ui.RegionPainter;
 import com.intellij.util.ui.UIUtil;
@@ -55,13 +53,6 @@ public class JBScrollBar extends JScrollBar {
         putClientProperty("JScrollBar.fastWheelScrolling", Boolean.TRUE); // fast scrolling for JDK 6
     }
 
-    @Override
-    public void updateUI() {
-        ScrollBarUI ui = getUI();
-        if (ui instanceof DefaultScrollBarUI) return;
-        setUI(createUI(this));
-    }
-
     /**
      * Returns a new instance of {@link ScrollBarUI}.
      * Do not share it between different scroll bars.
@@ -71,10 +62,6 @@ public class JBScrollBar extends JScrollBar {
      */
     @SuppressWarnings("UnusedParameters")
     public static ScrollBarUI createUI(JComponent c) {
-        if (Registry.is("ide.scroll.new.layout")) {
-            if (!SystemInfo.isMac) return new DefaultScrollBarUI();
-            if (Registry.is("mac.scroll.new.ui")) return new MacScrollBarUI();
-        }
         return ButtonlessScrollBarUI.createNormal();
     }
 }
