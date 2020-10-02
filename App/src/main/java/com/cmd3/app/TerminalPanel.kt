@@ -1,7 +1,6 @@
 package com.cmd3.app
 
 
-import com.intellij.util.JBHiDPIScaledImage
 import com.intellij.util.ui.DrawUtil
 import com.terminal.model.StyleState
 import com.terminal.model.TerminalTextBuffer
@@ -15,7 +14,7 @@ import java.awt.image.BufferedImage
 import java.awt.image.ImageObserver
 
 
-class TerminalPanel(
+class TerminalPanel (
 
     mySettingsProvider: SettingsProvider,
     styleState: StyleState,
@@ -30,9 +29,7 @@ class TerminalPanel(
         UIUtil.applyRenderingHints(graphics)
     }
 
-    override fun drawImage(gfx: Graphics2D, image: BufferedImage, x: Int, y: Int, observer: ImageObserver) {
-        DrawUtil.drawImage(gfx, image, x, y, observer)
-    }
+
 
     override fun drawImage(
         g: Graphics2D,
@@ -68,19 +65,9 @@ class TerminalPanel(
             sy2: Int,
             observer: ImageObserver?
         ) {
-            if (image is JBHiDPIScaledImage) {
-                val newG = g.create(0, 0, image.getWidth(observer), image.getHeight(observer)) as Graphics2D
-                newG.scale(0.5, 0.5)
-                var img = image.getDelegate()
-                if (img == null) {
-                    img = image
-                }
-                newG.drawImage(img, 2 * dx1, 2 * dy1, 2 * dx2, 2 * dy2, sx1 * 2, sy1 * 2, sx2 * 2, sy2 * 2, observer)
-                newG.scale(1.0, 1.0)
-                newG.dispose()
-            } else {
-                g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer)
-            }
+
+           g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer)
+
         }
 
     }

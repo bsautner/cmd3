@@ -16,7 +16,6 @@
 package com.intellij.ui.components;
 
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.util.ui.RegionPainter;
 import org.apache.log4j.Layout;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,17 +33,7 @@ import java.lang.reflect.Field;
 
 public class JBScrollPane extends JScrollPane {
 
-    @Deprecated
-    public static final RegionPainter<Float> THUMB_PAINTER = ScrollPainter.EditorThumb.DEFAULT;
 
-    @Deprecated
-    public static final RegionPainter<Float> THUMB_DARK_PAINTER = ScrollPainter.EditorThumb.DARCULA;
-
-    @Deprecated
-    public static final RegionPainter<Float> MAC_THUMB_PAINTER = ScrollPainter.EditorThumb.Mac.DEFAULT;
-
-    @Deprecated
-    public static final RegionPainter<Float> MAC_THUMB_DARK_PAINTER = ScrollPainter.EditorThumb.Mac.DARCULA;
 
     private static final Logger LOG = Logger.getInstance(JBScrollPane.class);
 

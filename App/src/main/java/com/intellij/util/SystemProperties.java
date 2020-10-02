@@ -43,21 +43,6 @@ public class SystemProperties {
         ourTestUserName = name;
     }
 
-    public static String getLineSeparator() {
-        return System.getProperty("line.separator");
-    }
-
-    public static String getOsName() {
-        return System.getProperty("os.name");
-    }
-
-    /**
-     * If you need to compare Java version with some value, use {@link com.intellij.openapi.util.SystemInfo#isJavaVersionAtLeast(String)}.
-     */
-    public static String getJavaVersion() {
-        return System.getProperty("java.version");
-    }
-
     public static String getJavaVmVendor() {
         return System.getProperty("java.vm.vendor");
     }
@@ -66,20 +51,7 @@ public class SystemProperties {
         return System.getProperty("java.home");
     }
 
-    /**
-     * Returns the value of given property as integer, or {@code defaultValue} if the property is not specified or malformed.
-     */
-    public static int getIntProperty(@NotNull final String key, final int defaultValue) {
-        final String value = System.getProperty(key);
-        if (value != null) {
-            try {
-                return Integer.parseInt(value);
-            } catch (NumberFormatException ignored) {
-            }
-        }
 
-        return defaultValue;
-    }
 
     /**
      * Returns the value of given property as a boolean, or {@code defaultValue} if the property is not specified or malformed.

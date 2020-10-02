@@ -25,7 +25,6 @@ import java.awt.event.*;
 import java.awt.font.TextHitInfo;
 import java.awt.im.InputMethodRequests;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.lang.ref.WeakReference;
 import java.net.URI;
 import java.text.AttributedCharacterIterator;
@@ -544,10 +543,6 @@ public class TerminalPanel extends JComponent implements TerminalDisplay, Termin
         return myCopyPasteHandler.getContents(false);
     }
 
-    protected void drawImage(Graphics2D gfx, BufferedImage image, int x, int y, ImageObserver observer) {
-        gfx.drawImage(image, x, y,
-                image.getWidth(), image.getHeight(), observer);
-    }
 
     protected BufferedImage createBufferedImage(int width, int height) {
         return new BufferedImage(width, height,

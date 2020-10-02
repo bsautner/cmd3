@@ -18,14 +18,11 @@ package com.intellij.util.ui;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import com.intellij.openapi.util.SystemInfo;
-import com.intellij.util.JBHiDPIScaledImage;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageOp;
-import java.awt.image.ImageObserver;
 import java.lang.reflect.Method;
 
 public class DrawUtil {
@@ -86,47 +83,6 @@ public class DrawUtil {
         return new BufferedImage(width, height, type);
     }
 
-    public static void drawImage(Graphics g, Image image, int x, int y, ImageObserver observer) {
-        drawImage(g, image, x, y, -1, -1, observer);
-    }
-
-    public static void drawImage(Graphics g, Image image, int x, int y, int width, int height, ImageObserver observer) {
-        if (image instanceof JBHiDPIScaledImage) {
-            final Graphics2D newG = (Graphics2D) g.create(x, y, image.getWidth(observer), image.getHeight(observer));
-            newG.scale(0.5, 0.5);
-            Image img = ((JBHiDPIScaledImage) image).getDelegate();
-            if (img == null) {
-                img = image;
-            }
-            if (width == -1 && height == -1) {
-                newG.drawImage(img, 0, 0, observer);
-            } else {
-                newG.drawImage(img, 0, 0, width * 2, height * 2, 0, 0, width * 2, height * 2, observer);
-            }
-            //newG.scale(1, 1);
-            newG.dispose();
-        } else if (width == -1 && height == -1) {
-            g.drawImage(image, x, y, observer);
-        } else {
-            g.drawImage(image, x, y, x + width, y + height, 0, 0, width, height, observer);
-        }
-    }
-
-    public static void drawImage(Graphics g, BufferedImage image, BufferedImageOp op, int x, int y) {
-        if (image instanceof JBHiDPIScaledImage) {
-            final Graphics2D newG = (Graphics2D) g.create(x, y, image.getWidth(null), image.getHeight(null));
-            newG.scale(0.5, 0.5);
-            Image img = ((JBHiDPIScaledImage) image).getDelegate();
-            if (img == null) {
-                img = image;
-            }
-            newG.drawImage((BufferedImage) img, op, 0, 0);
-            //newG.scale(1, 1);
-            newG.dispose();
-        } else {
-            ((Graphics2D) g).drawImage(image, op, x, y);
-        }
-    }
 
 
     private static final Supplier<Boolean> X_RENDER_ACTIVE = Suppliers.memoize(() -> {
