@@ -9,8 +9,8 @@ description: |
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 apps:
-  part-os-release:
-    command: scripts/cmd3
+  release:
+    command: bin/cmd3
 parts:
   cmd3:
     plugin: gradle
@@ -18,11 +18,11 @@ parts:
     source-type: git
     gradle-options: []   # suppress running of tests and run the war task
     gradle-output-dir: build/libs
-  part-os-release:
+  release:
       plugin: dump
       source: .
       organize:
-        cmd3: scripts/
+        cmd3: bin/
 
 
 
