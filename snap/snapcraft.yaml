@@ -1,6 +1,6 @@
 name: cmd3
 base: core18 # the base snap is the execution environment for this snap
-version: '0.0.6'
+version: '0.0.7'
 summary: "A terminal that automates commands by recording what you type to build scripts"
 icon: gui/freeplane.png
 description: |
