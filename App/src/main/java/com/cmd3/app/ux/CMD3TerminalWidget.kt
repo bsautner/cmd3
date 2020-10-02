@@ -33,7 +33,7 @@ class CMD3TerminalWidget(settingsProvider: SettingsProvider?) : CMD3TermWidget(s
         bar.putClientProperty(JBScrollPane.Alignment::class.java, JBScrollPane.Alignment.RIGHT)
         bar.putClientProperty(
             JBScrollBar.TRACK,
-            RegionPainter { g: Graphics2D, x: Int, y: Int, width: Int, height: Int, `object`: Any? ->
+            RegionPainter { g: Graphics2D, x: Int, y: Int, width: Int, height: Int, _: Any? ->
                 val result = myTerminalPanel.findResult
                 if (result != null) {
                     val modelHeight = bar.model.maximum - bar.model.minimum

@@ -97,7 +97,7 @@ class CommandListPane(private val selectionListener: SelectionListener) : JList<
     }
 
     fun scriptSelectedCommands() {
-        val selected = selectedValuesList
+      //  val selected = selectedValuesList
 
 
     }

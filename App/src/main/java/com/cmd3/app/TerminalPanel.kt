@@ -1,6 +1,6 @@
 package com.cmd3.app
 
-import com.intellij.openapi.Disposable
+
 import com.intellij.util.JBHiDPIScaledImage
 import com.intellij.util.ui.DrawUtil
 import com.terminal.model.StyleState
@@ -20,7 +20,7 @@ class TerminalPanel(
     mySettingsProvider: SettingsProvider,
     styleState: StyleState,
     backBuffer: TerminalTextBuffer
-) : TerminalPanel(mySettingsProvider, backBuffer, styleState), Disposable {
+) : TerminalPanel(mySettingsProvider, backBuffer, styleState) {
     override fun dispose() {
         //TODO
     }

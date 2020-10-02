@@ -29,8 +29,7 @@ import java.util.List;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-//TeamCity inherits StringUtil: do not add private constructors!!!
-@SuppressWarnings({"UtilityClassWithoutPrivateConstructor", "MethodOverridesStaticMethodOfSuperclass"})
+
 public class StringUtil extends StringUtilRt {
 
     @NotNull
