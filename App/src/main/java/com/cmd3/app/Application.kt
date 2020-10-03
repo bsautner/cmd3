@@ -30,12 +30,12 @@ class Application : JFrame(), SelectionListener, KeyListener {
     private val commandProcessor = CommandProcessor(this)
     private val dao = H2()
 
-    public fun go() {
-        initView()
+    fun go() {
+
 
         dao.connect()
 
-
+        initView()
         //add(splitPanel, B)
 
         EventQueue.invokeLater {
